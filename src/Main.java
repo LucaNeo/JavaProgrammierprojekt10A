@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 public class Main {
 
     private JFrame frame;
-    public Enemy enemy;
+    private Enemy enemy = new Enemy();
 
     public static void main(String[] args) {
         new Main().go();
@@ -16,6 +16,7 @@ public class Main {
         frame.setSize(1920, 1080);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        frame.setResizable(false);
+        frame.setResizable(true); // review
+        frame.getContentPane().add(enemy.label);
     }
 }

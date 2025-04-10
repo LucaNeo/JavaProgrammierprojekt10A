@@ -1,14 +1,15 @@
 package src;
-import src.textures.*;
 
 import javax.swing.*;
-import java.awt.Image;
+import java.awt.*;
+import java.util.Objects;
 
-public class Enemy {
+public class Enemy extends JFrame {
 
-    Image image;
+    Image image = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("\\textures\\image-5.png"))).getImage();
+    JLabel label;
 
     Enemy(){
-        image = new ImageIcon(getClass().getResource("./textures/image-5.png")).getImage();
+        label = new JLabel(new ImageIcon(image.getScaledInstance(231, 324, Image.SCALE_SMOOTH)));
     }
 }
