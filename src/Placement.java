@@ -35,7 +35,7 @@ public class Placement extends MouseAdapter {
 //            gamePanel.repaint();
 //        }
 //    }
-@Override
+@Override //TODO Tower aktulesiern wenn fester größe sich ändert
 public void mouseClicked(MouseEvent e) {
     if (!gamePanel.placingTower) return;
 
@@ -44,7 +44,7 @@ public void mouseClicked(MouseEvent e) {
     // Prüfen ob das Feld gültig, frei und bezahlbar ist
     if (gridX >= 0 && gridX < gamePanel.cols &&
             gridY >= 0 && gridY < gamePanel.rows &&
-            gamePanel.placeableTiles[gridY][gridX]) {
+            gamePanel.placeable[gridY][gridX]) {
         // Neuen Turm mit PNG erstellen
         if (gamePanel.selectedTowerType == 1 && gamePanel.money >= 30) {
             gamePanel.towers.add(new Tower1(gridX, gridY));
@@ -55,7 +55,7 @@ public void mouseClicked(MouseEvent e) {
             gamePanel.money -= 50; // Geld abziehen
         }
 
-        gamePanel.placeableTiles[gridY][gridX] = false;  // Feld als belegt markieren
+        gamePanel.placeable[gridY][gridX] = false;  // Feld als belegt markieren
         gamePanel.placingTower = false; // Platzierungsmodus beenden
         gamePanel.selectedTowerType = 0;
         gamePanel.repaint(); // Spielfeld neu zeichnen

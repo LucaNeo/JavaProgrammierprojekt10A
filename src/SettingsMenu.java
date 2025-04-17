@@ -31,7 +31,9 @@ public class SettingsMenu extends JPanel {
 
              JButton soundButton = styleButton("Sound");
              JButton difficultyButton = styleButton("Difficulty");
-            //TODO Button-Actions 
+             JButton AutoStartButton = styleButton("Auto-Start");
+
+            //TODO Button-Actions
              JButton backButton = styleButton("Back");
              backButton.addActionListener(e -> {
                  parentFrame.setContentPane(new MainMenu(parentFrame));
@@ -44,7 +46,10 @@ public class SettingsMenu extends JPanel {
              add(Box.createRigidArea(new Dimension(0, 20)));
              add(difficultyButton);
              add(Box.createRigidArea(new Dimension(0, 20)));
+             add(AutoStartButton);
+             add(Box.createRigidArea(new Dimension(0, 20)));
              add(backButton);
+
          }
 
          private JButton styleButton(String text) { // mainMenu copy 

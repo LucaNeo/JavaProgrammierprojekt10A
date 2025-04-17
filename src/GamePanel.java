@@ -8,10 +8,11 @@ package src;
 // TODO Grid umbennen und löschen
 // TODO  mehrarten von Chunks wasser,weg,plazierbar,unnutzbar
 // TODO shortcuts,Undo/Redo
+// TODO Autostart button
+
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -21,11 +22,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GamePanel extends JPanel {
-    final int TILE_SIZE = 50;
+    final int CHUNK_SIZE = 50;
     final int rows = 15;
     final int cols = 15;
 
-    public boolean[][] placeableTiles;
+    public boolean[][] placeable;
     public boolean placingTower = false;  // Ist Platzierungsmodus aktiv?
     private boolean gridEditorMode = false;
     final List<Tower1> towers = new ArrayList<>();
@@ -67,10 +68,10 @@ public class GamePanel extends JPanel {
     }
 
     public void initGrid() {
-        placeableTiles = new boolean[rows][cols];
+        placeable = new boolean[rows][cols];
         for (int y = 0; y < rows; y++) {
             for (int x = 0; x < cols; x++) {
-                placeableTiles[y][x] = (y % 2 == 0); // Zeilenweise
+                placeable[y][x] = (y % 2 == 0); // Zeilenweise
             }
         }
     }
@@ -97,11 +98,11 @@ public class GamePanel extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (gridEditorMode) {
-                    int x = e.getX() / TILE_SIZE;
-                    int y = e.getY() / TILE_SIZE;
+                    int x = e.getX() / CHUNK_SIZE;
+                    int y = e.getY() / CHUNK_SIZE;
 
                     if (x >= 0 && x < cols && y >= 0 && y < rows) {
-                        placeableTiles[y][x] = !placeableTiles[y][x]; // toggle
+                        placeable[y][x] = !placeable[y][x]; // toggle
                         repaint();
                     }
                 }
@@ -172,10 +173,10 @@ public class GamePanel extends JPanel {
         drawGrid(g);
         //  Türme zeichnen
         for (Tower1 tower : towers) {
-            tower.draw(g, TILE_SIZE);
+            tower.draw(g, CHUNK_SIZE);
         }
         for (Tower2 tower2 : towers2) {
-            tower2.draw(g, TILE_SIZE);
+            tower2.draw(g, CHUNK_SIZE);
         }
 
         // Gegner zeichnen (falls vorhanden)
@@ -188,15 +189,15 @@ public class GamePanel extends JPanel {
     private void drawGrid(Graphics g) { //teilt map in chunks
         for (int y = 0; y < rows; y++) {
             for (int x = 0; x < cols; x++) {
-                if (placeableTiles[y][x]) {
+                if (placeable[y][x]) {
                     g.setColor(new Color(80, 160, 80)); // Grün = platzierbar
                 } else {
                     g.setColor(new Color(100, 50, 50)); // Rot = nicht platzierbar
                 }
 
-                g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                g.fillRect(x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE);
                 g.setColor(Color.BLACK);
-                g.drawRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                g.drawRect(x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE);
             }
         }
 
@@ -220,7 +221,7 @@ public class GamePanel extends JPanel {
         try (PrintWriter writer = new PrintWriter(file)) {
             for (int y = 0; y < rows; y++) {
                 for (int x = 0; x < cols; x++) {
-                    writer.print(placeableTiles[y][x] ? "1" : "0");
+                    writer.print(placeable[y][x] ? "1" : "0");
                     if (x < cols - 1) writer.print(" ");
                 }
                 writer.println();
@@ -238,7 +239,7 @@ public class GamePanel extends JPanel {
                 if (!scanner.hasNextLine()) break;
                 String[] line = scanner.nextLine().split(" ");
                 for (int x = 0; x < cols && x < line.length; x++) {
-                    placeableTiles[y][x] = line[x].equals("1");
+                    placeable[y][x] = line[x].equals("1");
                 }
             }
             repaint();
