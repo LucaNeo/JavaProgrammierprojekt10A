@@ -6,26 +6,26 @@ import java.awt.event.*;
 import java.io.*;
 // Work in Progress 
 public class GridEditorPanel extends JPanel {
-    private static final int TILE_SIZE = 50;
+    private static final int CHUNK_SIZE = 50;
     private static final int rowsGrid = 15;
     private static final int colsGrid = 15;
-    private boolean[][] placeableTiles;
+    private boolean[][] placeable;
     private int currentTileType = 1; // 1 = placeable, 0 = non-placeable
     private boolean editMode = true;
     private JLabel statusLabel;
 
     public GridEditorPanel() {
-        placeableTiles = new boolean[rowsGrid][colsGrid];
-        setPreferredSize(new Dimension(colsGrid * TILE_SIZE, rowsGrid * TILE_SIZE + 30));
+        placeable = new boolean[rowsGrid][colsGrid];
+        setPreferredSize(new Dimension(colsGrid * CHUNK_SIZE, rowsGrid * CHUNK_SIZE + 30));
         setFocusable(true);
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (!editMode) return;
-                int x = e.getX() / TILE_SIZE;
-                int y = e.getY() / TILE_SIZE;
+                int x = e.getX() / CHUNK_SIZE;
+                int y = e.getY() / CHUNK_SIZE;
                 if (x >= 0 && x < colsGrid && y >= 0 && y < rowsGrid) {
-                    placeableTiles[y][x] = (currentTileType == 1);
+                    placeable[y][x] = (currentTileType == 1);
                     repaint();
                 }
             }
@@ -66,7 +66,7 @@ public class GridEditorPanel extends JPanel {
     private void clearGrid() { // stadrt grid herstellen 
         for (int y = 0; y < rowsGrid; y++) {
             for (int x = 0; x < colsGrid; x++) {
-                placeableTiles[y][x] = false;
+                placeable[y][x] = false;
             }
         }
     }
@@ -76,7 +76,7 @@ public class GridEditorPanel extends JPanel {
         try (PrintWriter writer = new PrintWriter(file)) {
             for (int y = 0; y < rowsGrid; y++) {
                 for (int x = 0; x < colsGrid; x++) {
-                    writer.print(placeableTiles[y][x] ? "1" : "0");
+                    writer.print(placeable[y][x] ? "1" : "0");
                 }
                 writer.println();
             }
@@ -94,7 +94,7 @@ public class GridEditorPanel extends JPanel {
             for (int y = 0; y < rowsGrid; y++) {
                 String line = reader.readLine();
                 for (int x = 0; x < colsGrid && x < line.length(); x++) {
-                    placeableTiles[y][x] = line.charAt(x) == '1';
+                    placeable[y][x] = line.charAt(x) == '1';
                 }
             }
             repaint();
@@ -110,10 +110,10 @@ public class GridEditorPanel extends JPanel {
         super.paintComponent(g);
         for (int y = 0; y < rowsGrid; y++) {
             for (int x = 0; x < colsGrid; x++) {
-                g.setColor(placeableTiles[y][x] ? Color.GREEN.darker() : Color.GRAY);
-                g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                g.setColor(placeable[y][x] ? Color.GREEN.darker() : Color.GRAY);
+                g.fillRect(x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE);
                 g.setColor(Color.BLACK);
-                g.drawRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                g.drawRect(x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE);
             }
         }
     }

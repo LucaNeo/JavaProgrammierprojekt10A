@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class GamePanel extends JPanel {
@@ -119,7 +120,7 @@ public class GamePanel extends JPanel {
 
 
         // Tower-Auswahl-Leiste
-        ImageIcon originalIcon1 = new ImageIcon(getClass().getResource("/src/textures/image-10.png"));
+        ImageIcon originalIcon1 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/image-10.png")));
         Image scaledImage1 = originalIcon1.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon1 = new ImageIcon(scaledImage1);
         JButton tower1Button = new JButton(scaledIcon1);
@@ -130,7 +131,7 @@ public class GamePanel extends JPanel {
             repaint();
         });
         add(tower1Button);
-        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/src/textures/image-9.png"));
+        ImageIcon originalIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/image-9.png")));
         Image scaledImage = originalIcon.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         JButton tower2Button = new JButton(scaledIcon);;
