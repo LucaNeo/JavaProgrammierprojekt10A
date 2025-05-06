@@ -1,18 +1,18 @@
 package src;
-//Autor Jakob
+// Autor Jakob
 import javax.swing.*;
 import java.awt.*;
 
-public class Tower1 {
+public class Tower2 {
     public int x, y;
     public Image image;
 
-    public Tower1(int x, int y) {
+    public Tower2(int x, int y) {
         this.x = x;
         this.y = y;
 
         // Bild laden
-        ImageIcon icon = new ImageIcon(getClass().getResource("/src/textures/image-10.png")); // Pfad anpassen
+        ImageIcon icon = new ImageIcon(getClass().getResource("/src/textures/image-9.png")); // Pfad anpassen
         this.image = icon.getImage();
     }
 
