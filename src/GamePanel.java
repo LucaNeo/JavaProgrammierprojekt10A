@@ -1,6 +1,6 @@
 package src;
 // Autor Jakob
-// TODO drop down menü für Maps + Vorschau
+// TODO (drop down) menü für Maps + Vorschau
 // TODO chunk system überarbeiten
 // TODO Settings verbessern
 // TODO Bild auschneiden für Tower
@@ -15,15 +15,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class GamePanel extends JPanel {
-    final int CHUNK_SIZE = 50;
+    final int CHUNK_SIZE = 40   ;
     final int rows = 15;
     final int cols = 15;
 
@@ -148,7 +147,7 @@ public class GamePanel extends JPanel {
         saveButton.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
             if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                saveGridToFile(chooser.getSelectedFile());
+               // saveGridToFile(chooser.getSelectedFile());
             }
         });
         add(saveButton);
@@ -158,7 +157,7 @@ public class GamePanel extends JPanel {
         loadButton.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
             if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-                loadGridFromFile(chooser.getSelectedFile());
+              //  loadGridFromFile(chooser.getSelectedFile());
             }
         });
         add(loadButton);
@@ -217,39 +216,53 @@ public class GamePanel extends JPanel {
         g2.drawString("❤" + health, 90, getHeight() - 30);
 
     }
-    // TODO files sollen im Projekt gespeichrt werden und nicht im Explorer aktuelle version mit gpt
-    public void saveGridToFile(File file) {
-        try (PrintWriter writer = new PrintWriter(file)) {
-            for (int y = 0; y < rows; y++) {
-                for (int x = 0; x < cols; x++) {
-                    writer.print(placeable[y][x] ? "1" : "0");
-                    if (x < cols - 1) writer.print(" ");
+    // TODO files sollen im Projekt gespeichrt werden und nicht im Explorer
+    public static boolean saveGrid(int[][] grid, String filename) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            // Schreibe Grid-Dimensionen in erste Zeile
+            writer.write(grid.length + " " + grid[0].length);
+            writer.newLine();
+
+            // Schreibe Grid-Inhalt
+            for (int[] row : grid) {
+                for (int cell : row) {
+                    writer.write(cell + " ");
                 }
-                writer.println();
+                writer.newLine();
             }
-            JOptionPane.showMessageDialog(this, "Grid gespeichert!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Fehler beim Speichern.");
+            return true;
+        } catch (IOException e) {
+            System.err.println("Fehler beim Speichern des Grids: " + e.getMessage());
+            return false;
         }
     }
-    // TODO files sollen im Projekt geladen werden und nicht im Explorer // aktuelle version mit gpt
-    public void loadGridFromFile(File file) {
-        try (Scanner scanner = new Scanner(file)) {
-            for (int y = 0; y < rows; y++) {
-                if (!scanner.hasNextLine()) break;
-                String[] line = scanner.nextLine().split(" ");
-                for (int x = 0; x < cols && x < line.length; x++) {
-                    placeable[y][x] = line[x].equals("1");
+    // TODO files sollen im Projekt geladen werden und nicht im Explorer
+
+    public static int[][] loadGrid(String filename) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            // Lese Dimensionen
+            String[] dimensions = reader.readLine().split(" ");
+            int rows = Integer.parseInt(dimensions[0]);
+            int cols = Integer.parseInt(dimensions[1]);
+
+            // Erstelle Grid
+            int[][] grid = new int[rows][cols];
+
+            // Fülle Grid
+            for (int i = 0; i < rows; i++) {
+                String[] values = reader.readLine().trim().split(" ");
+                for (int j = 0; j < cols; j++) {
+                    grid[i][j] = Integer.parseInt(values[j]);
                 }
             }
-            repaint();
-            JOptionPane.showMessageDialog(this, "Grid geladen!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Fehler beim Laden.");
+            return grid;
+        } catch (IOException | NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            System.err.println("Fehler beim Laden des Grids: " + e.getMessage());
+            return null;
         }
     }
+
+
 
 
 

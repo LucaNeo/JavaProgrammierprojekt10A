@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.util.Collections;
+import java.util.Objects;
 
 public class SettingsMenu extends JPanel {
          private final JFrame parentFrame;
@@ -15,12 +16,12 @@ public class SettingsMenu extends JPanel {
              setBackground(new Color(30, 30, 40));
              Font titleFont;
              try {
-                 titleFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("fonts/SomeCoolFont.ttf"))
+                 titleFont = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getResourceAsStream("fonts/SomeCoolFont.ttf")))
                          .deriveFont(72f);
                  // Für Unterstrich-Effekt:
                  titleFont = titleFont.deriveFont(Collections.singletonMap(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_LOW_DASHED));
              } catch (Exception e) {
-                 titleFont = new Font("Arial", Font.BOLD, 48);
+                 titleFont = new Font("Arial", Font.BOLD, 48); // fehler abfangen
             }
              // Titel setzen 
              JLabel title = new JLabel("Settings");
