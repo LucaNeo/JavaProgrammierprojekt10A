@@ -18,47 +18,53 @@ public class GridPanel extends JPanel {
         add(title);
 
         // Spinner für Zeilen und Spalten -> Erklärung // https://docs.oracle.com/en/java/javase/24/docs/api/java.desktop/javax/swing/JSpinner.html
-        SpinnerNumberModel rowModel = new SpinnerNumberModel(15, 5, 50, 1);
-        SpinnerNumberModel colModel = new SpinnerNumberModel(15, 5, 50, 1);
+
+        SpinnerNumberModel rowModel = new SpinnerNumberModel(15,5,50,1);
+        SpinnerNumberModel colModel = new SpinnerNumberModel(15,5,50,1);
         JSpinner rowSpinner = new JSpinner(rowModel);
         JSpinner colSpinner = new JSpinner(colModel);
+        rowSpinner.setForeground(Color.white);
+        colSpinner.setForeground(Color.white);
 
-        JLabel rowLabel = new JLabel("Reihen:");
-        JLabel colLabel = new JLabel("Spalten:");
-        rowLabel.setForeground(Color.WHITE);
-        colLabel.setForeground(Color.WHITE);
+        JLabel rowLabel = new JLabel("Row:");
+        JLabel colLabel = new JLabel("Col:");
+        rowLabel.setForeground(Color.white);
+        colLabel.setForeground(Color.white);
 
         JPanel rowPanel = new JPanel();
-        rowPanel.setBackground(new Color(30, 30, 40));
-        rowPanel.add(rowLabel);
-        rowPanel.add(rowSpinner);
-
         JPanel colPanel = new JPanel();
-        colPanel.setBackground(new Color(30, 30, 40));
-        colPanel.add(colLabel);
+        rowPanel.setBackground(new Color(30,30,30));
+        colPanel.setBackground(new Color(30,30,30));
+        rowPanel.add(rowSpinner);
         colPanel.add(colSpinner);
+        rowPanel.add(rowLabel);
+        colPanel.add(colLabel);
 
         add(rowPanel);
         add(colPanel);
 
-        JButton startButton = new JButton("Spiel starten");
+        JButton startButton = new JButton("Start");
+        startButton.setForeground(Color.white);
+        startButton.setFont(startButton.getFont().deriveFont(Font.BOLD));
         startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        startButton.setBackground(new Color(70, 70, 90));
-        startButton.setForeground(Color.WHITE);
+        startButton.setAlignmentY(Component.CENTER_ALIGNMENT);
+        startButton.setBorder(BorderFactory.createEmptyBorder(30,0,20,0 ));
+        startButton.setBackground(new Color(30,30,30));
         startButton.setFocusPainted(false);
 
+
         startButton.addActionListener(e -> {
-            int rows1 = (Integer) rowSpinner.getValue();
-            int cols1 = (Integer) colSpinner.getValue();
+            int rows = Integer.parseInt(rowSpinner.getValue().toString());
+            int cols = Integer.parseInt(colSpinner.getValue().toString());
 
-
-            GamePanel gamePanel = new GamePanel(frame, rows1, cols1);
-            frame.setContentPane(gamePanel);
+            GridPanel gridPanel = new GridPanel(frame,rows,cols);
+            frame.setContentPane(gridPanel);
             frame.revalidate();
             frame.repaint();
         });
         add(Box.createRigidArea(new Dimension(20, 10)));
-        add(startButton);
+    }
 
+    public GridPanel(JFrame frame, int rows, int cols) {
     }
 }

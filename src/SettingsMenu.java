@@ -9,7 +9,6 @@ import java.util.Objects;
 
 public class SettingsMenu extends JPanel {
          private final JFrame parentFrame;
-         boolean devmode = false;
 
          public SettingsMenu(JFrame frame) {
              this.parentFrame = frame;
@@ -22,7 +21,7 @@ public class SettingsMenu extends JPanel {
                  // Für Unterstrich-Effekt:
                  titleFont = titleFont.deriveFont(Collections.singletonMap(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_LOW_DASHED));
              } catch (Exception e) {
-                 titleFont = new Font("Arial", Font.BOLD, 48);
+                 titleFont = new Font("Arial", Font.BOLD, 48); // fehler abfangen
             }
              // Titel setzen 
              JLabel title = new JLabel("Settings");
@@ -33,7 +32,9 @@ public class SettingsMenu extends JPanel {
 
              JButton soundButton = styleButton("Sound");
              JButton difficultyButton = styleButton("Difficulty");
-            //TODO Button-Actions 
+             JButton AutoStartButton = styleButton("Auto-Start");
+
+            //TODO Button-Actions
              JButton backButton = styleButton("Back");
              backButton.addActionListener(e -> {
                  parentFrame.setContentPane(new MainMenu(parentFrame));
@@ -46,23 +47,13 @@ public class SettingsMenu extends JPanel {
              add(Box.createRigidArea(new Dimension(0, 20)));
              add(difficultyButton);
              add(Box.createRigidArea(new Dimension(0, 20)));
+             add(AutoStartButton);
+             add(Box.createRigidArea(new Dimension(0, 20)));
              add(backButton);
-                // Dev mode button
-             JRadioButton devRadio = new JRadioButton("Developer Mode");
-             devRadio.setAlignmentX(Component.CENTER_ALIGNMENT);
-             devRadio.setForeground(Color.LIGHT_GRAY);
-             devRadio.setBackground(new Color(30, 30, 40));
-             devRadio.addActionListener(e -> {
-                 if (devRadio.isSelected()) {
-                     devmode = true;
-                 }
-             });
-             add(devRadio);
 
          }
 
-
-         private JButton styleButton(String text) { // mainMenu copy
+         private JButton styleButton(String text) { // mainMenu copy 
              JButton button = new JButton(text);
              button.setAlignmentX(Component.CENTER_ALIGNMENT);
              button.setFont(new Font("Arial", Font.PLAIN, 24));

@@ -35,7 +35,7 @@ public class Placement extends MouseAdapter {
 //            gamePanel.repaint();
 //        }
 //    }
-@Override
+@Override //TODO Tower aktulesiern wenn fester größe sich ändert
 public void mouseClicked(MouseEvent e) {
     if (!gamePanel.placingTower) return;
 
