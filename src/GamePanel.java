@@ -22,8 +22,8 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class GamePanel extends JPanel {
-    final int CHUNK_SIZE = 40   ;
-    final int rows = 15;
+    final int CHUNK_SIZE = 65   ;
+    final int rows = 12;
     final int cols = 15;
 
     public boolean[][] placeable;
