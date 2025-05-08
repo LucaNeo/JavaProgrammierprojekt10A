@@ -63,7 +63,7 @@ public class GamePanel extends JPanel {
 
     private void updateGame() {
         for (Enemy e : enemies) {
-            e.move(); // Einfache bewegungen der Gegener
+            e.move(); // Einfache Bewegungen der Gegner
         }
     }
 
@@ -213,7 +213,7 @@ public class GamePanel extends JPanel {
         g.drawString("$" + money, 20, getHeight() - 30);
         g2.setColor(Color.RED);
         g2.setFont(new Font("Arial", Font.BOLD, 20));
-        g2.drawString("❤" + health, 90, getHeight() - 30);
+        g2.drawString("♥️" + health, 90, getHeight() - 30);
 
     }
     // TODO files sollen im Projekt gespeichrt werden und nicht im Explorer
