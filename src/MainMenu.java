@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Objects;
 
 public class MainMenu extends JPanel {
-    private Image backgroundImage;
+ //   private Image backgroundImage;
     private Font titleFont;
 
 

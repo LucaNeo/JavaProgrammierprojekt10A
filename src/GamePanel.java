@@ -4,10 +4,11 @@ package src;
 // TODO chunk system überarbeiten
 // TODO Settings verbessern
 // TODO Bild auschneiden für Tower
-// TODO Auto speichern/rundestarten
+// TODO Auto speichern/rundestarten //Radio boxen verwenden // Comboboxen verwenden
 // TODO Grid umbennen und löschen
 // TODO  mehrarten von Chunks wasser,weg,plazierbar,unnutzbar
-// TODO shortcuts,Undo/Redo
+// TODO shortcuts,Undo/Redo`
+// TODO dev mode
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,8 +23,8 @@ import java.util.Scanner;
 
 public class GamePanel extends JPanel {
     final int CHUNK_SIZE = 50;
-    final int rows = 15;
-    final int cols = 15;
+    int rows = 15;
+    int cols = 15;
 
     public boolean[][] placeable;
     public boolean placingTower = false;  // Ist Platzierungsmodus aktiv?
@@ -44,6 +45,13 @@ public class GamePanel extends JPanel {
         setUI();
         startGameLoop();
         setFocusable(true); // Shortcuts möglich machen (Press Key Event)
+    }
+
+    public GamePanel(JFrame frame, int rows1, int cols1) {
+        this.parentFrame = frame;
+        this.cols = cols1;
+        this.rows = rows1;
+        initGrid();
     }
 
     public GamePanel() {
