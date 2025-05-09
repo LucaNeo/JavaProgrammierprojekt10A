@@ -12,7 +12,7 @@ public class Main {
 
         JFrame frame = new JFrame("Tower Defense");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
+        frame.setSize(1920, 1080);
         frame.setLocationRelativeTo(null);
         frame.setContentPane(new MainMenu(frame));
         frame.setVisible(true);

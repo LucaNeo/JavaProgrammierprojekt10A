@@ -3,12 +3,10 @@ package src;
 import java.awt.*;
 
 public class Enemy {
+    public void move() {
 
-    float x, y;
-
-    public void move(){
-        x += 0.02f;
     }
 
-    public void draw(Graphics g) {}
+    public void draw(Graphics g) {
+    }
 }

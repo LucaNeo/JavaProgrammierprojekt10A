@@ -22,8 +22,8 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class GamePanel extends JPanel {
-    final int CHUNK_SIZE = 65   ;
-    final int rows = 12;
+    final int CHUNK_SIZE = 40   ;
+    final int rows = 15;
     final int cols = 15;
 
     public boolean[][] placeable;
@@ -84,15 +84,47 @@ public class GamePanel extends JPanel {
     }
 
     private void setUI() {
-        // zurück Button
-        setLayout(null);
-        JButton backButton = new JButton("← Menu");
-        backButton.setBounds(10, 10, 100, 30);
-        backButton.addActionListener(e -> returnToMenu());
-        add(backButton);
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(new Color(70, 70, 90));
+        buttonPanel.setPreferredSize(new Dimension(getWidth(), getHeight()));
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 25, 25));
+        add(buttonPanel,BorderLayout.SOUTH);
 
-        JButton gridEditorButton = new JButton("Edit Grid");
-        gridEditorButton.setBounds(150, 10, 100, 30);
+        JButton returnButton = new JButton("Menu");
+        returnButton.addActionListener(e -> returnToMenu());
+        returnButton.setFocusPainted(false);
+        returnButton.setForeground(Color.WHITE);
+        returnButton.setBackground(new Color(30, 30, 40));
+        buttonPanel.add(returnButton);
+
+        JButton gridEditorButton = new JButton("EditGridMode");
+        gridEditorButton.setFocusPainted(false);
+        gridEditorButton.setForeground(Color.WHITE);
+        gridEditorButton.setBackground(new Color(30, 30, 40));
+        buttonPanel.add(gridEditorButton);
+        gridEditorButton.addActionListener(e -> {
+            gridEditorMode = !gridEditorMode;
+            if (gridEditorMode) {
+                parentFrame.setContentPane(new GridEditorPanel());
+                parentFrame.revalidate();
+                parentFrame.repaint();
+            }
+        });
+
+
+
+
+
+
+//        // zurück Button
+//        setLayout(null);
+//        JButton backButton = new JButton("← Menu");
+//        backButton.setBounds(10, 10, 100, 30);
+//        backButton.addActionListener(e -> returnToMenu());
+//        add(backButton);
+//
+//        JButton gridEditorButton = new JButton("Edit Grid");
+//        gridEditorButton.setBounds(150, 10, 100, 30);
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -123,7 +155,7 @@ public class GamePanel extends JPanel {
         Image scaledImage1 = originalIcon1.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon1 = new ImageIcon(scaledImage1);
         JButton tower1Button = new JButton(scaledIcon1);
-        tower1Button.setBounds(backButton.getWidth() + 100,  parentFrame.getHeight() - 100, 64, 64);
+        tower1Button.setBounds(returnButton.getWidth() + 100,  parentFrame.getHeight() - 100, 64, 64);
         tower1Button.addActionListener(e -> {
             placingTower = true;
             selectedTowerType = 1;
@@ -134,7 +166,7 @@ public class GamePanel extends JPanel {
         Image scaledImage = originalIcon.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         JButton tower2Button = new JButton(scaledIcon);;
-        tower2Button.setBounds(backButton.getWidth()+170, parentFrame.getHeight() -100, 64, 64);
+        tower2Button.setBounds(returnButton.getWidth()+170, parentFrame.getHeight() -100, 64, 64);
         tower2Button.addActionListener(e -> {
             placingTower = true;
             selectedTowerType = 2;
@@ -187,26 +219,20 @@ public class GamePanel extends JPanel {
     }
 
     private void drawGrid(Graphics g) { //teilt map in chunks
-        for (int y = 0; y < rows; y++) {
-            for (int x = 0; x < cols; x++) {
-                if (placeable[y][x]) {
-                    g.setColor(new Color(80, 160, 80)); // Grün = platzierbar
-                } else {
-                    g.setColor(new Color(100, 50, 50)); // Rot = nicht platzierbar
-                }
-
-                g.fillRect(x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE);
-                g.setColor(Color.BLACK);
-                g.drawRect(x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE);
-            }
-        }
-
-        if (gridEditorMode) {
-            g.setColor(Color.YELLOW);
-            g.setFont(new Font("Arial", Font.BOLD, 20));
-            g.drawString("Editor Mode", 260, 30);
+      if (placingTower){
+      g.setColor( new Color(100,100,100,50));// a= transparenz
+        } else {
+          return;
+      }
+      for (int y = 0; y < cols; y++) {
+         for (int x = 0; x < rows; x++) {
+        if (placeable[y][x]) {
+            g.fillRect(x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE);
         }
     }
+}
+
+    } // TODO Maybe shop hinzufügen
     private void drawHUD(Graphics g, Graphics g2) { // HP und Geld anzeige
         g.setColor(Color.ORANGE);
         g.setFont(new Font("Arial", Font.BOLD, 20));
@@ -215,13 +241,12 @@ public class GamePanel extends JPanel {
         g2.setFont(new Font("Arial", Font.BOLD, 20));
         g2.drawString("♥️" + health, 90, getHeight() - 30);
 
+      //  g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
     }
     // TODO files sollen im Projekt gespeichrt werden und nicht im Explorer
     public static boolean saveGrid(int[][] grid, String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            // Schreibe Grid-Dimensionen in erste Zeile
-            writer.write(grid.length + " " + grid[0].length);
-            writer.newLine();
 
             // Schreibe Grid-Inhalt
             for (int[] row : grid) {
