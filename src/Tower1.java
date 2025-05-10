@@ -12,7 +12,7 @@ public class Tower1 {
         this.y = y;
 
         // Bild laden
-        ImageIcon icon = new ImageIcon(getClass().getResource("/src/textures/image-10.png")); // Pfad anpassen
+        ImageIcon icon = new ImageIcon(getClass().getResource("/src/textures/isometric-guard.png")); // Pfad anpassen
         this.image = icon.getImage();
     }
 

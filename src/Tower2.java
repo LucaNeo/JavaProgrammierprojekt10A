@@ -13,7 +13,7 @@ public class Tower2 {
         this.y = y;
 
         // Bild laden
-        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/image-9.png"))); // Pfad anpassen
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-ketoon.png"))); // Pfad anpassen
         this.image = icon.getImage();
     }
 

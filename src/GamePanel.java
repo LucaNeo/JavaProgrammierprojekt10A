@@ -22,7 +22,7 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class GamePanel extends JPanel {
-    final int CHUNK_SIZE = 40   ;
+    final int CHUNK_SIZE = 50   ;
     final int rows = 15;
     final int cols = 15;
 
@@ -86,7 +86,7 @@ public class GamePanel extends JPanel {
     private void setUI() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(new Color(70, 70, 90));
-        buttonPanel.setPreferredSize(new Dimension(getWidth(), getHeight()));
+        buttonPanel.setPreferredSize(new Dimension(getWidth()+50, getHeight()-100));
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 25, 25));
         add(buttonPanel,BorderLayout.SOUTH);
 
@@ -97,19 +97,19 @@ public class GamePanel extends JPanel {
         returnButton.setBackground(new Color(30, 30, 40));
         buttonPanel.add(returnButton);
 
-        JButton gridEditorButton = new JButton("EditGridMode");
-        gridEditorButton.setFocusPainted(false);
-        gridEditorButton.setForeground(Color.WHITE);
-        gridEditorButton.setBackground(new Color(30, 30, 40));
-        buttonPanel.add(gridEditorButton);
-        gridEditorButton.addActionListener(e -> {
-            gridEditorMode = !gridEditorMode;
-            if (gridEditorMode) {
-                parentFrame.setContentPane(new GridEditorPanel());
-                parentFrame.revalidate();
-                parentFrame.repaint();
-            }
-        });
+//        JButton gridEditorButton = new JButton("EditGridMode");
+//        gridEditorButton.setFocusPainted(false);
+//        gridEditorButton.setForeground(Color.WHITE);
+//        gridEditorButton.setBackground(new Color(30, 30, 40));
+//        buttonPanel.add(gridEditorButton);
+//        gridEditorButton.addActionListener(e -> {
+//            gridEditorMode = !gridEditorMode;
+//            if (gridEditorMode) {
+//                parentFrame.setContentPane(new GridEditorPanel());
+//                parentFrame.revalidate();
+//                parentFrame.repaint();
+//            }
+//        });
 
 
 
@@ -141,17 +141,17 @@ public class GamePanel extends JPanel {
             }
         });
 
-        gridEditorButton.addActionListener(e -> {
-            gridEditorMode = !gridEditorMode;
-            gridEditorButton.setText(gridEditorMode ? "Play Mode" : "Edit Grid");
-        });
-        add(gridEditorButton);
+//        gridEditorButton.addActionListener(e -> {
+//            gridEditorMode = !gridEditorMode;
+//            gridEditorButton.setText(gridEditorMode ? "Play Mode" : "Edit Grid");
+//        });
+//        add(gridEditorButton);
 
 
 
 
         // Tower-Auswahl-Leiste
-        ImageIcon originalIcon1 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/image-10.png")));
+        ImageIcon originalIcon1 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-guard.png")));
         Image scaledImage1 = originalIcon1.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon1 = new ImageIcon(scaledImage1);
         JButton tower1Button = new JButton(scaledIcon1);
@@ -162,7 +162,7 @@ public class GamePanel extends JPanel {
             repaint();
         });
         add(tower1Button);
-        ImageIcon originalIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/image-9.png")));
+        ImageIcon originalIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-ketoon.png")));
         Image scaledImage = originalIcon.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         JButton tower2Button = new JButton(scaledIcon);;
