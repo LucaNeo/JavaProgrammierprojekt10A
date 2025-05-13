@@ -29,8 +29,11 @@ public class GamePanel extends JPanel {
     public boolean placingTower = false;  // Ist Platzierungsmodus aktiv?
     private boolean gridEditorMode = false;
     final List<Tower1> towers1 = new ArrayList<>();
-    public final List<Tower2> towers2 = new ArrayList<>();
-    public final List<Tower3> tower3= new ArrayList<>();
+    final List<Tower2> towers2 = new ArrayList<>();
+    final List<Tower3> tower3= new ArrayList<>();
+    final List<Tower4> towers4 = new ArrayList<>();
+    final List<Tower5> towers5 = new ArrayList<>();
+
     private final List<Enemy> enemies = new ArrayList<>();
     private Timer gameLoop; // aktive runde ?
     int money = 1000; // StartGeld
@@ -241,7 +244,7 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         drawGrid(g);
         //  Türme zeichnen
-        for (Tower5 tower : towers) {
+        for (Tower5 tower : towers5) {
             tower.draw(g, CHUNK_SIZE);
         }
         for (Tower2 tower2 : towers2) {
