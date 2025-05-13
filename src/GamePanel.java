@@ -19,7 +19,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Scanner;
 
 public class GamePanel extends JPanel {
     final int CHUNK_SIZE = 50   ;
@@ -29,8 +28,9 @@ public class GamePanel extends JPanel {
     public boolean[][] placeable;
     public boolean placingTower = false;  // Ist Platzierungsmodus aktiv?
     private boolean gridEditorMode = false;
-    final List<Tower1> towers = new ArrayList<>();
+    final List<Tower1> towers1 = new ArrayList<>();
     public final List<Tower2> towers2 = new ArrayList<>();
+    public final List<Tower3> tower3= new ArrayList<>();
     private final List<Enemy> enemies = new ArrayList<>();
     private Timer gameLoop; // aktive runde ?
     int money = 1000; // StartGeld
@@ -162,6 +162,7 @@ public class GamePanel extends JPanel {
             repaint();
         });
         add(tower1Button);
+
         ImageIcon originalIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-ketoon.png")));
         Image scaledImage = originalIcon.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
@@ -173,6 +174,42 @@ public class GamePanel extends JPanel {
             repaint();
         });
         add(tower2Button);
+
+        ImageIcon originalIcon3 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-priest.png")));
+        Image scaledImage3 = originalIcon3.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon3 = new ImageIcon(scaledImage3);
+        JButton tower3Button = new JButton(scaledIcon3);;
+        tower3Button.setBounds(returnButton.getWidth()+240, parentFrame.getHeight() -100, 64, 64);
+        tower3Button.addActionListener(e -> {
+            placingTower = true;
+            selectedTowerType = 3;
+            repaint();
+        });
+        add(tower3Button);
+
+        ImageIcon originalIcon4 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-guard.png")));
+        Image scaledImage4 = originalIcon4.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon4= new ImageIcon(scaledImage4);
+        JButton tower4Button = new JButton(scaledIcon4);
+        tower4Button.setBounds(returnButton.getWidth()+310, parentFrame.getHeight() -100, 64, 64);
+        tower4Button.addActionListener(e -> {
+            placingTower = true;
+            selectedTowerType = 4;
+            repaint();
+        });
+        add(tower4Button);
+        ImageIcon originalIcon5 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-ketoon.png")));
+        Image scaledImage5 = originalIcon5.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon5= new ImageIcon(scaledImage5);
+        JButton tower5Button = new JButton(scaledIcon5);
+        tower5Button.setBounds(returnButton.getWidth()+380, parentFrame.getHeight() -100, 64, 64);
+        tower5Button.addActionListener(e -> {
+            placingTower = true;
+            selectedTowerType = 5;
+            repaint();
+        });
+        add(tower5Button);
+
         // Save Grid Button
         JButton saveButton = new JButton("Save Grid");
         saveButton.setBounds(390, 10, 120, 30);
@@ -204,12 +241,16 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         drawGrid(g);
         //  Türme zeichnen
-        for (Tower1 tower : towers) {
+        for (Tower5 tower : towers) {
             tower.draw(g, CHUNK_SIZE);
         }
         for (Tower2 tower2 : towers2) {
             tower2.draw(g, CHUNK_SIZE);
         }
+        for (Tower3 tower3 : tower3) {
+            tower3.draw(g, CHUNK_SIZE);
+        }
+
 
         // Gegner zeichnen (falls vorhanden)
         for (Enemy enemy : enemies) {

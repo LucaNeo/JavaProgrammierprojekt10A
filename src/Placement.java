@@ -46,15 +46,18 @@ public void mouseClicked(MouseEvent e) {
             gridY >= 0 && gridY < gamePanel.rows &&
             gamePanel.placeable[gridY][gridX]) {
         // Neuen Turm mit PNG erstellen
-        if (gamePanel.selectedTowerType == 1 && gamePanel.money >= 30) {
-            gamePanel.towers.add(new Tower1(gridX, gridY));
-            gamePanel.money -= 30;  // Geld abziehen
+        if (gamePanel.selectedTowerType == 1 && gamePanel.money >= 250) {
+            gamePanel.towers1.add(new Tower1(gridX, gridY));
+            gamePanel.money -= 250;  // Geld abziehen
         }
-        if (gamePanel.selectedTowerType == 2 && gamePanel.money >= 50) {
+        if (gamePanel.selectedTowerType == 2 && gamePanel.money >= 350) {
             gamePanel.towers2.add(new Tower2(gridX, gridY));
-            gamePanel.money -= 50; // Geld abziehen
+            gamePanel.money -= 350; // Geld abziehen
         }
-
+        if (gamePanel.selectedTowerType == 3 && gamePanel.money >= 500) {
+            gamePanel.towers3.add(new Tower3(gridX, gridY));
+            gamePanel.money -= 500; // Geld abziehen
+        }
         gamePanel.placeable[gridY][gridX] = false;  // Feld als belegt markieren
         gamePanel.placingTower = false; // Platzierungsmodus beenden
         gamePanel.selectedTowerType = 0;
