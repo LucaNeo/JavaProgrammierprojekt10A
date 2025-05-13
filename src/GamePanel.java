@@ -30,7 +30,7 @@ public class GamePanel extends JPanel {
     private boolean gridEditorMode = false;
     final List<Tower1> towers1 = new ArrayList<>();
     final List<Tower2> towers2 = new ArrayList<>();
-    final List<Tower3> tower3= new ArrayList<>();
+    final List<Tower3> towers3= new ArrayList<>();
     final List<Tower4> towers4 = new ArrayList<>();
     final List<Tower5> towers5 = new ArrayList<>();
 
@@ -200,6 +200,7 @@ public class GamePanel extends JPanel {
             selectedTowerType = 4;
             repaint();
         });
+
         add(tower4Button);
         ImageIcon originalIcon5 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-ketoon.png")));
         Image scaledImage5 = originalIcon5.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
@@ -250,8 +251,14 @@ public class GamePanel extends JPanel {
         for (Tower2 tower2 : towers2) {
             tower2.draw(g, CHUNK_SIZE);
         }
-        for (Tower3 tower3 : tower3) {
+        for (Tower3 tower3 : towers3) {
             tower3.draw(g, CHUNK_SIZE);
+        }
+        for (Tower4 tower4 : towers4) {
+            tower4.draw(g, CHUNK_SIZE);
+        }
+        for (Tower5 tower5 : towers5) {
+            tower5.draw(g, CHUNK_SIZE);
         }
 
 
