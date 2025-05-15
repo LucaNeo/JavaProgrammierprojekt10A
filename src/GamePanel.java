@@ -34,7 +34,6 @@ public class GamePanel extends JPanel {
     final List<Tower3> towers3 = new ArrayList<>();
     final List<Tower4> towers4 = new ArrayList<>();
     final List<Tower5> towers5 = new ArrayList<>();
-    private Graphics graphic;
 
     private final List<Enemy> enemies = new ArrayList<>();
     private Timer gameLoop; // aktive runde ?
@@ -84,10 +83,6 @@ public class GamePanel extends JPanel {
     private void initGrid() {
         placeable = new boolean[cols][rows];
         isPathway = new boolean[cols][rows];
-        Image grassIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/grass.png"))).getImage();
-        Image pathIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pathway.png"))).getImage();
-        Graphics2D g = (Graphics2D) parentFrame.getContentPane().getGraphics();
-
         for (int x = 0; x < cols; x++) {
             for (int y = 0; y < rows; y++) {
                 placeable[x][y] = true;
@@ -128,16 +123,6 @@ public class GamePanel extends JPanel {
         for (int y = 10; y < 15; y++) {
             placeable[4][y] = false;
             isPathway[4][y] = true;
-        }
-        // final image assignment
-        for (int x = 0; x < cols; x++) {
-            for (int y = 0; y < rows; y++) {
-                if (isPathway[x][y]) {
-                    g.drawImage(pathIcon, x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
-                } else {
-                    g.drawImage(grassIcon, x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
-                }
-            }
         }
     }
 
@@ -305,6 +290,17 @@ public class GamePanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Image grassImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/grass.png"))).getImage();
+        Image pathImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pathway.png"))).getImage();
+        for (int x = 0; x < cols; x++) {
+            for (int y = 0; y < rows; y++) {
+                if (isPathway[x][y]) {
+                    g.drawImage(pathImage, x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
+                } else {
+                    g.drawImage(grassImage, x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
+                }
+            }
+        }
         drawGrid(g);
         //  Türme zeichnen
         for (Tower5 tower1 : towers5) {
