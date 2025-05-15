@@ -2,6 +2,7 @@ package src;
 //Autor Jakob
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class Tower5 {
     public int x, y;
@@ -12,7 +13,7 @@ public class Tower5 {
         this.y = y;
 
         // Bild laden
-        ImageIcon icon = new ImageIcon(getClass().getResource("/src/textures/isometric-ketoon.png")); // Pfad anpassen
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-trader.png"))); // Pfad anpassen
         this.image = icon.getImage();
     }
 
@@ -21,4 +22,3 @@ public class Tower5 {
         g.drawImage(image, x * tileSize, y * tileSize, tileSize, tileSize, null);
     }
 }
-

@@ -202,7 +202,7 @@ public class GamePanel extends JPanel {
         });
 
         add(tower4Button);
-        ImageIcon originalIcon5 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-ketoon.png")));
+        ImageIcon originalIcon5 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-trader.png")));
         Image scaledImage5 = originalIcon5.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon5= new ImageIcon(scaledImage5);
         JButton tower5Button = new JButton(scaledIcon5);

@@ -58,6 +58,14 @@ public void mouseClicked(MouseEvent e) {
             gamePanel.towers3.add(new Tower3(gridX, gridY));
             gamePanel.money -= 500; // Geld abziehen
         }
+        if (gamePanel.selectedTowerType == 4 && gamePanel.money >= 60) {
+            gamePanel.towers4.add(new Tower4(gridX, gridY));
+            gamePanel.money -= 60; // Geld abziehen
+        }
+        if (gamePanel.selectedTowerType == 5 && gamePanel.money >= 400) {
+            gamePanel.towers5.add(new Tower5(gridX, gridY));
+            gamePanel.money -=400; // Geld abziehen
+        }
         gamePanel.placeable[gridY][gridX] = false;  // Feld als belegt markieren
         gamePanel.placingTower = false; // Platzierungsmodus beenden
         gamePanel.selectedTowerType = 0;
