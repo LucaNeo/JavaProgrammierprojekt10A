@@ -21,11 +21,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class GamePanel extends JPanel {
-    final int CHUNK_SIZE = 50   ;
+    final int CHUNK_SIZE = 50;
     final int rows = 15;
     final int cols = 15;
 
     public boolean[][] placeable;
+    public boolean[][] isPathway;
     public boolean placingTower = false;  // Ist Platzierungsmodus aktiv?
     private final boolean gridEditorMode = false;
     final List<Tower1> towers1 = new ArrayList<>();
@@ -33,6 +34,7 @@ public class GamePanel extends JPanel {
     final List<Tower3> towers3 = new ArrayList<>();
     final List<Tower4> towers4 = new ArrayList<>();
     final List<Tower5> towers5 = new ArrayList<>();
+    private Graphics graphic;
 
     private final List<Enemy> enemies = new ArrayList<>();
     private Timer gameLoop; // aktive runde ?
@@ -70,11 +72,71 @@ public class GamePanel extends JPanel {
         }
     }
 
-    public void initGrid() {
-        placeable = new boolean[rows][cols];
-        for (int y = 0; y < rows; y++) {
-            for (int x = 0; x < cols; x++) {
-                placeable[y][x] = (y % 2 == 0); // Zeilenweise
+    // public void initGrid() {
+    //    placeable = new boolean[rows][cols];
+    //    for (int y = 0; y < rows; y++) {
+    //        for (int x = 0; x < cols; x++) {
+    //            placeable[y][x] = (y % 2 == 0); // Zeilenweise
+    //        }
+    //    }
+    //}
+
+    private void initGrid() {
+        placeable = new boolean[cols][rows];
+        isPathway = new boolean[cols][rows];
+        Image grassIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/grass.png"))).getImage();
+        Image pathIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pathway.png"))).getImage();
+        Graphics2D g = (Graphics2D) parentFrame.getContentPane().getGraphics();
+
+        for (int x = 0; x < cols; x++) {
+            for (int y = 0; y < rows; y++) {
+                placeable[x][y] = true;
+                isPathway[x][y] = false;
+            }
+        }
+        // col 2 nach unten
+        for (int y = 0; y < 8; y++) {
+            placeable[2][y] = false;
+            isPathway[2][y] = true;
+        }
+        // row 7 nach rechts
+        for (int x = 3; x < 7; x++) {
+            placeable[x][7] = false;
+            isPathway[x][7] = true;
+        }
+        // col 6 nach oben
+        for (int y = 7; y > 3; y--) {
+            placeable[6][y] = false;
+            isPathway[6][y] = true;
+        }
+        // row 4 nach rechts
+        for (int x = 6; x < 11; x++) {
+            placeable[x][4] = false;
+            isPathway[x][4] = true;
+        }
+        // col 10 nach unten
+        for (int y = 4; y < 11; y++) {
+            placeable[10][y] = false;
+            isPathway[10][y] = true;
+        }
+        // row 10 nach links
+        for (int x = 10; x > 3; x--) {
+            placeable[x][10] = false;
+            isPathway[x][10] = true;
+        }
+        // col 4 nach unten
+        for (int y = 10; y < 15; y++) {
+            placeable[4][y] = false;
+            isPathway[4][y] = true;
+        }
+        // final image assignment
+        for (int x = 0; x < cols; x++) {
+            for (int y = 0; y < rows; y++) {
+                if (isPathway[x][y]) {
+                    g.drawImage(pathIcon, x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
+                } else {
+                    g.drawImage(grassIcon, x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
+                }
             }
         }
     }
@@ -261,7 +323,6 @@ public class GamePanel extends JPanel {
             tower5.draw(g, CHUNK_SIZE);
         }
 
-
         // Gegner zeichnen (falls vorhanden)
         for (Enemy enemy : enemies) {
             enemy.draw(g);
@@ -270,20 +331,22 @@ public class GamePanel extends JPanel {
     }
 
     private void drawGrid(Graphics g) { //teilt map in chunks
-      if (placingTower){
-      g.setColor( new Color(100,100,100,50));// a= transparenz
+        Image placementImage;
+        ImageIcon placementIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isPlaceable.png")));
+        placementImage = placementIcon.getImage();
+        if (placingTower) {
         } else {
-          return;
-      }
-      for (int y = 0; y < cols; y++) {
-         for (int x = 0; x < rows; x++) {
-        if (placeable[y][x]) {
-            g.fillRect(x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE);
+            return;
+        }
+        for (int x = 0; x < cols; x++) {
+            for (int y = 0; y < rows; y++) {
+                if (placeable[x][y]) {
+                    g.drawImage(placementImage, x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
+                }
+            }
         }
     }
-}
-
-    } // TODO Maybe shop hinzufügen
+    // TODO Maybe shop hinzufügen
     private void drawHUD(Graphics g, Graphics g2) { // HP und Geld anzeige
         g.setColor(Color.ORANGE);
         g.setFont(new Font("Arial", Font.BOLD, 20));
