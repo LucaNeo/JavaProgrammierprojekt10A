@@ -200,6 +200,7 @@ public class GamePanel extends JPanel {
             selectedTowerType = 4;
             repaint();
         });
+
         add(tower4Button);
         ImageIcon originalIcon5 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-ketoon.png")));
         Image scaledImage5 = originalIcon5.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
@@ -252,6 +253,12 @@ public class GamePanel extends JPanel {
         }
         for (Tower3 tower3 : towers3) {
             tower3.draw(g, CHUNK_SIZE);
+        }
+        for (Tower4 tower4 : towers4) {
+            tower4.draw(g, CHUNK_SIZE);
+        }
+        for (Tower5 tower5 : towers5) {
+            tower5.draw(g, CHUNK_SIZE);
         }
 
 
