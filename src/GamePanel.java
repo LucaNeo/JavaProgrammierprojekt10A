@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class GamePanel extends JPanel {
-    final int CHUNK_SIZE = 50;
+    final int CHUNK_SIZE = 72;
     final int rows = 15;
     final int cols = 15;
 
@@ -37,7 +37,7 @@ public class GamePanel extends JPanel {
 
     private final List<Enemy> enemies = new ArrayList<>();
     private Timer gameLoop; // aktive runde ?
-    int money = 10000; // StartGeld
+    int money = 1000; // StartGeld
     int health = 100; //hp
     int selectedTowerType = 0;     // 1 = Tower1, 2 = Tower2 etc.
 
@@ -303,7 +303,7 @@ public class GamePanel extends JPanel {
         }
         drawGrid(g);
         //  Türme zeichnen
-        for (Tower5 tower1 : towers5) {
+        for (Tower1 tower1 : towers1) {
             tower1.draw(g, CHUNK_SIZE);
         }
         for (Tower2 tower2 : towers2) {
@@ -330,10 +330,7 @@ public class GamePanel extends JPanel {
         Image placementImage;
         ImageIcon placementIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isPlaceable.png")));
         placementImage = placementIcon.getImage();
-        if (placingTower) {
-        } else {
-            return;
-        }
+
         for (int x = 0; x < cols; x++) {
             for (int y = 0; y < rows; y++) {
                 if (placeable[x][y]) {
