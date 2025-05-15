@@ -330,7 +330,10 @@ public class GamePanel extends JPanel {
         Image placementImage;
         ImageIcon placementIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isPlaceable.png")));
         placementImage = placementIcon.getImage();
-
+        if (placingTower) {
+        } else {
+            return;
+        }
         for (int x = 0; x < cols; x++) {
             for (int y = 0; y < rows; y++) {
                 if (placeable[x][y]) {
