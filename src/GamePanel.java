@@ -27,10 +27,10 @@ public class GamePanel extends JPanel {
 
     public boolean[][] placeable;
     public boolean placingTower = false;  // Ist Platzierungsmodus aktiv?
-    private boolean gridEditorMode = false;
+    private final boolean gridEditorMode = false;
     final List<Tower1> towers1 = new ArrayList<>();
     final List<Tower2> towers2 = new ArrayList<>();
-    final List<Tower3> tower3= new ArrayList<>();
+    final List<Tower3> towers3= new ArrayList<>();
     final List<Tower4> towers4 = new ArrayList<>();
     final List<Tower5> towers5 = new ArrayList<>();
 
@@ -250,7 +250,7 @@ public class GamePanel extends JPanel {
         for (Tower2 tower2 : towers2) {
             tower2.draw(g, CHUNK_SIZE);
         }
-        for (Tower3 tower3 : tower3) {
+        for (Tower3 tower3 : towers3) {
             tower3.draw(g, CHUNK_SIZE);
         }
 
