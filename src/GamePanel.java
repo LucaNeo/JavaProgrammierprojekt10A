@@ -30,13 +30,13 @@ public class GamePanel extends JPanel {
     private final boolean gridEditorMode = false;
     final List<Tower1> towers1 = new ArrayList<>();
     final List<Tower2> towers2 = new ArrayList<>();
-    final List<Tower3> towers3= new ArrayList<>();
+    final List<Tower3> towers3 = new ArrayList<>();
     final List<Tower4> towers4 = new ArrayList<>();
     final List<Tower5> towers5 = new ArrayList<>();
 
     private final List<Enemy> enemies = new ArrayList<>();
     private Timer gameLoop; // aktive runde ?
-    int money = 1000; // StartGeld
+    int money = 10000; // StartGeld
     int health = 100; //hp
     int selectedTowerType = 0;     // 1 = Tower1, 2 = Tower2 etc.
 
@@ -166,10 +166,10 @@ public class GamePanel extends JPanel {
         });
         add(tower1Button);
 
-        ImageIcon originalIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-ketoon.png")));
-        Image scaledImage = originalIcon.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-        JButton tower2Button = new JButton(scaledIcon);;
+        ImageIcon originalIcon2 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-ketoon.png")));
+        Image scaledImage2 = originalIcon2.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon2 = new ImageIcon(scaledImage2);
+        JButton tower2Button = new JButton(scaledIcon2);
         tower2Button.setBounds(returnButton.getWidth()+170, parentFrame.getHeight() -100, 64, 64);
         tower2Button.addActionListener(e -> {
             placingTower = true;
@@ -245,8 +245,8 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         drawGrid(g);
         //  Türme zeichnen
-        for (Tower5 tower : towers5) {
-            tower.draw(g, CHUNK_SIZE);
+        for (Tower5 tower1 : towers5) {
+            tower1.draw(g, CHUNK_SIZE);
         }
         for (Tower2 tower2 : towers2) {
             tower2.draw(g, CHUNK_SIZE);
