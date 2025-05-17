@@ -71,15 +71,6 @@ public class GamePanel extends JPanel {
         }
     }
 
-    // public void initGrid() {
-    //    placeable = new boolean[rows][cols];
-    //    for (int y = 0; y < rows; y++) {
-    //        for (int x = 0; x < cols; x++) {
-    //            placeable[y][x] = (y % 2 == 0); // Zeilenweise
-    //        }
-    //    }
-    //}
-
     private void initGrid() {
         placeable = new boolean[cols][rows];
         isPathway = new boolean[cols][rows];
@@ -282,7 +273,6 @@ public class GamePanel extends JPanel {
         });
         add(loadButton);
 
-
         addMouseListener(new Placement(this));
 
     }
@@ -327,9 +317,9 @@ public class GamePanel extends JPanel {
     }
 
     private void drawGrid(Graphics g) { //teilt map in chunks
-        Image placementImage;
-        ImageIcon placementIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isPlaceable.png")));
-        placementImage = placementIcon.getImage();
+        Image placementImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isPlaceable.png"))).getImage();
+        Image nonPlaceableImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isNotPlaceable.png"))).getImage();
+
         if (placingTower) {
         } else {
             return;
@@ -338,6 +328,9 @@ public class GamePanel extends JPanel {
             for (int y = 0; y < rows; y++) {
                 if (placeable[x][y]) {
                     g.drawImage(placementImage, x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
+                }
+                if (!placeable[x][y]) {
+                    g.drawImage(nonPlaceableImage, x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
                 }
             }
         }
@@ -396,9 +389,4 @@ public class GamePanel extends JPanel {
             return null;
         }
     }
-
-
-
-
-
 }
