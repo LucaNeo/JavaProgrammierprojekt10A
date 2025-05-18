@@ -8,7 +8,8 @@ public class Tower1 {
     public int x, y;
     public Image image;
 
-    public Tower1(int x, int y) {
+    public Tower1
+            (int x, int y) {
         this.x = x;
         this.y = y;
 

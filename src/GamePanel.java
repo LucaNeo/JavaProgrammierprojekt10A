@@ -252,26 +252,26 @@ public class GamePanel extends JPanel {
         });
         add(tower5Button);
 
-        // Save Grid Button
-        JButton saveButton = new JButton("Save Grid");
-        saveButton.setBounds(390, 10, 120, 30);
-        saveButton.addActionListener(e -> {
-            JFileChooser chooser = new JFileChooser();
-            if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-               // saveGridToFile(chooser.getSelectedFile());
-            }
-        });
-        add(saveButton);
-        // load Grid Button
-        JButton loadButton = new JButton("Load Grid");
-        loadButton.setBounds(500, 10, 120, 30);
-        loadButton.addActionListener(e -> {
-            JFileChooser chooser = new JFileChooser();
-            if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-              //  loadGridFromFile(chooser.getSelectedFile());
-            }
-        });
-        add(loadButton);
+//        // Save Grid Button
+//        JButton saveButton = new JButton("Save Grid");
+//        saveButton.setBounds(390, 10, 120, 30);
+//        saveButton.addActionListener(e -> {
+//            JFileChooser chooser = new JFileChooser();
+//            if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+//               // saveGridToFile(chooser.getSelectedFile());
+//            }
+//        });
+//        add(saveButton);
+//        // load Grid Button
+//        JButton loadButton = new JButton("Load Grid");
+//        loadButton.setBounds(500, 10, 120, 30);
+//        loadButton.addActionListener(e -> {
+//            JFileChooser chooser = new JFileChooser();
+//            if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+//              //  loadGridFromFile(chooser.getSelectedFile());
+//            }
+//        });
+//        add(loadButton);
 
         addMouseListener(new Placement(this));
 
