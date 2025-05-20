@@ -35,7 +35,7 @@ public class GamePanel extends JPanel {
     final List<Tower4> towers4 = new ArrayList<>();
     final List<Tower5> towers5 = new ArrayList<>();
 
-    private final List<Enemy> enemies = new ArrayList<>();
+    private final List<Enemy1> enemies = new ArrayList<>();
     private Timer gameLoop; // aktive runde ?
     int money = 1000; // StartGeld
     int health = 100; //hp
@@ -49,12 +49,7 @@ public class GamePanel extends JPanel {
         setUI();
         startGameLoop();
         setFocusable(true); // Shortcuts möglich machen (Press Key Event)
-    }
-
-    public GamePanel() {
-        initGrid();
-        setUI();
-        startGameLoop();
+        createEnemies();
     }
 
     private void startGameLoop() {
@@ -66,7 +61,7 @@ public class GamePanel extends JPanel {
     }
 
     private void updateGame() {
-        for (Enemy e : enemies) {
+        for (Enemy1 e : enemies) {
             e.move(); // Einfache Bewegungen der Gegner
         }
     }
@@ -138,34 +133,13 @@ public class GamePanel extends JPanel {
         returnButton.setBackground(new Color(30, 30, 40));
         buttonPanel.add(returnButton);
 
-//        JButton gridEditorButton = new JButton("EditGridMode");
-//        gridEditorButton.setFocusPainted(false);
-//        gridEditorButton.setForeground(Color.WHITE);
-//        gridEditorButton.setBackground(new Color(30, 30, 40));
-//        buttonPanel.add(gridEditorButton);
-//        gridEditorButton.addActionListener(e -> {
-//            gridEditorMode = !gridEditorMode;
-//            if (gridEditorMode) {
-//                parentFrame.setContentPane(new GridEditorPanel());
-//                parentFrame.revalidate();
-//                parentFrame.repaint();
-//            }
-//        });
 
 
 
 
 
 
-//        // zurück Button
-//        setLayout(null);
-//        JButton backButton = new JButton("← Menu");
-//        backButton.setBounds(10, 10, 100, 30);
-//        backButton.addActionListener(e -> returnToMenu());
-//        add(backButton);
-//
-//        JButton gridEditorButton = new JButton("Edit Grid");
-//        gridEditorButton.setBounds(150, 10, 100, 30);
+
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -181,12 +155,6 @@ public class GamePanel extends JPanel {
                 }
             }
         });
-
-//        gridEditorButton.addActionListener(e -> {
-//            gridEditorMode = !gridEditorMode;
-//            gridEditorButton.setText(gridEditorMode ? "Play Mode" : "Edit Grid");
-//        });
-//        add(gridEditorButton);
 
 
 
@@ -251,28 +219,6 @@ public class GamePanel extends JPanel {
             repaint();
         });
         add(tower5Button);
-
-//        // Save Grid Button
-//        JButton saveButton = new JButton("Save Grid");
-//        saveButton.setBounds(390, 10, 120, 30);
-//        saveButton.addActionListener(e -> {
-//            JFileChooser chooser = new JFileChooser();
-//            if (chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-//               // saveGridToFile(chooser.getSelectedFile());
-//            }
-//        });
-//        add(saveButton);
-//        // load Grid Button
-//        JButton loadButton = new JButton("Load Grid");
-//        loadButton.setBounds(500, 10, 120, 30);
-//        loadButton.addActionListener(e -> {
-//            JFileChooser chooser = new JFileChooser();
-//            if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-//              //  loadGridFromFile(chooser.getSelectedFile());
-//            }
-//        });
-//        add(loadButton);
-
         addMouseListener(new Placement(this));
 
     }
@@ -310,9 +256,7 @@ public class GamePanel extends JPanel {
         }
 
         // Gegner zeichnen (falls vorhanden)
-        for (Enemy enemy : enemies) {
-            enemy.draw(g);
-        }
+
         drawHUD(g,g);
     }
 
@@ -347,46 +291,14 @@ public class GamePanel extends JPanel {
       //  g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
     }
-    // TODO files sollen im Projekt gespeichrt werden und nicht im Explorer
-    public static boolean saveGrid(int[][] grid, String filename) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
 
-            // Schreibe Grid-Inhalt
-            for (int[] row : grid) {
-                for (int cell : row) {
-                    writer.write(cell + " ");
-                }
-                writer.newLine();
-            }
-            return true;
-        } catch (IOException e) {
-            System.err.println("Fehler beim Speichern des Grids: " + e.getMessage());
-            return false;
+    private void createEnemies(){
+        for (Enemy1 enemy : enemies) {
+            enemy.x = 2;
+            enemy.y = 0;
+            enemy.draw(CHUNK_SIZE);//g, CHUNK_SIZE);
         }
-    }
-    // TODO files sollen im Projekt geladen werden und nicht im Explorer
-
-    public static int[][] loadGrid(String filename) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            // Lese Dimensionen
-            String[] dimensions = reader.readLine().split(" ");
-            int rows = Integer.parseInt(dimensions[0]);
-            int cols = Integer.parseInt(dimensions[1]);
-
-            // Erstelle Grid
-            int[][] grid = new int[rows][cols];
-
-            // Fülle Grid
-            for (int i = 0; i < rows; i++) {
-                String[] values = reader.readLine().trim().split(" ");
-                for (int j = 0; j < cols; j++) {
-                    grid[i][j] = Integer.parseInt(values[j]);
-                }
-            }
-            return grid;
-        } catch (IOException | NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            System.err.println("Fehler beim Laden des Grids: " + e.getMessage());
-            return null;
-        }
+        Enemy1 a = new Enemy1(2,0);
+        enemies.add(a);
     }
 }
