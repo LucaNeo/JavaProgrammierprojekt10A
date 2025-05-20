@@ -256,7 +256,11 @@ public class GamePanel extends JPanel {
         }
 
         // Gegner zeichnen (falls vorhanden)
-
+        for (Enemy1 enemy : enemies) {
+            enemy.x = 2;
+            enemy.y = 0;
+            enemy.draw(g, CHUNK_SIZE);
+        }
         drawHUD(g,g);
     }
 
@@ -292,12 +296,7 @@ public class GamePanel extends JPanel {
 
     }
 
-    private void createEnemies(){
-        for (Enemy1 enemy : enemies) {
-            enemy.x = 2;
-            enemy.y = 0;
-            enemy.draw(CHUNK_SIZE);//g, CHUNK_SIZE);
-        }
+    private void createEnemies(){ //Test Enemy
         Enemy1 a = new Enemy1(2,0);
         enemies.add(a);
     }

@@ -23,8 +23,8 @@ public class Enemy1 {
 
     }
 
-    public void draw(int CHUNK_SIZE) {
-        Graphics2D g = (Graphics2D) image.getGraphics();
+    public void draw(Graphics g ,int CHUNK_SIZE) {
+       // Graphics2D g = (Graphics2D) image.getGraphics();
         g.drawImage(image, x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
     }
 }
