@@ -2,6 +2,7 @@ package src;
 //Autor Jakob
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class Tower4 {
     public int x, y;
@@ -12,13 +13,13 @@ public class Tower4 {
         this.y = y;
 
         // Bild laden
-        ImageIcon icon = new ImageIcon(getClass().getResource("/src/textures/isometric-guard.png")); // Pfad anpassen
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-archer.png"))); // Pfad anpassen
         this.image = icon.getImage();
     }
 
 
-    public void draw(Graphics g, int tileSize) {
-        g.drawImage(image, x * tileSize, y * tileSize, tileSize, tileSize, null);
+    public void draw(Graphics g, int CHUNK_SIZE) {
+        g.drawImage(image, x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
     }
 }
 
