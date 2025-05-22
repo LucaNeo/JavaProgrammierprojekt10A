@@ -1,12 +1,6 @@
 package src;
-// Autor Jakob
-// TODO (drop down) menü für Maps + Vorschau
-// TODO chunk system überarbeiten
+// Autor Jakob/Luca
 // TODO Settings verbessern
-// TODO Bild auschneiden für Tower
-// TODO Auto speichern
-// TODO Grid umbennen und löschen
-// TODO  mehrarten von Chunks wasser,weg,plazierbar,unnutzbar
 // TODO shortcuts,Undo/Redo
 // TODO Autostart button
 
