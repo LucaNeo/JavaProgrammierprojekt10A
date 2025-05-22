@@ -32,9 +32,9 @@ public class Pathfinding extends JPanel implements Runnable {
     @Override
     public void run() {
     e1.x += speed/100;
-    if (gamePanel.isPathway[e1.getX()][e1.getY()] = true;){
+    if (gamePanel.isPathway[e1.getX()][e1.getY()] = true){
 
-        }else
+        }
 
     }
 }

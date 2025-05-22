@@ -7,15 +7,6 @@ import java.util.Objects;
 
 public class Enemy1 {
     public int x, y;
-
-    public int getY() {
-        return y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
     public int health = 100;
     public Image image;
 
@@ -26,6 +17,14 @@ public class Enemy1 {
         // Bild laden
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-midlander.png"))); // Pfad anpassen
         this.image = icon.getImage();
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getX() {
+        return x;
     }
 
     public void move() {
