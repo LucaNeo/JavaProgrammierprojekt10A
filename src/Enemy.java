@@ -20,7 +20,7 @@ public abstract class Enemy {
     }
 
     public void move() {
-        if (currentPathIndex < path.size()) return;
+        if (currentPathIndex >= path.size()) return; //ckeck if path is finished
 
         int[] currentPath = path.get(currentPathIndex);
         if (x == currentPath[0] && y == currentPath[1]) {
