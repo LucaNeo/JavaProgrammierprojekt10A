@@ -28,12 +28,12 @@ public abstract class Enemy {
             return; // cancel Loop
         }
     else {//TODO: pathfinding von Ckeckpoint zu Checkpoint
-        int dx = currentPath[0] - x;
-        int dy = currentPath[1] - y;
-        if (dx > 0) x++;
-        else if (dx < 0) x--;
-        if (dy > 0) y++;
-        else if (dy < 0) y--;
+//        int dx = currentPath[0] - x;
+//        int dy = currentPath[1] - y;
+//        if (dx > 0) x++;
+//        else if (dx < 0) x--;
+//        if (dy > 0) y++;
+//        else if (dy < 0) += speed;
     }
     }
 
