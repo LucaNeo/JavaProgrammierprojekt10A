@@ -5,18 +5,20 @@ import java.util.List;
 
 
 public abstract class Enemy {
-    public final int x, y;
-    private final int speed ;
-    private final List<int[]> path;
-    private int currentPathIndex = 0;
-    private final Image image;
+    protected int x, y;
+    protected int speed ;
+    protected int currentPathIndex = 0;
+    protected int health;
+    protected int reward;
+    protected List<int[]> path;
+    protected Image image;
 
-    public Enemy(int x, int y, int speed, List<int[]> path, Image image) {
-        this.x = x;
-        this.y = y;
-        this.speed = speed;
+    public Enemy(int startX, int startY, List<int[]> path){
+
+        this.x = startX;
+        this.y = startY;
         this.path = path;
-        this.image = image;
+
     }
 
     public void move() {
@@ -40,4 +42,16 @@ public abstract class Enemy {
     public void draw(Graphics g,int CHUNK_SIZE) {
     g.drawImage(image, x*CHUNK_SIZE, y*CHUNK_SIZE, CHUNK_SIZE,CHUNK_SIZE,null);
     }
+    public boolean hasReachEnd(){
+        return currentPathIndex >= path.size();
+    }
+    public void takeDamage(int damage){
+        health -= damage;
+
+    }
+    public boolean isAlive(){
+        return health > 0;
+    }
+    public abstract int getMaxHealth();
+    public abstract int getReward();
 }

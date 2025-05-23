@@ -22,7 +22,7 @@ public class GamePanel extends JPanel {
     public boolean[][] placeable;
     public boolean[][] isPathway;
     public boolean placingTower = false;  // Ist Platzierungsmodus aktiv?
-    private final boolean gridEditorMode = false;
+   // private final boolean gridEditorMode = false;
     final List<Tower1> towers1 = new ArrayList<>();
     final List<Tower2> towers2 = new ArrayList<>();
     final List<Tower3> towers3 = new ArrayList<>();
@@ -57,7 +57,16 @@ public class GamePanel extends JPanel {
     private void updateGame() {
         for (Enemy1 e : enemies) {
             e.move(); // Einfache Bewegungen der Gegner
+            if (e.hasReachEnd()){
+                health -= e.health;
+                enemies.remove(e);
+                break;
+            }
         }
+    }
+
+    private void spawnEnemies() {
+      //  enemies.add(new Enemy1())
     }
 
     private void initGrid() {
@@ -135,20 +144,20 @@ public class GamePanel extends JPanel {
 
 
 
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                if (gridEditorMode) {
-                    int x = e.getX() / CHUNK_SIZE;
-                    int y = e.getY() / CHUNK_SIZE;
-
-                    if (x >= 0 && x < cols && y >= 0 && y < rows) {
-                        placeable[y][x] = !placeable[y][x]; // toggle
-                        repaint();
-                    }
-                }
-            }
-        });
+//        addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mousePressed(MouseEvent e) {
+//                if (gridEditorMode) {
+//                    int x = e.getX() / CHUNK_SIZE;
+//                    int y = e.getY() / CHUNK_SIZE;
+//
+//                    if (x >= 0 && x < cols && y >= 0 && y < rows) {
+//                        placeable[y][x] = !placeable[y][x]; // toggle
+//                        repaint();
+//                    }
+//                }
+//            }
+//        });
 
 
 
@@ -291,7 +300,7 @@ public class GamePanel extends JPanel {
     }
 
     private void createEnemies(){ //Test Enemy
-        Enemy1 a = new Enemy1(2,0);
+        Enemy1 a = new Enemy1(2,0,null);
         enemies.add(a);
     }
 }

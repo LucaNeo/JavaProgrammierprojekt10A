@@ -14,12 +14,12 @@ public class Pathfinding extends JPanel implements Runnable {
     public int speed = 100;
 
     public Pathfinding() {
-        e1 = new Enemy1(2, 0);
+        e1 = new Enemy1(2, 0,null);
         this.e1 = e1;
     }
 
     private void createEnemies(Enemy1 a){ //Test Enemy
-         a = new Enemy1(2,0);
+         a = new Enemy1(2,0,null);
         enemies.add(a);
     }
 
