@@ -7,12 +7,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class Enemy1 extends Enemy{
-    public int x, y;
+    public double x, y;
     public int health = 100;
     public Image image;
 
-    public Enemy1(int x, int y)
-    {   super(x,y);
+    public Enemy1(double x, double y) {   super(x,y);
         this.x = x;
         this.y = y;
 
@@ -21,21 +20,16 @@ public class Enemy1 extends Enemy{
         this.image = icon.getImage();
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public void move() {
-
-    }
-
-    public void draw(Graphics g ,int CHUNK_SIZE) {
-       // Graphics2D g = (Graphics2D) image.getGraphics();
-        g.drawImage(image, x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
+    public void draw(Graphics g, int CHUNK_SIZE) {
+        g.drawImage(image, (int) Math.round(x * CHUNK_SIZE), (int) Math.round(y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
     }
 
     @Override

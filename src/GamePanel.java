@@ -264,12 +264,6 @@ public class GamePanel extends JPanel {
         pathFinding.paint(g);
         pathFinding.run();
 
-        // Gegner zeichnen (falls vorhanden)
-        for (Enemy1 enemy : enemies) {
-            enemy.x = 2;
-            enemy.y = 0;
-            enemy.draw(g, CHUNK_SIZE);
-        }
         drawHUD(g,g);
     }
 

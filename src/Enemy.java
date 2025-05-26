@@ -5,7 +5,7 @@ import java.util.List;
 
 
 public abstract class Enemy {
-    protected int x, y;
+    protected double x, y;
     protected int speed ;
     protected int currentPathIndex = 0;
     protected int health;
@@ -13,7 +13,7 @@ public abstract class Enemy {
     protected List<int[]> path;
     protected Image image;
 
-    public Enemy(int startX, int startY){
+    public Enemy(double startX, double startY){
 
         this.x = startX;
         this.y = startY;
@@ -37,8 +37,8 @@ public abstract class Enemy {
     }
     }
 
-    public void draw(Graphics g,int CHUNK_SIZE) {
-    g.drawImage(image, x*CHUNK_SIZE, y*CHUNK_SIZE, CHUNK_SIZE,CHUNK_SIZE,null);
+    public void draw(Graphics g, int CHUNK_SIZE) {
+        g.drawImage(image, (int) Math.round(x * CHUNK_SIZE), (int) Math.round(y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
     }
     public boolean hasReachEnd(){
         return currentPathIndex >= path.size();
