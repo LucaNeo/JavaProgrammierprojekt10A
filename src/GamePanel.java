@@ -59,7 +59,6 @@ public class GamePanel extends JPanel {
 
     private void updateGame() {
         for (Enemy1 e : enemies) {
-            e.move(); // Einfache Bewegungen der Gegner
             if (e.hasReachEnd()){
                 health -= e.health;
                 enemies.remove(e);
