@@ -13,12 +13,10 @@ public abstract class Enemy {
     protected List<int[]> path;
     protected Image image;
 
-    public Enemy(int startX, int startY, List<int[]> path){
+    public Enemy(int startX, int startY){
 
         this.x = startX;
         this.y = startY;
-        this.path = path;
-
     }
 
     public void move() {

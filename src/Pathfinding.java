@@ -10,31 +10,28 @@ public class Pathfinding extends JPanel implements Runnable {
     private final List<Enemy1> enemies = new ArrayList<>();
     private final int CHUNK_SIZE = 72;
     GamePanel gamePanel;
-    Enemy1 e1;
+    private Enemy1 e1;
     public int speed = 100;
 
     public Pathfinding() {
-        e1 = new Enemy1(2, 0,null);
-        this.e1 = e1;
     }
 
-    private void createEnemies(Enemy1 a){ //Test Enemy
-         a = new Enemy1(2,0,null);
+    public void createEnemies(Enemy1 a){ //Test Enemy
+         a = new Enemy1(2,0);
         enemies.add(a);
+        this.e1 = a;
+        System.out.println("Created Enemies");
     }
 
-    @Override
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        e1.draw(g,CHUNK_SIZE);
+    public void paint(Graphics g){
+        e1.draw(g, CHUNK_SIZE);
     }
 
     @Override
     public void run() {
-    e1.x += speed/100;
-    if (gamePanel.isPathway[e1.getX()][e1.getY()] = true){
-
+        if (e1.x == 2 && e1.y < 7){
+            e1.y += speed/100;
+            System.out.println("funzt");
         }
-
     }
 }

@@ -28,6 +28,7 @@ public class GamePanel extends JPanel {
     final List<Tower3> towers3 = new ArrayList<>();
     final List<Tower4> towers4 = new ArrayList<>();
     final List<Tower5> towers5 = new ArrayList<>();
+    private Enemy1 e1 = new Enemy1(2 * CHUNK_SIZE, 0);
 
     private final List<Enemy1> enemies = new ArrayList<>();
     private Timer gameLoop; // aktive runde ?
@@ -36,6 +37,7 @@ public class GamePanel extends JPanel {
     int selectedTowerType = 0;     // 1 = Tower1, 2 = Tower2 etc.
 
     private JFrame parentFrame;
+    private Pathfinding pathFinding;
 
     public GamePanel(JFrame frame) {
         this.parentFrame = frame;
@@ -43,7 +45,8 @@ public class GamePanel extends JPanel {
         setUI();
         startGameLoop();
         setFocusable(true); // Shortcuts möglich machen (Press Key Event)
-        createEnemies();
+        pathFinding = new Pathfinding();
+        pathFinding.createEnemies(e1);
     }
 
     private void startGameLoop() {
@@ -258,6 +261,9 @@ public class GamePanel extends JPanel {
             tower5.draw(g, CHUNK_SIZE);
         }
 
+        pathFinding.paint(g);
+        pathFinding.run();
+
         // Gegner zeichnen (falls vorhanden)
         for (Enemy1 enemy : enemies) {
             enemy.x = 2;
@@ -299,8 +305,8 @@ public class GamePanel extends JPanel {
 
     }
 
-    private void createEnemies(){ //Test Enemy
-        Enemy1 a = new Enemy1(2,0,null);
-        enemies.add(a);
-    }
+    // private void createEnemies(){ //Test Enemy
+    //    Enemy1 a = new Enemy1(2,0);
+    //    enemies.add(a);
+    // }
 }

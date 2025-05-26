@@ -11,8 +11,8 @@ public class Enemy1 extends Enemy{
     public int health = 100;
     public Image image;
 
-    public Enemy1(int x, int y, List path)
-    {   super(x,y,path);
+    public Enemy1(int x, int y)
+    {   super(x,y);
         this.x = x;
         this.y = y;
 
