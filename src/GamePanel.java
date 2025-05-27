@@ -28,17 +28,15 @@ public class GamePanel extends JPanel {
     final List<Tower3> towers3 = new ArrayList<>();
     final List<Tower4> towers4 = new ArrayList<>();
     final List<Tower5> towers5 = new ArrayList<>();
-    private Enemy1 e1 = new Enemy1(2 * CHUNK_SIZE, 0);
-    private Wave wave = new Wave();
+    public Wave wave = new Wave();
 
-    private final List<Enemy1> enemies = new ArrayList<>();
     private Timer gameLoop; // aktive runde ?
     int money = 1000; // StartGeld
     int health = 100; //hp
     int selectedTowerType = 0;     // 1 = Tower1, 2 = Tower2 etc.
 
     private JFrame parentFrame;
-    private Pathfinding pathFinding;
+    private final Pathfinding pathFinding = new Pathfinding(this);
 
     public GamePanel(JFrame frame) {
         this.parentFrame = frame;
@@ -46,8 +44,8 @@ public class GamePanel extends JPanel {
         setUI();
         startGameLoop();
         setFocusable(true); // Shortcuts möglich machen (Press Key Event)
-        pathFinding = new Pathfinding();
         wave.createWave1();
+
     }
 
     private void startGameLoop() {
@@ -59,11 +57,11 @@ public class GamePanel extends JPanel {
     }
 
     private void updateGame() {
-        for (Enemy1 e : enemies) {
-            if (e.hasReachEnd()){
-                health -= e.health;
-                enemies.remove(e);
-                break;
+        for (int i = 0; i < wave.enemy1.length; i++) {
+            if (wave.enemy1[i].x == 4 && wave.enemy1[i].y == 13){
+                health = 0;
+                wave.clearWave();
+                return;
             }
         }
     }
@@ -261,8 +259,7 @@ public class GamePanel extends JPanel {
             tower5.draw(g, CHUNK_SIZE);
         }
 
-        pathFinding.paint(g);
-        pathFinding.run();
+        pathFinding.run(g);
 
         drawHUD(g,g);
     }
@@ -300,11 +297,5 @@ public class GamePanel extends JPanel {
     }
 
     private void createWave(){
-        wave = new Wave();
     }
-
-    // private void createEnemies(){ //Test Enemy
-    //    Enemy1 a = new Enemy1(2,0);
-    //    enemies.add(a);
-    // }
 }

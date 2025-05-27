@@ -5,12 +5,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-public abstract class Enemy1 extends Enemy implements Runnable {
+public class Enemy1 extends Enemy {
     public double x, y;
     public int health = 100;
+    public double speed = 0.01;
     public Image image;
 
-    public Enemy1(double x, double y) {   super(x,y);
+    public Enemy1(double x, double y) {
+        super(x, y);
         this.x = x;
         this.y = y;
 
@@ -31,8 +33,27 @@ public abstract class Enemy1 extends Enemy implements Runnable {
         g.drawImage(image, (int) Math.round(x * CHUNK_SIZE), (int) Math.round(y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
     }
 
-    @Override
-    public void run() {
-        move();
+    public void move() {
+        if (x == 2 && y < 7){
+            y = Double.parseDouble(String.format("%.2f", y += speed).replace(',', '.'));
+        }
+        if (x < 6 && y == 7){
+            x = Double.parseDouble(String.format("%.2f", x += speed).replace(',', '.'));
+        }
+        if (x == 6 && y > 4 && y < 8){
+            y = Double.parseDouble(String.format("%.2f", y -= speed).replace(',', '.'));
+        }
+        if (x < 10 && x > 5 && y == 4){
+            x = Double.parseDouble(String.format("%.2f", x += speed).replace(',', '.'));
+        }
+        if (x == 10 && y < 10){
+            y = Double.parseDouble(String.format("%.2f", y += speed).replace(',', '.'));
+        }
+        if (x > 4 && y == 10){
+            x = Double.parseDouble(String.format("%.2f", x -= speed).replace(',', '.'));
+        }
+        if (x == 4 && y > 9 && y < 14){
+            y = Double.parseDouble(String.format("%.2f", y += speed).replace(',', '.'));
+        }
     }
 }
