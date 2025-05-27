@@ -29,6 +29,7 @@ public class GamePanel extends JPanel {
     final List<Tower4> towers4 = new ArrayList<>();
     final List<Tower5> towers5 = new ArrayList<>();
     private Enemy1 e1 = new Enemy1(2 * CHUNK_SIZE, 0);
+    private Wave wave = new Wave();
 
     private final List<Enemy1> enemies = new ArrayList<>();
     private Timer gameLoop; // aktive runde ?
@@ -46,7 +47,7 @@ public class GamePanel extends JPanel {
         startGameLoop();
         setFocusable(true); // Shortcuts möglich machen (Press Key Event)
         pathFinding = new Pathfinding();
-        pathFinding.createEnemies(e1);
+        wave.createWave1();
     }
 
     private void startGameLoop() {
@@ -296,6 +297,10 @@ public class GamePanel extends JPanel {
 
       //  g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
+    }
+
+    private void createWave(){
+        wave = new Wave();
     }
 
     // private void createEnemies(){ //Test Enemy

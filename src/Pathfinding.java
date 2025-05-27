@@ -10,6 +10,7 @@ public class Pathfinding extends JPanel {
     private final List<Enemy1> enemies = new ArrayList<>();
     private final int CHUNK_SIZE = 72;
     private GamePanel gamePanel;
+    private Wave wave;
     private Enemy1 e1;
     public double speed = 0.01;
 

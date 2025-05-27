@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-public class Enemy1 extends Enemy {
+public abstract class Enemy1 extends Enemy implements Runnable {
     public double x, y;
     public int health = 100;
     public Image image;
@@ -29,5 +29,10 @@ public class Enemy1 extends Enemy {
 
     public void draw(Graphics g, int CHUNK_SIZE) {
         g.drawImage(image, (int) Math.round(x * CHUNK_SIZE), (int) Math.round(y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
+    }
+
+    @Override
+    public void run() {
+        move();
     }
 }
