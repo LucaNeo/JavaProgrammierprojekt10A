@@ -59,11 +59,13 @@ public class GamePanel extends JPanel {
     private void updateGame() {
         boolean endWave = true;
         for (int i = 0; i < wave.enemy1.length && endWave; i++) {
-            if (wave.enemy1[i].x == 4 && wave.enemy1[i].y == 13){
-                health = 0;
-                wave.clearWave();
-                i = wave.enemy1.length;
-                endWave = false;
+            if(wave.enemy1[i] != null) {
+                if (wave.enemy1[i].x == 4 && wave.enemy1[i].y == 13) {
+                    health = 0;
+                    wave.clearWave();
+                    i = wave.enemy1.length;
+                    endWave = false;
+                }
             }
         }
     }
