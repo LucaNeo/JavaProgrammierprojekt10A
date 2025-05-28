@@ -7,9 +7,6 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +19,7 @@ public class GamePanel extends JPanel {
     public boolean[][] placeable;
     public boolean[][] isPathway;
     public boolean placingTower = false;  // Ist Platzierungsmodus aktiv?
-    public int offsetX = 200;
+    public int offsetX = 100;
    // private final boolean gridEditorMode = false;
     final List<Tower1> towers1 = new ArrayList<>();
     final List<Tower2> towers2 = new ArrayList<>();
@@ -36,7 +33,7 @@ public class GamePanel extends JPanel {
     int health = 100; //hp
     int selectedTowerType = 0;     // 1 = Tower1, 2 = Tower2 etc.
 
-    private JFrame parentFrame;
+    private final JFrame parentFrame;
     private final Pathfinding pathFinding = new Pathfinding(this);
 
     public GamePanel(JFrame frame) {
@@ -69,10 +66,6 @@ public class GamePanel extends JPanel {
                 }
             }
         }
-    }
-
-    private void spawnEnemies() {
-      //  enemies.add(new Enemy1())
     }
 
     private void initGrid() {
@@ -142,38 +135,16 @@ public class GamePanel extends JPanel {
         returnButton.setBackground(new Color(30, 30, 40));
         buttonPanel.add(returnButton);
 
-
-
-
-
-
-
-
-
-//        addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mousePressed(MouseEvent e) {
-//                if (gridEditorMode) {
-//                    int x = e.getX() / CHUNK_SIZE;
-//                    int y = e.getY() / CHUNK_SIZE;
-//
-//                    if (x >= 0 && x < cols && y >= 0 && y < rows) {
-//                        placeable[y][x] = !placeable[y][x]; // toggle
-//                        repaint();
-//                    }
-//                }
-//            }
-//        });
-
-
-
-
         // Tower-Auswahl-Leiste
         ImageIcon originalIcon1 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-guard.png")));
         Image scaledImage1 = originalIcon1.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon1 = new ImageIcon(scaledImage1);
         JButton tower1Button = new JButton(scaledIcon1);
-        tower1Button.setBounds(returnButton.getWidth() + 100,  parentFrame.getHeight() - 100, 64, 64);
+        tower1Button.setBounds(returnButton.getWidth() + 100,parentFrame.getHeight() - 100, 64, 64);
+        System.out.println(returnButton.getWidth());
+        tower1Button.setOpaque(false);
+        tower1Button.setContentAreaFilled(false);
+        tower1Button.setBorderPainted(false);
         tower1Button.addActionListener(e -> {
             placingTower = true;
             selectedTowerType = 1;
@@ -186,6 +157,9 @@ public class GamePanel extends JPanel {
         ImageIcon scaledIcon2 = new ImageIcon(scaledImage2);
         JButton tower2Button = new JButton(scaledIcon2);
         tower2Button.setBounds(returnButton.getWidth()+170, parentFrame.getHeight() -100, 64, 64);
+        tower2Button.setOpaque(false);
+        tower2Button.setContentAreaFilled(false);
+        tower2Button.setBorderPainted(false);
         tower2Button.addActionListener(e -> {
             placingTower = true;
             selectedTowerType = 2;
@@ -198,6 +172,9 @@ public class GamePanel extends JPanel {
         ImageIcon scaledIcon3 = new ImageIcon(scaledImage3);
         JButton tower3Button = new JButton(scaledIcon3);;
         tower3Button.setBounds(returnButton.getWidth()+240, parentFrame.getHeight() -100, 64, 64);
+        tower3Button.setOpaque(false);
+        tower3Button.setContentAreaFilled(false);
+        tower3Button.setBorderPainted(false);
         tower3Button.addActionListener(e -> {
             placingTower = true;
             selectedTowerType = 3;
@@ -210,26 +187,32 @@ public class GamePanel extends JPanel {
         ImageIcon scaledIcon4= new ImageIcon(scaledImage4);
         JButton tower4Button = new JButton(scaledIcon4);
         tower4Button.setBounds(returnButton.getWidth()+310, parentFrame.getHeight() -100, 64, 64);
+        tower4Button.setOpaque(false);
+        tower4Button.setContentAreaFilled(false);
+        tower4Button.setBorderPainted(false);
         tower4Button.addActionListener(e -> {
             placingTower = true;
             selectedTowerType = 4;
             repaint();
         });
-
         add(tower4Button);
+
         ImageIcon originalIcon5 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-trader.png")));
         Image scaledImage5 = originalIcon5.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon5= new ImageIcon(scaledImage5);
         JButton tower5Button = new JButton(scaledIcon5);
         tower5Button.setBounds(returnButton.getWidth()+380, parentFrame.getHeight() -100, 64, 64);
+        tower5Button.setOpaque(false);
+        tower5Button.setContentAreaFilled(false);
+        tower5Button.setBorderPainted(false);
         tower5Button.addActionListener(e -> {
             placingTower = true;
             selectedTowerType = 5;
             repaint();
         });
         add(tower5Button);
-        addMouseListener(new Placement(this));
 
+        addMouseListener(new Placement(this));
     }
 
     @Override
@@ -237,6 +220,7 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         Image grassImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/grass.png"))).getImage();
         Image pathImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pathway.png"))).getImage();
+        Image towerFrame = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/towerframe.png"))).getImage();
         for (int x = 0; x < cols; x++) {
             for (int y = 0; y < rows; y++) {
                 if (isPathway[x][y]) {
@@ -249,24 +233,26 @@ public class GamePanel extends JPanel {
         drawGrid(g);
         //  Türme zeichnen
         for (Tower1 tower1 : towers1) {
-            tower1.draw(g, CHUNK_SIZE);
+            tower1.draw(g, CHUNK_SIZE, offsetX);
         }
         for (Tower2 tower2 : towers2) {
-            tower2.draw(g, CHUNK_SIZE);
+            tower2.draw(g, CHUNK_SIZE, offsetX);
         }
         for (Tower3 tower3 : towers3) {
-            tower3.draw(g, CHUNK_SIZE);
+            tower3.draw(g, CHUNK_SIZE, offsetX);
         }
         for (Tower4 tower4 : towers4) {
-            tower4.draw(g, CHUNK_SIZE);
+            tower4.draw(g, CHUNK_SIZE, offsetX);
         }
         for (Tower5 tower5 : towers5) {
-            tower5.draw(g, CHUNK_SIZE);
+            tower5.draw(g, CHUNK_SIZE, offsetX);
         }
 
         pathFinding.run(g);
 
         drawHUD(g,g);
+        //draw ButtonBackground
+        g.drawImage(towerFrame, 19 * CHUNK_SIZE, 0,null);
     }
 
     private void drawGrid(Graphics g) { //teilt map in chunks
@@ -280,10 +266,10 @@ public class GamePanel extends JPanel {
         for (int x = 0; x < cols; x++) {
             for (int y = 0; y < rows; y++) {
                 if (placeable[x][y]) {
-                    g.drawImage(placementImage, x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
+                    g.drawImage(placementImage, x * CHUNK_SIZE + offsetX, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
                 }
                 if (!placeable[x][y]) {
-                    g.drawImage(nonPlaceableImage, x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
+                    g.drawImage(nonPlaceableImage, x * CHUNK_SIZE + offsetX, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
                 }
             }
         }
