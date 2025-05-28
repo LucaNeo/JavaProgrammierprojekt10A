@@ -10,11 +10,13 @@ public class Enemy1 extends Enemy {
     public int health = 100;
     public double speed = 0.1;
     public Image image;
+    private final GamePanel gamePanel;
 
-    public Enemy1(double x, double y) {
+    public Enemy1(double x, double y, GamePanel gamePanel) {
         super(x, y);
         this.x = x;
         this.y = y;
+        this.gamePanel = gamePanel;
 
         // Bild laden
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-midlander.png"))); // Pfad anpassen
@@ -30,7 +32,7 @@ public class Enemy1 extends Enemy {
     }
 
     public void draw(Graphics g, int CHUNK_SIZE) {
-        g.drawImage(image, (int) Math.round(x * CHUNK_SIZE), (int) Math.round(y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
+        g.drawImage(image, (int) Math.round(x * CHUNK_SIZE) + gamePanel.offsetX, (int) Math.round(y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
     }
 
     public void move() {

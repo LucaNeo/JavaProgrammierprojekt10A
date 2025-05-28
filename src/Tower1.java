@@ -8,8 +8,7 @@ public class Tower1 {
     public int x, y;
     public Image image;
 
-    public Tower1
-            (int x, int y) {
+    public Tower1(int x, int y) {
         this.x = x;
         this.y = y;
 
@@ -18,8 +17,7 @@ public class Tower1 {
         this.image = icon.getImage();
     }
 
-
-    public void draw(Graphics g, int tileSize) {
-        g.drawImage(image, x * tileSize, y * tileSize, tileSize, tileSize, null);
+    public void draw(Graphics g, int CHUNK_SIZE) {
+        g.drawImage(image, x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
     }
 }

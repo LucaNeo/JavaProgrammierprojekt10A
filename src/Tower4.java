@@ -17,7 +17,6 @@ public class Tower4 {
         this.image = icon.getImage();
     }
 
-
     public void draw(Graphics g, int CHUNK_SIZE) {
         g.drawImage(image, x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
     }

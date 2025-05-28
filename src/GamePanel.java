@@ -22,13 +22,14 @@ public class GamePanel extends JPanel {
     public boolean[][] placeable;
     public boolean[][] isPathway;
     public boolean placingTower = false;  // Ist Platzierungsmodus aktiv?
+    public int offsetX = 200;
    // private final boolean gridEditorMode = false;
     final List<Tower1> towers1 = new ArrayList<>();
     final List<Tower2> towers2 = new ArrayList<>();
     final List<Tower3> towers3 = new ArrayList<>();
     final List<Tower4> towers4 = new ArrayList<>();
     final List<Tower5> towers5 = new ArrayList<>();
-    public Wave wave = new Wave();
+    public Wave wave = new Wave(this);
 
     private Timer gameLoop; // aktive runde ?
     int money = 1000; // StartGeld
@@ -239,9 +240,9 @@ public class GamePanel extends JPanel {
         for (int x = 0; x < cols; x++) {
             for (int y = 0; y < rows; y++) {
                 if (isPathway[x][y]) {
-                    g.drawImage(pathImage, x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
+                    g.drawImage(pathImage, x * CHUNK_SIZE + offsetX, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
                 } else {
-                    g.drawImage(grassImage, x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
+                    g.drawImage(grassImage, x * CHUNK_SIZE + offsetX, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
                 }
             }
         }
