@@ -30,7 +30,7 @@ public class Enemy1 extends Enemy {
     public double getX() {
         return x;
     }
-
+ //public void reward(){if(health==0){}}
     public void draw(Graphics g, int CHUNK_SIZE) {
         g.drawImage(image, (int) Math.round(x * CHUNK_SIZE) + gamePanel.offsetX, (int) Math.round(y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
     }

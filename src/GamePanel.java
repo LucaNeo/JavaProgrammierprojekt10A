@@ -35,7 +35,7 @@ public class GamePanel extends JPanel {
 
     private final JFrame parentFrame;
     private final Pathfinding pathFinding = new Pathfinding(this);
-
+private final Shot shot= new Shot (this);
     public GamePanel(JFrame frame) {
         this.parentFrame = frame;
         initGrid();
