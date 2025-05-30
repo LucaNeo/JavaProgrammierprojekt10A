@@ -122,11 +122,21 @@ public class GamePanel extends JPanel {
     }
 
     private void setUI() {
+        setLayout(null); // Layout des GamePanel auf null setzen
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(new Color(70, 70, 90));
-        buttonPanel.setPreferredSize(new Dimension(getWidth()+50, getHeight()-100));
+        buttonPanel.setPreferredSize(new Dimension(getWidth()+50, 80)); // Bevorzugte Höhe setzen
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 25, 25));
-        add(buttonPanel,BorderLayout.SOUTH);
+
+        // Position und Größe des buttonPanel festlegen
+        int panelWidth = getWidth();
+        int panelHeight = 80;
+        int panelX = 0;
+        int panelY = getHeight() - panelHeight;
+        buttonPanel.setBounds(panelX, panelY, panelWidth, panelHeight);
+
+        add(buttonPanel); // buttonPanel zum GamePanel hinzufügen (ohne BorderLayout-Angabe)
 
         JButton returnButton = new JButton("Menu");
         returnButton.addActionListener(e -> returnToMenu());
@@ -137,11 +147,10 @@ public class GamePanel extends JPanel {
 
         // Tower-Auswahl-Leiste
         ImageIcon originalIcon1 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-guard.png")));
-        Image scaledImage1 = originalIcon1.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        Image scaledImage1 = originalIcon1.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon1 = new ImageIcon(scaledImage1);
         JButton tower1Button = new JButton(scaledIcon1);
-        tower1Button.setBounds(returnButton.getWidth() + 100,parentFrame.getHeight() - 100, 64, 64);
-        System.out.println(returnButton.getWidth());
+        tower1Button.setBounds(1380,8,70,70);
         tower1Button.setOpaque(false);
         tower1Button.setContentAreaFilled(false);
         tower1Button.setBorderPainted(false);
@@ -156,7 +165,6 @@ public class GamePanel extends JPanel {
         Image scaledImage2 = originalIcon2.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon2 = new ImageIcon(scaledImage2);
         JButton tower2Button = new JButton(scaledIcon2);
-        tower2Button.setBounds(returnButton.getWidth()+170, parentFrame.getHeight() -100, 64, 64);
         tower2Button.setOpaque(false);
         tower2Button.setContentAreaFilled(false);
         tower2Button.setBorderPainted(false);
@@ -171,7 +179,6 @@ public class GamePanel extends JPanel {
         Image scaledImage3 = originalIcon3.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon3 = new ImageIcon(scaledImage3);
         JButton tower3Button = new JButton(scaledIcon3);;
-        tower3Button.setBounds(returnButton.getWidth()+240, parentFrame.getHeight() -100, 64, 64);
         tower3Button.setOpaque(false);
         tower3Button.setContentAreaFilled(false);
         tower3Button.setBorderPainted(false);
@@ -186,7 +193,6 @@ public class GamePanel extends JPanel {
         Image scaledImage4 = originalIcon4.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon4= new ImageIcon(scaledImage4);
         JButton tower4Button = new JButton(scaledIcon4);
-        tower4Button.setBounds(returnButton.getWidth()+310, parentFrame.getHeight() -100, 64, 64);
         tower4Button.setOpaque(false);
         tower4Button.setContentAreaFilled(false);
         tower4Button.setBorderPainted(false);
@@ -201,7 +207,6 @@ public class GamePanel extends JPanel {
         Image scaledImage5 = originalIcon5.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon5= new ImageIcon(scaledImage5);
         JButton tower5Button = new JButton(scaledIcon5);
-        tower5Button.setBounds(returnButton.getWidth()+380, parentFrame.getHeight() -100, 64, 64);
         tower5Button.setOpaque(false);
         tower5Button.setContentAreaFilled(false);
         tower5Button.setBorderPainted(false);
@@ -213,6 +218,19 @@ public class GamePanel extends JPanel {
         add(tower5Button);
 
         addMouseListener(new Placement(this));
+
+        ImageIcon resetIconO = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/returnToMenu.png")));
+        Image resetIconS = resetIconO.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon reseticonS = new ImageIcon(resetIconS);
+        JButton resetsw = new JButton(reseticonS);
+        resetsw.setBounds(10, 10, 40, 40);
+        resetsw.setOpaque(false);
+        resetsw.setContentAreaFilled(false);
+        resetsw.setBorderPainted(false);
+        resetsw.addActionListener(e -> {
+            returnToMenu();
+        });
+        add(resetsw);
     }
 
     @Override
@@ -220,7 +238,7 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         Image grassImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/grass.png"))).getImage();
         Image pathImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pathway.png"))).getImage();
-        Image towerFrame = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/towerframe.png"))).getImage();
+        Image towerFrame = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/towerFrame.png"))).getImage();
         for (int x = 0; x < cols; x++) {
             for (int y = 0; y < rows; y++) {
                 if (isPathway[x][y]) {
@@ -289,4 +307,7 @@ public class GamePanel extends JPanel {
 
     private void createWave(){
     }
+
+
+
 }
