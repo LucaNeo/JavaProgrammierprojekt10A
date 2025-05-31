@@ -31,18 +31,19 @@ public class GamePanel extends JPanel {
     private Timer gameLoop; // aktive runde ?
     int money = 1000; // StartGeld
     int health = 100; //hp
-    int selectedTowerType = 0;     // 1 = Tower1, 2 = Tower2 etc.
+    int selectedTowerType = 0;    // 1 = Tower1, 2 = Tower2 etc.
+    boolean waveStarted = false;
 
     private final JFrame parentFrame;
     private final Pathfinding pathFinding = new Pathfinding(this);
-private final Shot shot= new Shot (this);
+    JButton startButton;
+
     public GamePanel(JFrame frame) {
         this.parentFrame = frame;
         initGrid();
         setUI();
         startGameLoop();
         setFocusable(true); // Shortcuts möglich machen (Press Key Event)
-        wave.createWave1();
 
     }
 
@@ -55,17 +56,20 @@ private final Shot shot= new Shot (this);
     }
 
     private void updateGame() {
-        boolean endWave = true;
-        for (int i = 0; i < wave.enemy1.length && endWave; i++) {
-            if(wave.enemy1[i] != null) {
+        for (int i = 0; i < wave.enemy1.length; i++) {
+            if (wave.enemy1[i] != null) {
                 if (wave.enemy1[i].x == 4 && wave.enemy1[i].y == 13) {
                     health = 0;
                     wave.clearWave();
+                    startButton.setEnabled(true);
                     i = wave.enemy1.length;
-                    endWave = false;
                 }
             }
         }
+    }
+
+    private void pauseGame(){
+
     }
 
     private void initGrid() {
@@ -122,11 +126,21 @@ private final Shot shot= new Shot (this);
     }
 
     private void setUI() {
+        setLayout(null); // Layout des GamePanel auf null setzen
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(new Color(70, 70, 90));
-        buttonPanel.setPreferredSize(new Dimension(getWidth()+50, getHeight()-100));
+        buttonPanel.setPreferredSize(new Dimension(getWidth()+50, 80)); // Bevorzugte Höhe setzen
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 25, 25));
-        add(buttonPanel,BorderLayout.SOUTH);
+
+        // Position und Größe des buttonPanel festlegen
+        int panelWidth = getWidth();
+        int panelHeight = 80;
+        int panelX = 0;
+        int panelY = getHeight() - panelHeight;
+        buttonPanel.setBounds(panelX, panelY, panelWidth, panelHeight);
+
+        add(buttonPanel); // buttonPanel zum GamePanel hinzufügen (ohne BorderLayout-Angabe)
 
         JButton returnButton = new JButton("Menu");
         returnButton.addActionListener(e -> returnToMenu());
@@ -140,8 +154,7 @@ private final Shot shot= new Shot (this);
         Image scaledImage1 = originalIcon1.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon1 = new ImageIcon(scaledImage1);
         JButton tower1Button = new JButton(scaledIcon1);
-        tower1Button.setBounds(returnButton.getWidth() + 100,parentFrame.getHeight() - 100, 64, 64);
-        System.out.println(returnButton.getWidth());
+        tower1Button.setBounds(1380,8,64,64);
         tower1Button.setOpaque(false);
         tower1Button.setContentAreaFilled(false);
         tower1Button.setBorderPainted(false);
@@ -156,7 +169,7 @@ private final Shot shot= new Shot (this);
         Image scaledImage2 = originalIcon2.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon2 = new ImageIcon(scaledImage2);
         JButton tower2Button = new JButton(scaledIcon2);
-        tower2Button.setBounds(returnButton.getWidth()+170, parentFrame.getHeight() -100, 64, 64);
+        tower2Button.setBounds(1464,10,64,64);
         tower2Button.setOpaque(false);
         tower2Button.setContentAreaFilled(false);
         tower2Button.setBorderPainted(false);
@@ -170,8 +183,8 @@ private final Shot shot= new Shot (this);
         ImageIcon originalIcon3 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-priest.png")));
         Image scaledImage3 = originalIcon3.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon3 = new ImageIcon(scaledImage3);
-        JButton tower3Button = new JButton(scaledIcon3);;
-        tower3Button.setBounds(returnButton.getWidth()+240, parentFrame.getHeight() -100, 64, 64);
+        JButton tower3Button = new JButton(scaledIcon3);
+        tower3Button.setBounds(1545,8,64,64);
         tower3Button.setOpaque(false);
         tower3Button.setContentAreaFilled(false);
         tower3Button.setBorderPainted(false);
@@ -186,7 +199,7 @@ private final Shot shot= new Shot (this);
         Image scaledImage4 = originalIcon4.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon4= new ImageIcon(scaledImage4);
         JButton tower4Button = new JButton(scaledIcon4);
-        tower4Button.setBounds(returnButton.getWidth()+310, parentFrame.getHeight() -100, 64, 64);
+        tower4Button.setBounds(1624,8,64,64);
         tower4Button.setOpaque(false);
         tower4Button.setContentAreaFilled(false);
         tower4Button.setBorderPainted(false);
@@ -201,7 +214,7 @@ private final Shot shot= new Shot (this);
         Image scaledImage5 = originalIcon5.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon5= new ImageIcon(scaledImage5);
         JButton tower5Button = new JButton(scaledIcon5);
-        tower5Button.setBounds(returnButton.getWidth()+380, parentFrame.getHeight() -100, 64, 64);
+        tower5Button.setBounds(1705,8,64,64);
         tower5Button.setOpaque(false);
         tower5Button.setContentAreaFilled(false);
         tower5Button.setBorderPainted(false);
@@ -213,14 +226,73 @@ private final Shot shot= new Shot (this);
         add(tower5Button);
 
         addMouseListener(new Placement(this));
+
+        ImageIcon returnIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/returnToMenu.png")));
+        Image returnImage = returnIcon.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon scaledReturnIcon = new ImageIcon(returnImage);
+        JButton returnToMenu = new JButton(scaledReturnIcon);
+        returnToMenu.setBounds(8, 10, 64, 64);
+        returnToMenu.setOpaque(false);
+        returnToMenu.setContentAreaFilled(false);
+        returnToMenu.setBorderPainted(false);
+        returnToMenu.addActionListener(e -> {
+            returnToMenu();
+        });
+        add(returnToMenu);
+
+        //startButton
+        ImageIcon startIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/startButton.png")));
+        Image startImage = startIcon.getImage().getScaledInstance(161, 112, Image.SCALE_SMOOTH);
+        //whenPressed
+        ImageIcon pressedStartIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/startButtonPressed.png")));
+        Image pressedStartImage = pressedStartIcon.getImage().getScaledInstance(161, 112, Image.SCALE_SMOOTH);
+        startButton = new JButton(new ImageIcon(startImage));
+        startButton.setBounds(1450, 500, 161, 112);
+        startButton.setContentAreaFilled(false);
+        startButton.setBorderPainted(false);
+        startButton.setDisabledIcon(new ImageIcon(pressedStartImage));
+        startButton.addActionListener(e -> {
+            if (!waveStarted && health != 0){
+                wave.createWave1();
+                startButton.setEnabled(false);
+            }
+        });
+        add(startButton);
+
+        //pauseButton
+        ImageIcon pauseIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pauseButton.png")));
+        Image pauseImage = pauseIcon.getImage().getScaledInstance(156, 64, Image.SCALE_SMOOTH);
+        JButton pauseButton = new JButton(new ImageIcon(pauseImage));
+        pauseButton.setBounds(1360, 620, 156, 64);
+        pauseButton.setContentAreaFilled(false);
+        pauseButton.setBorderPainted(false);
+        pauseButton.addActionListener(e -> {
+            //pauseGame Methode einfügen
+        });
+        add(pauseButton);
+
+        //restartButton
+        ImageIcon restartIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/restartButton.png")));
+        Image restartImage = restartIcon.getImage().getScaledInstance(156, 64, Image.SCALE_SMOOTH);
+        JButton restartButton = new JButton(new ImageIcon(restartImage));
+        restartButton.setBounds(1540, 620, 156, 64);
+        restartButton.setContentAreaFilled(false);
+        restartButton.setBorderPainted(false);
+        restartButton.addActionListener(e -> {
+            //restartGame Methode einfügen
+        });
+        add(restartButton);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         Image grassImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/grass.png"))).getImage();
         Image pathImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pathway.png"))).getImage();
-        Image towerFrame = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/towerframe.png"))).getImage();
+        Image towerFrame = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/towerFrame.png"))).getImage();
+        Image separator = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/separator.png"))).getImage();
+
         for (int x = 0; x < cols; x++) {
             for (int y = 0; y < rows; y++) {
                 if (isPathway[x][y]) {
@@ -253,6 +325,8 @@ private final Shot shot= new Shot (this);
         drawHUD(g,g);
         //draw ButtonBackground
         g.drawImage(towerFrame, 19 * CHUNK_SIZE, 0,null);
+        g.drawImage(separator, 78, 0,null);
+        g.drawImage(separator,1178,0,null);
     }
 
     private void drawGrid(Graphics g) { //teilt map in chunks
@@ -277,11 +351,11 @@ private final Shot shot= new Shot (this);
     // TODO Maybe shop hinzufügen
     private void drawHUD(Graphics g, Graphics g2) { // HP und Geld anzeige
         g.setColor(Color.ORANGE);
-        g.setFont(new Font("Arial", Font.BOLD, 20));
-        g.drawString("$" + money, 20, getHeight() - 30);
+        g.setFont(new Font("Arial", Font.BOLD, 40));
+        g.drawString("$" + money, 1220, 40);
         g2.setColor(Color.RED);
-        g2.setFont(new Font("Arial", Font.BOLD, 20));
-        g2.drawString("♥️" + health, 90, getHeight() - 30);
+        g2.setFont(new Font("Arial", Font.BOLD, 40));
+        g2.drawString("♥️" + health, 1220, 80);
 
       //  g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
@@ -289,4 +363,7 @@ private final Shot shot= new Shot (this);
 
     private void createWave(){
     }
+
+
+
 }
