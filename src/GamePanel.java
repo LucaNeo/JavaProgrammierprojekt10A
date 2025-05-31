@@ -322,7 +322,7 @@ public class GamePanel extends JPanel {
         }
 
         pathFinding.run(g);
-        shot.attack(g);
+        shot.run(g);
 
         drawHUD(g,g);
         //draw ButtonBackground

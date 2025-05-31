@@ -9,8 +9,8 @@ public class Tower1 {
     public Image image;
     public int damage = 3;
     public int coolDown = 100; // in ms
-    public int range = 1;
-    public int shotSpeed = 5;
+    public int range = 10;
+    public double shotSpeed = 0.5;
     public Tower1(int x, int y) {
         this.x = x;
         this.y = y;
@@ -22,5 +22,13 @@ public class Tower1 {
 
     public void draw(Graphics g, int CHUNK_SIZE, int offsetX) {
         g.drawImage(image, (int) (x * CHUNK_SIZE + offsetX), (int) (y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
+    }
+
+    public double getX(){
+        return x;
+    }
+
+    public double getY(){
+        return y;
     }
 }
