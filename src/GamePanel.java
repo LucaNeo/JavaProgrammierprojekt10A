@@ -243,12 +243,12 @@ public class GamePanel extends JPanel {
 
         //startButton
         ImageIcon startIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/startButton.png")));
-        Image startImage = startIcon.getImage().getScaledInstance(161, 112, Image.SCALE_SMOOTH);
+        Image startImage = startIcon.getImage().getScaledInstance(600, 200, Image.SCALE_SMOOTH);
         //whenPressed
         ImageIcon pressedStartIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/startButtonPressed.png")));
-        Image pressedStartImage = pressedStartIcon.getImage().getScaledInstance(161, 112, Image.SCALE_SMOOTH);
+        Image pressedStartImage = pressedStartIcon.getImage().getScaledInstance(600, 200, Image.SCALE_SMOOTH);
         startButton = new JButton(new ImageIcon(startImage));
-        startButton.setBounds(1450, 500, 161, 112);
+        startButton.setBounds(1255, 740, 600, 200);
         startButton.setContentAreaFilled(false);
         startButton.setBorderPainted(false);
         startButton.setDisabledIcon(new ImageIcon(pressedStartImage));
@@ -262,9 +262,9 @@ public class GamePanel extends JPanel {
 
         //pauseButton
         ImageIcon pauseIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pauseButton.png")));
-        Image pauseImage = pauseIcon.getImage().getScaledInstance(156, 64, Image.SCALE_SMOOTH);
+        Image pauseImage = pauseIcon.getImage().getScaledInstance(290, 100, Image.SCALE_SMOOTH);
         JButton pauseButton = new JButton(new ImageIcon(pauseImage));
-        pauseButton.setBounds(1360, 620, 156, 64);
+        pauseButton.setBounds(1255, 960, 290, 100);
         pauseButton.setContentAreaFilled(false);
         pauseButton.setBorderPainted(false);
         pauseButton.addActionListener(e -> {
@@ -274,9 +274,9 @@ public class GamePanel extends JPanel {
 
         //restartButton
         ImageIcon restartIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/restartButton.png")));
-        Image restartImage = restartIcon.getImage().getScaledInstance(156, 64, Image.SCALE_SMOOTH);
+        Image restartImage = restartIcon.getImage().getScaledInstance(290, 100, Image.SCALE_SMOOTH);
         JButton restartButton = new JButton(new ImageIcon(restartImage));
-        restartButton.setBounds(1540, 620, 156, 64);
+        restartButton.setBounds(1565, 960, 290, 100);
         restartButton.setContentAreaFilled(false);
         restartButton.setBorderPainted(false);
         restartButton.addActionListener(e -> {
@@ -362,10 +362,6 @@ public class GamePanel extends JPanel {
       //  g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
     }
-
-    private void createWave(){
-    }
-
 
 
 }
