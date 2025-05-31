@@ -5,7 +5,7 @@ import java.awt.*;
 import java.util.Objects;
 
 public class Tower1 {
-    public int x, y;
+    public double x, y;
     public Image image;
     public int damage = 3;
     public int coolDown = 100; // in ms
@@ -21,6 +21,6 @@ public class Tower1 {
     }
 
     public void draw(Graphics g, int CHUNK_SIZE, int offsetX) {
-        g.drawImage(image, x * CHUNK_SIZE + offsetX, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
+        g.drawImage(image, (int) (x * CHUNK_SIZE + offsetX), (int) (y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
     }
 }

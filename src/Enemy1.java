@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Enemy1 extends Enemy {
     public double x, y;
     public int health = 100;
-    public double speed = 0.1;
+    public double speed = 0.01;
     public Image image;
     private final GamePanel gamePanel;
 

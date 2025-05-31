@@ -16,7 +16,7 @@ public class Shot {
 
     public void attack(Graphics g) {
         for (int i = 0; i < gamePanel.towers1.size(); i++) {
-            Rectangle[] shot = new Rectangle[15];
+            Projectile[] shot = new Projectile[15];
             Enemy1 targetenemy;
             Image shotImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/goatAttack.png"))).getImage();
             double deltaX;
@@ -30,12 +30,11 @@ public class Shot {
                         targetenemy = gamePanel.wave.enemy1[j];
 
                         for (int a = 0; a < shot.length; a++) {
-                            shot[a] = new Rectangle(gamePanel.towers1.get(i).x, gamePanel.towers1.get(i).y, 25, 25);
-                            shot[a].x = gamePanel.towers1.get(i).x;
-                            shot[a].y = gamePanel.towers1.get(i).y;
-                            shot[a].x += (int) (deltaX * ((double) gamePanel.towers1.get(i).shotSpeed / 5));
-                            shot[a].y += (int) (deltaY * ((double) gamePanel.towers1.get(i).shotSpeed / 5));
-                            g.drawImage(shotImage, shot[a].x * gamePanel.CHUNK_SIZE, shot[a].y * gamePanel.CHUNK_SIZE,25, 25, null);
+
+                            shot[a] = new Projectile(gamePanel.towers1.get(i).x, gamePanel.towers1.get(i).y, gamePanel.towers1.get(i).shotSpeed, g);
+                            shot[a].x += (deltaX * ((double) gamePanel.towers1.get(i).shotSpeed / 5));
+                            shot[a].y += (deltaY * ((double) gamePanel.towers1.get(i).shotSpeed / 5));
+                            g.drawImage(shotImage, (int) (shot[a].x * gamePanel.CHUNK_SIZE), (int) (shot[a].y * gamePanel.CHUNK_SIZE),25, 25, null);
                             System.out.println(shot[a].x + " " + shot[a].y);
                         }
                     }
