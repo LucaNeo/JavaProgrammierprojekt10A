@@ -147,10 +147,10 @@ public class GamePanel extends JPanel {
 
         // Tower-Auswahl-Leiste
         ImageIcon originalIcon1 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-guard.png")));
-        Image scaledImage1 = originalIcon1.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+        Image scaledImage1 = originalIcon1.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon1 = new ImageIcon(scaledImage1);
         JButton tower1Button = new JButton(scaledIcon1);
-        tower1Button.setBounds(1380,8,70,70);
+        tower1Button.setBounds(1380,8,64,64);
         tower1Button.setOpaque(false);
         tower1Button.setContentAreaFilled(false);
         tower1Button.setBorderPainted(false);
@@ -165,6 +165,7 @@ public class GamePanel extends JPanel {
         Image scaledImage2 = originalIcon2.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon2 = new ImageIcon(scaledImage2);
         JButton tower2Button = new JButton(scaledIcon2);
+        tower2Button.setBounds(1464,10,64,64);
         tower2Button.setOpaque(false);
         tower2Button.setContentAreaFilled(false);
         tower2Button.setBorderPainted(false);
@@ -178,7 +179,8 @@ public class GamePanel extends JPanel {
         ImageIcon originalIcon3 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-priest.png")));
         Image scaledImage3 = originalIcon3.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon3 = new ImageIcon(scaledImage3);
-        JButton tower3Button = new JButton(scaledIcon3);;
+        JButton tower3Button = new JButton(scaledIcon3);
+        tower3Button.setBounds(1545,8,64,64);
         tower3Button.setOpaque(false);
         tower3Button.setContentAreaFilled(false);
         tower3Button.setBorderPainted(false);
@@ -193,6 +195,7 @@ public class GamePanel extends JPanel {
         Image scaledImage4 = originalIcon4.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon4= new ImageIcon(scaledImage4);
         JButton tower4Button = new JButton(scaledIcon4);
+        tower4Button.setBounds(1624,8,64,64);
         tower4Button.setOpaque(false);
         tower4Button.setContentAreaFilled(false);
         tower4Button.setBorderPainted(false);
@@ -207,6 +210,7 @@ public class GamePanel extends JPanel {
         Image scaledImage5 = originalIcon5.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon5= new ImageIcon(scaledImage5);
         JButton tower5Button = new JButton(scaledIcon5);
+        tower5Button.setBounds(1705,8,64,64);
         tower5Button.setOpaque(false);
         tower5Button.setContentAreaFilled(false);
         tower5Button.setBorderPainted(false);
@@ -223,7 +227,7 @@ public class GamePanel extends JPanel {
         Image resetIconS = resetIconO.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon reseticonS = new ImageIcon(resetIconS);
         JButton resetsw = new JButton(reseticonS);
-        resetsw.setBounds(10, 10, 40, 40);
+        resetsw.setBounds(8, 10, 64, 64);
         resetsw.setOpaque(false);
         resetsw.setContentAreaFilled(false);
         resetsw.setBorderPainted(false);
@@ -239,6 +243,8 @@ public class GamePanel extends JPanel {
         Image grassImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/grass.png"))).getImage();
         Image pathImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pathway.png"))).getImage();
         Image towerFrame = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/towerFrame.png"))).getImage();
+        Image separator = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/separator.png"))).getImage();
+        //Image separatorS = separator.getImage().getScaledInstance(25, 1100, Image.SCALE_SMOOTH);
         for (int x = 0; x < cols; x++) {
             for (int y = 0; y < rows; y++) {
                 if (isPathway[x][y]) {
@@ -271,6 +277,8 @@ public class GamePanel extends JPanel {
         drawHUD(g,g);
         //draw ButtonBackground
         g.drawImage(towerFrame, 19 * CHUNK_SIZE, 0,null);
+        g.drawImage(separator, 78, 0,null);
+        g.drawImage(separator,1178,0,null);
     }
 
     private void drawGrid(Graphics g) { //teilt map in chunks
@@ -295,11 +303,11 @@ public class GamePanel extends JPanel {
     // TODO Maybe shop hinzufügen
     private void drawHUD(Graphics g, Graphics g2) { // HP und Geld anzeige
         g.setColor(Color.ORANGE);
-        g.setFont(new Font("Arial", Font.BOLD, 20));
-        g.drawString("$" + money, 20, getHeight() - 30);
+        g.setFont(new Font("Arial", Font.BOLD, 40));
+        g.drawString("$" + money, 1220, 40);
         g2.setColor(Color.RED);
-        g2.setFont(new Font("Arial", Font.BOLD, 20));
-        g2.drawString("♥️" + health, 90, getHeight() - 30);
+        g2.setFont(new Font("Arial", Font.BOLD, 40));
+        g2.drawString("♥️" + health, 1220, 80);
 
       //  g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
