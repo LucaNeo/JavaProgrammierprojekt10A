@@ -31,10 +31,12 @@ public class GamePanel extends JPanel {
     private Timer gameLoop; // aktive runde ?
     int money = 1000; // StartGeld
     int health = 100; //hp
-    int selectedTowerType = 0;     // 1 = Tower1, 2 = Tower2 etc.
+    int selectedTowerType = 0;    // 1 = Tower1, 2 = Tower2 etc.
+    boolean waveStarted = false;
 
     private final JFrame parentFrame;
     private final Pathfinding pathFinding = new Pathfinding(this);
+    JButton startButton;
 
     public GamePanel(JFrame frame) {
         this.parentFrame = frame;
@@ -42,7 +44,6 @@ public class GamePanel extends JPanel {
         setUI();
         startGameLoop();
         setFocusable(true); // Shortcuts möglich machen (Press Key Event)
-        wave.createWave1();
 
     }
 
@@ -55,17 +56,20 @@ public class GamePanel extends JPanel {
     }
 
     private void updateGame() {
-        boolean endWave = true;
-        for (int i = 0; i < wave.enemy1.length && endWave; i++) {
-            if(wave.enemy1[i] != null) {
+        for (int i = 0; i < wave.enemy1.length; i++) {
+            if (wave.enemy1[i] != null) {
                 if (wave.enemy1[i].x == 4 && wave.enemy1[i].y == 13) {
                     health = 0;
                     wave.clearWave();
+                    startButton.setEnabled(true);
                     i = wave.enemy1.length;
-                    endWave = false;
                 }
             }
         }
+    }
+
+    private void pauseGame(){
+
     }
 
     private void initGrid() {
@@ -223,28 +227,72 @@ public class GamePanel extends JPanel {
 
         addMouseListener(new Placement(this));
 
-        ImageIcon resetIconO = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/returnToMenu.png")));
-        Image resetIconS = resetIconO.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
-        ImageIcon reseticonS = new ImageIcon(resetIconS);
-        JButton resetsw = new JButton(reseticonS);
-        resetsw.setBounds(8, 10, 64, 64);
-        resetsw.setOpaque(false);
-        resetsw.setContentAreaFilled(false);
-        resetsw.setBorderPainted(false);
-        resetsw.addActionListener(e -> {
+        ImageIcon returnIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/returnToMenu.png")));
+        Image returnImage = returnIcon.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon scaledReturnIcon = new ImageIcon(returnImage);
+        JButton returnToMenu = new JButton(scaledReturnIcon);
+        returnToMenu.setBounds(8, 10, 64, 64);
+        returnToMenu.setOpaque(false);
+        returnToMenu.setContentAreaFilled(false);
+        returnToMenu.setBorderPainted(false);
+        returnToMenu.addActionListener(e -> {
             returnToMenu();
         });
-        add(resetsw);
+        add(returnToMenu);
+
+        //startButton
+        ImageIcon startIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/startButton.png")));
+        Image startImage = startIcon.getImage().getScaledInstance(161, 112, Image.SCALE_SMOOTH);
+        //whenPressed
+        ImageIcon pressedStartIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/startButtonPressed.png")));
+        Image pressedStartImage = pressedStartIcon.getImage().getScaledInstance(161, 112, Image.SCALE_SMOOTH);
+        startButton = new JButton(new ImageIcon(startImage));
+        startButton.setBounds(1450, 500, 161, 112);
+        startButton.setContentAreaFilled(false);
+        startButton.setBorderPainted(false);
+        startButton.setDisabledIcon(new ImageIcon(pressedStartImage));
+        startButton.addActionListener(e -> {
+            if (!waveStarted && health != 0){
+                wave.createWave1();
+                startButton.setEnabled(false);
+            }
+        });
+        add(startButton);
+
+        //pauseButton
+        ImageIcon pauseIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pauseButton.png")));
+        Image pauseImage = pauseIcon.getImage().getScaledInstance(156, 64, Image.SCALE_SMOOTH);
+        JButton pauseButton = new JButton(new ImageIcon(pauseImage));
+        pauseButton.setBounds(1360, 620, 156, 64);
+        pauseButton.setContentAreaFilled(false);
+        pauseButton.setBorderPainted(false);
+        pauseButton.addActionListener(e -> {
+            //pauseGame Methode einfügen
+        });
+        add(pauseButton);
+
+        //restartButton
+        ImageIcon restartIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/restartButton.png")));
+        Image restartImage = restartIcon.getImage().getScaledInstance(156, 64, Image.SCALE_SMOOTH);
+        JButton restartButton = new JButton(new ImageIcon(restartImage));
+        restartButton.setBounds(1540, 620, 156, 64);
+        restartButton.setContentAreaFilled(false);
+        restartButton.setBorderPainted(false);
+        restartButton.addActionListener(e -> {
+            //restartGame Methode einfügen
+        });
+        add(restartButton);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         Image grassImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/grass.png"))).getImage();
         Image pathImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pathway.png"))).getImage();
         Image towerFrame = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/towerFrame.png"))).getImage();
         Image separator = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/separator.png"))).getImage();
-        //Image separatorS = separator.getImage().getScaledInstance(25, 1100, Image.SCALE_SMOOTH);
+
         for (int x = 0; x < cols; x++) {
             for (int y = 0; y < rows; y++) {
                 if (isPathway[x][y]) {
