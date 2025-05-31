@@ -36,6 +36,7 @@ public class GamePanel extends JPanel {
 
     private final JFrame parentFrame;
     private final Pathfinding pathFinding = new Pathfinding(this);
+    private final Shot shot = new Shot(this);
     JButton startButton;
 
     public GamePanel(JFrame frame) {
@@ -321,6 +322,7 @@ public class GamePanel extends JPanel {
         }
 
         pathFinding.run(g);
+        shot.attack(g);
 
         drawHUD(g,g);
         //draw ButtonBackground

@@ -7,9 +7,10 @@ import java.util.Objects;
 public class Tower1 {
     public int x, y;
     public Image image;
-public int damage = 3;
-public int coolDown = 10;
-        public int  range =1;
+    public int damage = 3;
+    public int coolDown = 100; // in ms
+    public int range = 1;
+    public int shotSpeed = 5;
     public Tower1(int x, int y) {
         this.x = x;
         this.y = y;
