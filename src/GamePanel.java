@@ -327,7 +327,7 @@ public class GamePanel extends JPanel {
         drawHUD(g,g);
         //draw ButtonBackground
         g.drawImage(towerFrame, 19 * CHUNK_SIZE, 0,null);
-        g.drawImage(separator, 78, 0,null);
+        g.drawImage(separator, 80, 0,null);
         g.drawImage(separator,1178,0,null);
     }
 
