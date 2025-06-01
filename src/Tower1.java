@@ -4,17 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-public class Tower1 {
+public class Tower1 extends Tower {
 
-    public double x, y;
+    private double x, y;
     public Image image;
     public int damage = 3;
-    public int coolDown = 30; // in ms
-    public int range = 10;
-    public double shotSpeed = 0.2;
-    public Enemy1[] enemy1 = new Enemy1[10];
+    public int coolDown = 10; // in ms
+    private int range = 5;
+    public double shotSpeed = 0.1;
 
     public Tower1(int x, int y) {
+        super(x, y);
 
         this.x = x;
         this.y = y;
@@ -24,17 +24,13 @@ public class Tower1 {
         this.image = icon.getImage();
     }
 
+    @Override
     public void draw(Graphics g, int CHUNK_SIZE, int offsetX) {
         g.drawImage(image, (int) (x * CHUNK_SIZE + offsetX), (int) (y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
     }
 
-    public double getX(){
-        return x;
+    @Override
+    public int getRange() {
+        return range;
     }
-
-    public double getY(){
-        return y;
-    }
-
-
 }

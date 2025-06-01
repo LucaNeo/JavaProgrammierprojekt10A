@@ -18,8 +18,6 @@ public class Projectile {
         g.drawImage(image, (int) Math.round(x * CHUNK_SIZE) + offsetX, (int) Math.round(y * CHUNK_SIZE), width, height, null);
     }
 
-
-
     public void move(double dx, double dy) {
         x += dx;
         y += dy;

@@ -14,8 +14,8 @@ public class Shot {
     private double timer1 = 0;
 
     final List<Projectile> projectile = new ArrayList<>();
-    Image projectileImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/goatAttack.png"))).getImage();
-    Enemy1 targetedEnemy;
+    private Image projectileImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/goatAttack.png"))).getImage();
+    private Enemy targetedEnemy;
     double deltaX = 0;
     double deltaY = 0;
 
@@ -31,56 +31,60 @@ public class Shot {
 
 
     public void shootTower1(Graphics g) {
-
         for (int a = 0; a < gamePanel.towers1.size(); a++) {
             if (gamePanel.towers1.get(a) != null && getTargetedEnemy(gamePanel.towers1.get(a)) != null) {
 
                 deltaX = getTargetedEnemy(gamePanel.towers1.get(a)).getX() - gamePanel.towers1.get(a).getX();
                 deltaY = getTargetedEnemy(gamePanel.towers1.get(a)).getY() - gamePanel.towers1.get(a).getY();
 
-                if (timer1 % gamePanel.towers1.get(a).coolDown == 0 &&) {
-                projectile.add(new Projectile(gamePanel.towers1.get(a).x, gamePanel.towers1.get(a).y, gamePanel.towers1.get(a).shotSpeed, g));
+                if (timer1 % gamePanel.towers1.get(a).coolDown == 0 && gamePanel.health > 0) {
+                    projectile.add(new Projectile(gamePanel.towers1.get(a).getX(), gamePanel.towers1.get(a).getY(), gamePanel.towers1.get(a).shotSpeed, g));
                 }
 
-                for (Projectile d : projectile) {
-                d.draw(g, projectileImage, 100, 100, gamePanel.offsetX, gamePanel.CHUNK_SIZE);
-                d.move(deltaX * gamePanel.towers1.get(a).shotSpeed, deltaY * gamePanel.towers1.get(a).shotSpeed);
+                for (Projectile p : projectile) {
+                    p.draw(g, projectileImage, 25, 25, gamePanel.offsetX, gamePanel.CHUNK_SIZE);
+                    p.move(deltaX * gamePanel.towers1.get(a).shotSpeed, deltaY * gamePanel.towers1.get(a).shotSpeed);
+                    hit(p);
                 }
-
             }
         }
-
         timer1++;
     }
 
+    private Enemy getTargetedEnemy(Tower tower) {
 
-    Enemy1 getTargetedEnemy(Tower1 tower) {
+        double smallestdistance = tower.getRange();
+        boolean targeting = true;
 
-        double smallestdistance = tower.range;
+        for (int a = 0; a < gamePanel.wave.enemy1.size() && targeting; a++) {
+            if (gamePanel.wave.enemy1.get(a) != null) {
+                double tempDeltaX = tower.getX() - gamePanel.wave.enemy1.get(a).getX();
+                double tempDeltaY = tower.getY() - gamePanel.wave.enemy1.get(a).getY();
+                double distance = Math.sqrt(tempDeltaX * tempDeltaX + tempDeltaY * tempDeltaY);
+                System.out.println(distance);
+                System.out.println(tower.getRange());
 
-            for (int b = 0; b < gamePanel.wave.enemy1.length; b++) {
-                if (gamePanel.wave.enemy1[b] != null) {
-                    double tempDeltaX = tower.x - gamePanel.wave.enemy1[b].x;
-                    double tempDeltaY = tower.y - gamePanel.wave.enemy1[b].y;
-                    double distance = Math.sqrt(tempDeltaX * tempDeltaX + tempDeltaY * tempDeltaY);
+                if (distance <= smallestdistance) {
+                    smallestdistance = distance;
+                }
 
-                    if(distance<=smallestdistance){
-                        smallestdistance = distance;
-                    }
-
-                    if(distance <= tower.range && distance == smallestdistance) {
-                    targetedEnemy = gamePanel.wave.enemy1[b];
-                    }
-
+                if (distance <= tower.getRange() && distance == smallestdistance) {
+                    targetedEnemy = gamePanel.wave.enemy1.get(a);
+                    targeting = false;
                 }
             }
-
+        }
         return targetedEnemy;
-
     }
 
-
+    private void hit(Projectile p) {
+        for (Enemy enemy : gamePanel.wave.enemy1) {
+            if (p != null && enemy.checkCollision(p, gamePanel.CHUNK_SIZE)) {
+                p = null;
+            }
+        }
     }
+}
 
 
 

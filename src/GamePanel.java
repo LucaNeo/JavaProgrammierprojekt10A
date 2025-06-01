@@ -26,7 +26,7 @@ public class GamePanel extends JPanel {
     final List<Tower3> towers3 = new ArrayList<>();
     final List<Tower4> towers4 = new ArrayList<>();
     final List<Tower5> towers5 = new ArrayList<>();
-    public Wave wave = new Wave(this);
+    public Wave wave = new Wave();
 
     private Timer gameLoop; // aktive runde ?
     int money = 1000; // StartGeld
@@ -57,13 +57,13 @@ public class GamePanel extends JPanel {
     }
 
     private void updateGame() {
-        for (int i = 0; i < wave.enemy1.length; i++) {
-            if (wave.enemy1[i] != null) {
-                if (wave.enemy1[i].x == 4 && wave.enemy1[i].y == 13) {
+        for (int i = 0; i < wave.enemy1.size(); i++) {
+            if (wave.enemy1.get(i) != null) {
+                if (wave.enemy1.get(i).getX() == 4 && wave.enemy1.get(i).getY() == 13) {
                     health = 0;
                     wave.clearWave();
                     startButton.setEnabled(true);
-                    i = wave.enemy1.length;
+                    i = wave.enemy1.size();
                 }
             }
         }
