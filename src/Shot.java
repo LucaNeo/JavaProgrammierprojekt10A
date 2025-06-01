@@ -38,7 +38,7 @@ public class Shot {
                 deltaX = getTargetedEnemy(gamePanel.towers1.get(a)).getX() - gamePanel.towers1.get(a).getX();
                 deltaY = getTargetedEnemy(gamePanel.towers1.get(a)).getY() - gamePanel.towers1.get(a).getY();
 
-                if (timer1 % gamePanel.towers1.get(a).coolDown == 0) {
+                if (timer1 % gamePanel.towers1.get(a).coolDown == 0 &&) {
                 projectile.add(new Projectile(gamePanel.towers1.get(a).x, gamePanel.towers1.get(a).y, gamePanel.towers1.get(a).shotSpeed, g));
                 }
 
