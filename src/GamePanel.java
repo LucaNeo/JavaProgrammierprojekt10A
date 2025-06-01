@@ -2,8 +2,8 @@ package src;
 // Autor Jakob/Luca
 // TODO Settings verbessern
 // TODO shortcuts,Undo/Redo
-// TODO Autostart button
-
+// TODO pause Button
+// TODO Sounds?
 
 import javax.swing.*;
 import java.awt.*;
@@ -131,7 +131,7 @@ public class GamePanel extends JPanel {
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(new Color(70, 70, 90));
-        buttonPanel.setPreferredSize(new Dimension(getWidth()+50, 80)); // Bevorzugte Höhe setzen
+        buttonPanel.setPreferredSize(new Dimension(getWidth()+50, 80));
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 25, 25));
 
         // Position und Größe des buttonPanel festlegen
@@ -141,7 +141,7 @@ public class GamePanel extends JPanel {
         int panelY = getHeight() - panelHeight;
         buttonPanel.setBounds(panelX, panelY, panelWidth, panelHeight);
 
-        add(buttonPanel); // buttonPanel zum GamePanel hinzufügen (ohne BorderLayout-Angabe)
+        add(buttonPanel);
 
         JButton returnButton = new JButton("Menu");
         returnButton.addActionListener(e -> returnToMenu());
@@ -280,7 +280,23 @@ public class GamePanel extends JPanel {
         restartButton.setContentAreaFilled(false);
         restartButton.setBorderPainted(false);
         restartButton.addActionListener(e -> {
-            //restartGame Methode einfügen
+            health = 100;
+            money = 1000;
+            towers1.clear();
+            towers2.clear();
+            towers3.clear();
+            towers4.clear();
+            towers5.clear();
+            wave.enemy1.clear();
+            //wave.enemy2.clear();
+            //wave.enemy3.clear();
+            //wave.enemy4.clear();
+            //wave.enemy5.clear();
+
+            wave.createWave1();
+            initGrid();
+            startButton.setEnabled(false);
+            repaint();
         });
         add(restartButton);
     }

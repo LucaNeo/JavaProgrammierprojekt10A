@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+//Autoren Neo, Luca
+
 public class Shot {
 
     public GamePanel gamePanel;
@@ -29,6 +31,7 @@ public class Shot {
         shootTower1(g);
     }
 
+    //TODO double arrylist wo die speeds bzw die ausrichtung für jeden schuss gespeichert ist, die dann in shoottower aufgerufen wird... (im moment wird die geschwindigkeit für den aktuellen schuss auf alle angewendet (soll so nicht)) LG
 
     public void shootTower1(Graphics g) {
         for (int a = 0; a < gamePanel.towers1.size(); a++) {
@@ -51,6 +54,7 @@ public class Shot {
         timer1++;
     }
 
+    //gibt den vordersten Enemy zurück, der in der Range des Towers ist.
     private Enemy getTargetedEnemy(Tower tower) {
 
         double smallestdistance = tower.getRange();
