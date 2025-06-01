@@ -13,54 +13,134 @@ public class Shot {
     private double y;
     private double timer1 = 0;
 
+    final List<Projectile> projectile = new ArrayList<>();
+    Image projectileImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/goatAttack.png"))).getImage();
+    Enemy1 targetedEnemy;
+    double deltaX = 0;
+    double deltaY = 0;
+
+
     Shot(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
     }
+
 
     public void run(Graphics g){
         shootTower1(g);
     }
 
+
     public void shootTower1(Graphics g) {
-        final List<Projectile> projectile = new ArrayList<>();
-        Image projectileImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/goatAttack.png"))).getImage();
-        Enemy1 targetedEnemy;
-        double deltaX = 0;
-        double deltaY = 0;
 
         for (int a = 0; a < gamePanel.towers1.size(); a++) {
-            if (gamePanel.towers1.get(a) != null) {
-                for (int b = 0; b < gamePanel.wave.enemy1.length; b++) {
-                    if (gamePanel.wave.enemy1[b] != null) {
-                        double tempDeltaX = gamePanel.towers1.get(a).x - gamePanel.wave.enemy1[b].x;
-                        double tempDeltaY = gamePanel.towers1.get(a).y - gamePanel.wave.enemy1[b].y;
-                        double range = Math.sqrt(tempDeltaX * tempDeltaX + tempDeltaY * tempDeltaY);
-                        if (range <= gamePanel.towers1.get(a).range) {
+            if (gamePanel.towers1.get(a) != null && getTargetedEnemy(gamePanel.towers1.get(a)) != null) {
 
-                            deltaX = -tempDeltaX;
-                            deltaY = -tempDeltaY;
-                            targetedEnemy = gamePanel.wave.enemy1[b];
+                deltaX = getTargetedEnemy(gamePanel.towers1.get(a)).getX() - gamePanel.towers1.get(a).getX();
+                deltaY = getTargetedEnemy(gamePanel.towers1.get(a)).getY() - gamePanel.towers1.get(a).getY();
 
-                            //if (timer1 % gamePanel.towers1.get(a).coolDown == 0) {
-                                projectile.add(new Projectile(gamePanel.towers1.get(a).x, gamePanel.towers1.get(a).y, gamePanel.towers1.get(a).shotSpeed, g));
-                            //}
-
-                            for (Projectile d : projectile) {
-                                d.draw(g, projectileImage, 100, 100, gamePanel.offsetX, gamePanel.CHUNK_SIZE);
-                                d.move(deltaX * gamePanel.towers1.get(a).shotSpeed, deltaY * gamePanel.towers1.get(a).shotSpeed);
-                            }
-
-                            System.out.println("X: " + deltaX * gamePanel.towers1.get(a).shotSpeed);
-                            System.out.println("Y: " + deltaY * gamePanel.towers1.get(a).shotSpeed);
-
-                            timer1++;
-                            System.out.println(timer1);
-                        }
-                    }
+                if (timer1 % gamePanel.towers1.get(a).coolDown == 0) {
+                projectile.add(new Projectile(gamePanel.towers1.get(a).x, gamePanel.towers1.get(a).y, gamePanel.towers1.get(a).shotSpeed, g));
                 }
+
+                for (Projectile d : projectile) {
+                d.draw(g, projectileImage, 100, 100, gamePanel.offsetX, gamePanel.CHUNK_SIZE);
+                d.move(deltaX * gamePanel.towers1.get(a).shotSpeed, deltaY * gamePanel.towers1.get(a).shotSpeed);
+                }
+
             }
         }
+
+        timer1++;
     }
+
+
+    Enemy1 getTargetedEnemy(Tower1 tower) {
+
+        double smallestdistance = tower.range;
+
+            for (int b = 0; b < gamePanel.wave.enemy1.length; b++) {
+                if (gamePanel.wave.enemy1[b] != null) {
+                    double tempDeltaX = tower.x - gamePanel.wave.enemy1[b].x;
+                    double tempDeltaY = tower.y - gamePanel.wave.enemy1[b].y;
+                    double distance = Math.sqrt(tempDeltaX * tempDeltaX + tempDeltaY * tempDeltaY);
+
+                    if(distance<=smallestdistance){
+                        smallestdistance = distance;
+                    }
+
+                    if(distance <= tower.range && distance == smallestdistance) {
+                    targetedEnemy = gamePanel.wave.enemy1[b];
+                    }
+
+                }
+            }
+
+        return targetedEnemy;
+
+    }
+
+
+    }
+
+
+
+
+
+
+
+//public GamePanel gamePanel;
+                    //private double x;
+                    //private double y;
+                    //private double timer1 = 0;
+
+                    //Shot(GamePanel gamePanel) {
+                    //this.gamePanel = gamePanel;
+                    //}
+
+                    //public void run(Graphics g){
+                    //shootTower1(g);
+                    //}
+
+                    //public void shootTower1(Graphics g) {
+                    //final List<Projectile> projectile = new ArrayList<>();
+                    //Image projectileImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/goatAttack.png"))).getImage();
+                    //Enemy1 targetedEnemy;
+                    //double deltaX = 0;
+                    //double deltaY = 0;
+
+                    //for (int a = 0; a < gamePanel.towers1.size(); a++) {
+                    //if (gamePanel.towers1.get(a) != null) {
+                    //for (int b = 0; b < gamePanel.wave.enemy1.length; b++) {
+                    //if (gamePanel.wave.enemy1[b] != null) {
+                    //double tempDeltaX = gamePanel.towers1.get(a).x - gamePanel.wave.enemy1[b].x;
+                    //double tempDeltaY = gamePanel.towers1.get(a).y - gamePanel.wave.enemy1[b].y;
+                    //double range = Math.sqrt(tempDeltaX * tempDeltaX + tempDeltaY * tempDeltaY);
+                    //if (range <= gamePanel.towers1.get(a).range) {
+
+                    //deltaX = -tempDeltaX;
+                    //deltaY = -tempDeltaY;
+                    //targetedEnemy = gamePanel.wave.enemy1[b];
+
+                    //if (timer1 % gamePanel.towers1.get(a).coolDown == 0) {
+                    //projectile.add(new Projectile(gamePanel.towers1.get(a).x, gamePanel.towers1.get(a).y, gamePanel.towers1.get(a).shotSpeed, g));
+                    //}
+
+                    //for (Projectile d : projectile) {
+                    //d.draw(g, projectileImage, 100, 100, gamePanel.offsetX, gamePanel.CHUNK_SIZE);
+                    //d.move(deltaX * gamePanel.towers1.get(a).shotSpeed, deltaY * gamePanel.towers1.get(a).shotSpeed);
+                    //}
+
+                    //System.out.println("X: " + deltaX * gamePanel.towers1.get(a).shotSpeed);
+                    //System.out.println("Y: " + deltaY * gamePanel.towers1.get(a).shotSpeed);
+
+                    //timer1++;
+                    //System.out.println(timer1);
+                    //}
+                    //}
+                    //}
+                    //}
+                    //}
+
 
 //    public void attack(Graphics g) {
 //        for (int i = 0; i < gamePanel.towers1.size(); i++) {
@@ -90,4 +170,5 @@ public class Shot {
 //            }
 //        }
 //    }
-}
+
+

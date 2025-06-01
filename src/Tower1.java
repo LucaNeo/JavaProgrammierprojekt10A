@@ -5,13 +5,17 @@ import java.awt.*;
 import java.util.Objects;
 
 public class Tower1 {
+
     public double x, y;
     public Image image;
     public int damage = 3;
-    public int coolDown = 100; // in ms
+    public int coolDown = 30; // in ms
     public int range = 10;
-    public double shotSpeed = 0.5;
+    public double shotSpeed = 0.2;
+    public Enemy1[] enemy1 = new Enemy1[10];
+
     public Tower1(int x, int y) {
+
         this.x = x;
         this.y = y;
 
@@ -31,4 +35,6 @@ public class Tower1 {
     public double getY(){
         return y;
     }
+
+
 }
