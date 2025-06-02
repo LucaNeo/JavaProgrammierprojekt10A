@@ -59,9 +59,9 @@ public class Enemy {
 
         if (centerPointX + tolerance > projectile.getX() || projectile.getX() > centerPointX - tolerance || centerPointY + tolerance > projectile.getY() || projectile.getY() > centerPointY - tolerance) {
             return true;
+        } else {
+            return false;
         }
-
-        return false;
     }
 
     public void takeDamage(int damage){

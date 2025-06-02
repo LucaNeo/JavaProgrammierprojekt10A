@@ -37,14 +37,13 @@ public class Shot {
         for (int a = 0; a < gamePanel.towers1.size(); a++) {
             if (gamePanel.towers1.get(a) != null && getTargetedEnemy(gamePanel.towers1.get(a)) != null) {
 
-                deltaX = getTargetedEnemy(gamePanel.towers1.get(a)).getX() - gamePanel.towers1.get(a).getX();
-                deltaY = getTargetedEnemy(gamePanel.towers1.get(a)).getY() - gamePanel.towers1.get(a).getY();
-
                 if (timer1 % gamePanel.towers1.get(a).coolDown == 0 && gamePanel.health > 0) {
                     projectile.add(new Projectile(gamePanel.towers1.get(a).getX(), gamePanel.towers1.get(a).getY(), gamePanel.towers1.get(a).shotSpeed, g));
                 }
 
                 for (Projectile p : projectile) {
+                    deltaX = getTargetedEnemy(gamePanel.towers1.get(a)).getX() - gamePanel.towers1.get(a).getX();
+                    deltaY = getTargetedEnemy(gamePanel.towers1.get(a)).getY() - gamePanel.towers1.get(a).getY();
                     p.draw(g, projectileImage, 25, 25, gamePanel.offsetX, gamePanel.CHUNK_SIZE);
                     p.move(deltaX * gamePanel.towers1.get(a).shotSpeed, deltaY * gamePanel.towers1.get(a).shotSpeed);
                     hit(p);
