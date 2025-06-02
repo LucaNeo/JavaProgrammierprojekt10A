@@ -1,23 +1,22 @@
 package src;
 
-// Autor Luca/Titus
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-public class Enemy1 extends Enemy {
+public class Enemy3 extends Enemy {
     public double x, y;
     public int health = 100;
-    public double speed = 0.1;
+    public double speed = 0.3;
     public Image image;
 
-    public Enemy1(double x, double y) {
+    public Enemy3(double x, double y) {
         super(x, y);
         this.x = x;
         this.y = y;
 
         // Bild laden
-        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-midlander.png"))); // Pfad anpassen
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-midleader.png"))); // Pfad anpassen
         this.image = icon.getImage();
     }
 
