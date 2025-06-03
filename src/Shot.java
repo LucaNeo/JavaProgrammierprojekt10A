@@ -42,7 +42,7 @@ public class Shot {
                     for (Projectile p : projectile) {
                         int index = projectile.indexOf(p);
 
-                        p.draw(g, projectileImage, 25, 25, gamePanel.offsetX, gamePanel.CHUNK_SIZE);
+                        p.draw(g, projectileImage, 80, 20, gamePanel.offsetX, gamePanel.CHUNK_SIZE);
                         p.move(deltaX.get(index) * gamePanel.towers1.get(a).shotSpeed, deltaY.get(index) * gamePanel.towers1.get(a).shotSpeed);
                         p.setX(p.getX() + deltaX.get(index) * gamePanel.towers1.get(a).shotSpeed);
                         p.setY(p.getY() + deltaY.get(index) * gamePanel.towers1.get(a).shotSpeed);
@@ -101,6 +101,7 @@ public class Shot {
                 deltaY.remove(index);
                 if (enemy.getHealth() <= 0) {
                     gamePanel.wave.enemy1.remove(enemy);
+                    gamePanel.money +=50;
                 }
             }
         }

@@ -11,6 +11,7 @@ public class Enemy1 extends Enemy {
     public double speed = 0.05;
     public Image image;
 
+
     public Enemy1(double x, double y) {
         super(x, y);
         this.x = x;
@@ -81,4 +82,4 @@ public class Enemy1 extends Enemy {
     public void takeDamage(int damage){
         health -= damage;
     }
-}
+    }
