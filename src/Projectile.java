@@ -6,12 +6,10 @@ public class Projectile {
 
     private double x;
     private double y;
-    private double speed;
 
     public Projectile(double x, double y, double speed, Graphics g) {
         this.x = x;
         this.y = y;
-        this.speed = speed;
     }
 
     public void draw(Graphics g, Image image, int width, int height, int offsetX, int CHUNK_SIZE) {

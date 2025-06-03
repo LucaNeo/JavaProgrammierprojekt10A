@@ -15,11 +15,10 @@ public class Shot {
     private double y;
     private double timer1 = 0;
 
-    final List<Projectile> projectile = new ArrayList<>();
-    private Image projectileImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/goatAttack.png"))).getImage();
+    private final List<Projectile> projectile = new ArrayList<>();
     private Enemy targetedEnemy;
-    List<Double> deltaX = new ArrayList<>();
-    List<Double> deltaY = new ArrayList<>();
+    private final List<Double> deltaX = new ArrayList<>();
+    private final List<Double> deltaY = new ArrayList<>();
 
     Shot(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -29,24 +28,26 @@ public class Shot {
         shootTower1(g);
     }
 
-    //TODO double arrylist wo die speeds bzw die ausrichtung für jeden schuss gespeichert ist, die dann in shoottower aufgerufen wird... (im moment wird die geschwindigkeit für den aktuellen schuss auf alle angewendet (soll so nicht)) LG
-
     public void shootTower1(Graphics g) {
+        Image projectileImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/goatAttack.png"))).getImage();
         for (int a = 0; a < gamePanel.towers1.size(); a++) {
             if (gamePanel.towers1.get(a) != null && getTargetedEnemy(gamePanel.towers1.get(a)) != null) {
+                if (gamePanel.health > 0 && checkEnemyInRange(gamePanel.towers1.get(a)) && !gamePanel.wave.enemy1.isEmpty()) {
+                    if (timer1 % gamePanel.towers1.get(a).coolDown == 0) {
+                        projectile.add(new Projectile(gamePanel.towers1.get(a).getX(), gamePanel.towers1.get(a).getY(), gamePanel.towers1.get(a).shotSpeed, g));
+                        deltaX.add((getTargetedEnemy(gamePanel.towers1.get(a)).getX() + 0.5) - gamePanel.towers1.get(a).getX());
+                        deltaY.add((getTargetedEnemy(gamePanel.towers1.get(a)).getY() + 0.5) - gamePanel.towers1.get(a).getY());
+                    }
 
-                if (timer1 % gamePanel.towers1.get(a).coolDown == 0 && gamePanel.health > 0) {
-                    projectile.add(new Projectile(gamePanel.towers1.get(a).getX(), gamePanel.towers1.get(a).getY(), gamePanel.towers1.get(a).shotSpeed, g));
-                    deltaX.add(getTargetedEnemy(gamePanel.towers1.get(a)).getX() - gamePanel.towers1.get(a).getX());
-                    deltaY.add(getTargetedEnemy(gamePanel.towers1.get(a)).getY() - gamePanel.towers1.get(a).getY());
-                }
+                    for (Projectile p : projectile) {
+                        int index = projectile.indexOf(p);
 
-                for (Projectile p : projectile) {
-                    int index = projectile.indexOf(p);
-
-                    p.draw(g, projectileImage, 25, 25, gamePanel.offsetX, gamePanel.CHUNK_SIZE);
-                    p.move(deltaX.get(index) * gamePanel.towers1.get(a).shotSpeed, deltaY.get(index) * gamePanel.towers1.get(a).shotSpeed);
-                    hit(p);
+                        p.draw(g, projectileImage, 25, 25, gamePanel.offsetX, gamePanel.CHUNK_SIZE);
+                        p.move(deltaX.get(index) * gamePanel.towers1.get(a).shotSpeed, deltaY.get(index) * gamePanel.towers1.get(a).shotSpeed);
+                        p.setX(p.getX() + deltaX.get(index) * gamePanel.towers1.get(a).shotSpeed);
+                        p.setY(p.getY() + deltaY.get(index) * gamePanel.towers1.get(a).shotSpeed);
+                        hit(p, gamePanel.towers1.get(a), index);
+                    }
                 }
             }
         }
@@ -80,14 +81,27 @@ public class Shot {
         return targetedEnemy;
     }
 
-    private void hit(Projectile p) {
+    private boolean checkEnemyInRange(Tower tower) {
+        double tempDeltaX = tower.getX() - getTargetedEnemy(tower).getX();
+        double tempDeltaY = tower.getY() - getTargetedEnemy(tower).getY();
+        double distance = Math.sqrt(tempDeltaX * tempDeltaX + tempDeltaY * tempDeltaY);
+
+        if (distance <= tower.getRange()) {
+            return true;
+        }
+        return false;
+    }
+
+    private void hit(Projectile p, Tower tower, int index) {
         for (Enemy enemy : gamePanel.wave.enemy1) {
-            int indexEnemy = gamePanel.wave.enemy1.indexOf(enemy);
             if (p != null && enemy != null && enemy.checkCollision(p, gamePanel.CHUNK_SIZE)) {
+                enemy.takeDamage(tower.getDamage());
                 projectile.remove(p);
-                gamePanel.wave.enemy1.remove(enemy);
-                System.out.println(enemy);
-                //System.out.println("hit");
+                deltaX.remove(index);
+                deltaY.remove(index);
+                if (enemy.getHealth() <= 0) {
+                    gamePanel.wave.enemy1.remove(enemy);
+                }
             }
         }
     }

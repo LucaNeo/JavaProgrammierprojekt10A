@@ -6,9 +6,10 @@ import java.util.Objects;
 
 public class Tower1 extends Tower {
 
-    private double x, y;
+    private final double x;
+    private final double y;
     public Image image;
-    public int damage = 3;
+    public int damage = 25;
     public int coolDown = 10; // in ms
     private int range = 5;
     public double shotSpeed = 0.1;
@@ -30,7 +31,22 @@ public class Tower1 extends Tower {
     }
 
     @Override
+    public double getX(){
+        return x;
+    }
+
+    @Override
+    public double getY(){
+        return y;
+    }
+
+    @Override
     public int getRange() {
         return range;
+    }
+
+    @Override
+    public int getDamage() {
+        return damage;
     }
 }
