@@ -18,7 +18,7 @@ public class Wave {
     public void createWave1(){
         for (int i = 0; i < 10; i++) {
             double r = random.doubles(1, 1.25).findFirst().getAsDouble();
-            enemy1.add(new Enemy2(2, Double.parseDouble(String.format("%.1f", i * -r).replace(',', '.')))); // r = Abstand der Enemies in Chunks
+            enemy1.add(new Enemy1(2, Double.parseDouble(String.format("%.1f", i * -r).replace(',', '.')))); // r = Abstand der Enemies in Chunks
         }
     }
 

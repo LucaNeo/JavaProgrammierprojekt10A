@@ -11,31 +11,7 @@ public class Placement extends MouseAdapter {
         this.gamePanel = gamePanel;
     }
 
-
-//    public void mouseClicked(MouseEvent e) { // alte Version
-//        int gridX = e.getX() / gamePanel.TILE_SIZE;
-//        int gridY = e.getY() / gamePanel.TILE_SIZE;
-//
-//
-//        if (gridX >= 0 && gridX < gamePanel.cols &&
-//                gridY >= 0 && gridY < gamePanel.rows &&
-//                gamePanel.placeableTiles[gridY][gridX] &&
-//                gamePanel.money >= 30) {
-//
-//
-//            Tower1 tower = new Tower1(gridX, gridY);
-//            gamePanel.towers.add(tower);
-//
-//            gamePanel.placeableTiles[gridY][gridX] = false;
-//
-//
-//            gamePanel.money -= 30;
-//
-//
-//            gamePanel.repaint();
-//        }
-//    }
-@Override //TODO Tower aktulesiern wenn fester größe sich ändert
+    @Override
     public void mouseClicked(MouseEvent e) {
         if (!gamePanel.placingTower) return;
 
