@@ -3,10 +3,36 @@ package src;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Tower5 {
     public int x, y;
     public Image image;
+    public GamePanel gamePanel;
+
+
+//timer welcher alle 5 sekunden dir geld gibt wenn trader da ist
+        private final Timer timer = new Timer();
+
+        public void startIncrementing() {
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                   gamePanel.money=gamePanel.money+50 ;
+                     ;
+                }
+            };
+
+
+            timer.scheduleAtFixedRate(task, 0, 5000);
+        }
+
+
+
+
+
+
 
     public Tower5(int x, int y) {
         this.x = x;
