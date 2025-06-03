@@ -3,7 +3,8 @@ package src;
 import java.awt.*;
 
 public class Tower {
-    private double x, y;
+    private final double x;
+    private final double y;
     public int damage;
     public int coolDown; // in ms
     private int range;
@@ -31,5 +32,9 @@ public class Tower {
 
     public int getRange() {
         return range;
+    }
+
+    public int getDamage() {
+        return damage;
     }
 }
