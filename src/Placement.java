@@ -43,7 +43,7 @@ public class Placement extends MouseAdapter {
                 gamePanel.placeable[gridX][gridY] = false;
             }
             if (gamePanel.selectedTowerType == 5 && gamePanel.money >= 400) {
-                gamePanel.towers5.add(new Tower5(gridX, gridY));
+                gamePanel.towers5.add(new Tower5(gridX, gridY, gamePanel));
                 gamePanel.money -=400; // Geld abziehen
                 gamePanel.placeable[gridX][gridY] = false;
             }
