@@ -10,23 +10,7 @@ public class Tower5 {
     public int x, y;
     public Image image;
     public GamePanel gamePanel;
-
-
-//timer welcher alle 5 sekunden dir geld gibt wenn trader da ist
-        private final Timer timer = new Timer();
-
-        public void startIncrementing() {
-            TimerTask task = new TimerTask() {
-                @Override
-                public void run() {
-                   gamePanel.money=gamePanel.money+50 ;
-                     ;
-                }
-            };
-
-
-            timer.scheduleAtFixedRate(task, 0, 5000);
-        }
+    private Timer timer;
 
 
 
@@ -34,13 +18,28 @@ public class Tower5 {
 
 
 
-    public Tower5(int x, int y) {
+    public Tower5(int x, int y, GamePanel gamePanel) {
         this.x = x;
         this.y = y;
+        this.gamePanel = gamePanel;
 
         // Bild laden
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-trader.png"))); // Pfad anpassen
         this.image = icon.getImage();
+        startTimer();
+    }
+
+    private void startTimer() {
+        timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                if (!gamePanel.wave.enemy1.isEmpty()) {
+                    gamePanel.money += 75;
+                }
+            }
+        };
+        timer.schedule(task, 5000, 5000);
     }
 
     public void draw(Graphics g, int CHUNK_SIZE, int offsetX) {

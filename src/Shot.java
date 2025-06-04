@@ -3,6 +3,7 @@ package src;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,17 +12,17 @@ import java.util.Objects;
 public class Shot {
 
     public GamePanel gamePanel;
-    private double x;
-    private double y;
-    private double timer1 = 0;
+
 
     private final List<Projectile> projectile = new ArrayList<>();
     private Enemy targetedEnemy;
     private final List<Double> deltaX = new ArrayList<>();
     private final List<Double> deltaY = new ArrayList<>();
+    private final Integer[] timer = new Integer[4];
 
     Shot(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
+        Arrays.fill(timer, 0);
     }
 
     public void run(Graphics g){
@@ -30,10 +31,11 @@ public class Shot {
 
     public void shootTower1(Graphics g) {
         Image projectileImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/goatAttack.png"))).getImage();
+
         for (int a = 0; a < gamePanel.towers1.size(); a++) {
             if (gamePanel.towers1.get(a) != null && getTargetedEnemy(gamePanel.towers1.get(a)) != null) {
                 if (gamePanel.health > 0 && checkEnemyInRange(gamePanel.towers1.get(a)) && !gamePanel.wave.enemy1.isEmpty()) {
-                    if (timer1 % gamePanel.towers1.get(a).coolDown == 0) {
+                    if (timer[0] % gamePanel.towers1.get(a).coolDown == 0) {
                         projectile.add(new Projectile(gamePanel.towers1.get(a).getX(), gamePanel.towers1.get(a).getY(), gamePanel.towers1.get(a).shotSpeed, g));
                         deltaX.add((getTargetedEnemy(gamePanel.towers1.get(a)).getX() + 0.5) - gamePanel.towers1.get(a).getX());
                         deltaY.add((getTargetedEnemy(gamePanel.towers1.get(a)).getY() + 0.5) - gamePanel.towers1.get(a).getY());
@@ -51,7 +53,7 @@ public class Shot {
                 }
             }
         }
-        timer1++;
+        timer[0]++;
     }
 
     //gibt den vordersten Enemy zurück, der in der Range des Towers ist.

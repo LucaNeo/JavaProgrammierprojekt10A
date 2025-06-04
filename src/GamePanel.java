@@ -293,9 +293,8 @@ public class GamePanel extends JPanel {
             //wave.enemy4.clear();
             //wave.enemy5.clear();
 
-            wave.createWave1();
             initGrid();
-            startButton.setEnabled(false);
+            startButton.setEnabled(true);
             repaint();
         });
         add(restartButton);
