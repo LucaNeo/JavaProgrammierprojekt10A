@@ -338,14 +338,14 @@ public class GamePanel extends JPanel {
         }
 
         pathFinding.run(g);
-        shot.run(g);
+        shot.run(g, (Graphics2D) g);
 
         drawHUD(g,g);
         //draw ButtonBackground
         g.drawImage(towerFrame, 19 * CHUNK_SIZE, 0,null);
         g.drawImage(separator, 80, 0,null);
         g.drawImage(separator,1178,0,null);
-        g.drawImage(gateway2,345,13*CHUNK_SIZE,150,70,null);
+        g.drawImage(gateway2,345,14*CHUNK_SIZE,150,70,null);
         g.drawImage(banner,5*CHUNK_SIZE,0,null);
 
     }

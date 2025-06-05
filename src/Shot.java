@@ -2,6 +2,7 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,11 +26,11 @@ public class Shot {
         Arrays.fill(timer, 0);
     }
 
-    public void run(Graphics g){
-        shootTower1(g);
+    public void run(Graphics g, Graphics2D g2d) {
+        shootTower1(g, g2d);
     }
 
-    public void shootTower1(Graphics g) {
+    public void shootTower1(Graphics g, Graphics2D g2d) {
         Image projectileImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/goatAttack.png"))).getImage();
 
         for (int a = 0; a < gamePanel.towers1.size(); a++) {
@@ -43,8 +44,12 @@ public class Shot {
 
                     for (Projectile p : projectile) {
                         int index = projectile.indexOf(p);
+                        int angleRad = (int) Math.toRadians(Math.atan(Math.round(deltaX.get(index)) - Math.round(deltaY.get(index))));
+                        AffineTransform transform = new AffineTransform();
+                        transform.rotate(angleRad);
 
-                        p.draw(g, projectileImage, 80, 20, gamePanel.offsetX, gamePanel.CHUNK_SIZE);
+                        g2d.transform(transform);
+                        p.draw(g, projectileImage, 71, 26, gamePanel.offsetX, gamePanel.CHUNK_SIZE);
                         p.move(deltaX.get(index) * gamePanel.towers1.get(a).shotSpeed, deltaY.get(index) * gamePanel.towers1.get(a).shotSpeed);
                         p.setX(p.getX() + deltaX.get(index) * gamePanel.towers1.get(a).shotSpeed);
                         p.setY(p.getY() + deltaY.get(index) * gamePanel.towers1.get(a).shotSpeed);
