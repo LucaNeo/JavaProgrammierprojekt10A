@@ -261,6 +261,7 @@ public class GamePanel extends JPanel {
         add(startButton);
 
         //pauseButton
+        boolean pausepressed = false;
         ImageIcon pauseIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pauseButton.png")));
         Image pauseImage = pauseIcon.getImage().getScaledInstance(290, 100, Image.SCALE_SMOOTH);
         JButton pauseButton = new JButton(new ImageIcon(pauseImage));
@@ -268,7 +269,13 @@ public class GamePanel extends JPanel {
         pauseButton.setContentAreaFilled(false);
         pauseButton.setBorderPainted(false);
         pauseButton.addActionListener(e -> {
-            //pauseGame Methode einfügen
+            //if(pausepressed){
+            //     for (Shot.Projectile p : Shot.projectile) {
+            //        p.setX(0);
+            //        p.setY(0);
+            //
+            //    }
+            //}
         });
         add(pauseButton);
 
