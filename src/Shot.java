@@ -2,7 +2,10 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.desktop.PrintFilesEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.image.AreaAveragingScaleFilter;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,24 +21,24 @@ public class Shot {
 
 
     private final List<Projectile> projectile = new ArrayList<>();
-    private final List<Projectile> projectileArrow = new ArrayList<>();
     private Enemy targetedEnemy;
     private final List<Double> deltaX = new ArrayList<>();
     private final List<Double> deltaY = new ArrayList<>();
     private final Integer[] timer = new Integer[4];
 
-    Shot(GamePanel gamePanel) {
+    public Shot(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         Arrays.fill(timer, 0);
     }
 
-    public void run(Graphics g, Graphics2D g2d) {
-        shootTower1(g, g2d);
-        shootTower4(g, g2d);
+    public void run(Graphics g) {
+        shootTower1(g);
+        shootTower4(g);
     }
 
-    public void shootTower1(Graphics g, Graphics2D g2d) {
-        ImageIcon projectileImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/goatAttack.png")));
+    //Autor: Neo, Luca
+    public void shootTower1(Graphics g) {
+        Image projectileImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/goatAttack.png"))).getImage();
 
         for (int a = 0; a < gamePanel.towers1.size(); a++) {
             if (gamePanel.towers1.get(a) != null && getTargetedEnemy(gamePanel.towers1.get(a)) != null) {
@@ -48,9 +51,9 @@ public class Shot {
 
                     for (Projectile p : projectile) {
                         int index = projectile.indexOf(p);
-                       // double angle = Math.toRadians(Math.atan2(deltaX.get(index), deltaY.get(index)));
-                        double angle =100;
-                        p.draw(g, getroatetedImage(projectileImage, angle, g2d), 71, 26, gamePanel.offsetX, gamePanel.CHUNK_SIZE);
+                        double angle = Math.toDegrees(Math.atan2(deltaY.get(index), deltaX.get(index)));
+
+                        p.draw(g, getRotatedImage(projectileImage, angle), gamePanel.offsetX, gamePanel.CHUNK_SIZE);
                         p.move(deltaX.get(index) * gamePanel.towers1.get(a).shotSpeed, deltaY.get(index) * gamePanel.towers1.get(a).shotSpeed);
                         p.setX(p.getX() + deltaX.get(index) * gamePanel.towers1.get(a).shotSpeed);
                         p.setY(p.getY() + deltaY.get(index) * gamePanel.towers1.get(a).shotSpeed);
@@ -62,49 +65,58 @@ public class Shot {
         timer[0]++;
     }
 
-    public void shootTower4(Graphics g, Graphics2D g2d) {
-        ImageIcon projectileImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/arrow.png")));
+    //Autor: Neo
+    public void shootTower4(Graphics g) {
+        Image projectileImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/arrow.png"))).getImage();
 
         for (int a = 0; a < gamePanel.towers4.size(); a++) {
             if (gamePanel.towers4.get(a) != null && getTargetedEnemy(gamePanel.towers4.get(a)) != null) {
                 if (gamePanel.health > 0 && checkEnemyInRange(gamePanel.towers4.get(a)) && !gamePanel.wave.enemy1.isEmpty()) {
-                    if (timer[0] % gamePanel.towers4.get(a).coolDown == 0) {
+                    if (timer[1] % gamePanel.towers4.get(a).coolDown == 0) {
                         projectile.add(new Projectile(gamePanel.towers4.get(a).getX(), gamePanel.towers4.get(a).getY(), gamePanel.towers4.get(a).shotSpeed, g));
                         deltaX.add((getTargetedEnemy(gamePanel.towers4.get(a)).getX() + 0.5) - gamePanel.towers4.get(a).getX());
                         deltaY.add((getTargetedEnemy(gamePanel.towers4.get(a)).getY() + 0.5) - gamePanel.towers4.get(a).getY());
                     }
 
-                    for (Projectile pA : projectile) {
-                        int index1 = projectileArrow.indexOf(pA);
-                        // double angle = Math.toRadians(Math.atan2(deltaX.get(index), deltaY.get(index)));
-                        double angle =100;
-                        pA.draw(g, getroatetedImage(projectileImage, angle, g2d), 71, 26, gamePanel.offsetX, gamePanel.CHUNK_SIZE);
-                        pA.move(deltaX.get(index1) * gamePanel.towers1.get(a).shotSpeed, deltaY.get(index1) * gamePanel.towers1.get(a).shotSpeed);
-                        pA.setX(pA.getX() + deltaX.get(index1) * gamePanel.towers1.get(a).shotSpeed);
-                        pA.setY(pA.getY() + deltaY.get(index1) * gamePanel.towers1.get(a).shotSpeed);
-                        hit(pA, gamePanel.towers4.get(a), index1);
+                    for (Projectile p : projectile) {
+                        int index = projectile.indexOf(p);
+                        double angle = Math.toDegrees(Math.atan2(deltaY.get(index), deltaX.get(index)));
+
+                        p.draw(g, getRotatedImage(projectileImage, angle), gamePanel.offsetX, gamePanel.CHUNK_SIZE);
+                        p.move(deltaX.get(index) * gamePanel.towers4.get(a).shotSpeed, deltaY.get(index) * gamePanel.towers4.get(a).shotSpeed);
+                        p.setX(p.getX() + deltaX.get(index) * gamePanel.towers4.get(a).shotSpeed);
+                        p.setY(p.getY() + deltaY.get(index) * gamePanel.towers4.get(a).shotSpeed);
+                        hit(p, gamePanel.towers4.get(a), index);
                     }
                 }
             }
         }
-        timer[0]++;
+        timer[1]++;
     }
 
-    BufferedImage getroatetedImage (ImageIcon projectile, double angle, Graphics2D g2d) {
+    //Autor: Neo, Luca
+    private BufferedImage getRotatedImage (Image projectile, double angle) {
+        int width = projectile.getWidth(null);
+        int height = projectile.getHeight(null);
+        int newWidth = (int) Math.abs(width * Math.cos(angle)) + (int) Math.abs(height * Math.sin(angle));
+        int newHeight = (int) Math.abs(height * Math.cos(angle)) + (int) Math.abs(width * Math.sin(angle));
 
-        BufferedImage originalImage = new BufferedImage(projectile.getIconWidth(),projectile.getIconHeight(),BufferedImage.TYPE_INT_ARGB);
-        g2d = originalImage.createGraphics();
-        g2d.drawImage(projectile.getImage(), 0, 0, null);
+        BufferedImage originalImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage rotatedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+        AffineTransform transform = new AffineTransform();
+        AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
+
+        transform.rotate(Math.toRadians(angle + 90), (double) newWidth / 2, (double) newHeight / 2);
+        transform.translate((double) (newWidth - width) / 2, (double) (newHeight - height) / 2);
+
+        Graphics2D g2d = originalImage.createGraphics();
+        g2d.drawImage(projectile, 0, 0, null);
         g2d.dispose();
 
-        AffineTransform tx = AffineTransform.getRotateInstance(angle, 100, 100);
-        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-        BufferedImage rotatedImage = op.filter(originalImage, null); // null erzeugt ein neues BufferedImage
-
-        return rotatedImage;
+        return op.filter(originalImage, rotatedImage);
     }
 
-    //gibt den vordersten Enemy zurück, der in der Range des Towers ist.
+    //gibt den vordersten Enemy zurück, der in der Range des Towers ist. Autor: Neo
     private Enemy getTargetedEnemy(Tower tower) {
 
         double smallestdistance = tower.getRange();
@@ -115,8 +127,6 @@ public class Shot {
                 double tempDeltaX = tower.getX() - gamePanel.wave.enemy1.get(a).getX();
                 double tempDeltaY = tower.getY() - gamePanel.wave.enemy1.get(a).getY();
                 double distance = Math.sqrt(tempDeltaX * tempDeltaX + tempDeltaY * tempDeltaY);
-                System.out.println(distance);
-                System.out.println(tower.getRange());
 
                 if (distance <= smallestdistance) {
                     smallestdistance = distance;
@@ -131,6 +141,7 @@ public class Shot {
         return targetedEnemy;
     }
 
+    //Autor: Luca
     private boolean checkEnemyInRange(Tower tower) {
         double tempDeltaX = tower.getX() - getTargetedEnemy(tower).getX();
         double tempDeltaY = tower.getY() - getTargetedEnemy(tower).getY();
@@ -142,6 +153,7 @@ public class Shot {
         return false;
     }
 
+    //Autor: Luca
     private void hit(Projectile p, Tower tower, int index) {
         for (Enemy enemy : gamePanel.wave.enemy1) {
             if (p != null && enemy != null && enemy.checkCollision(p, gamePanel.CHUNK_SIZE)) {

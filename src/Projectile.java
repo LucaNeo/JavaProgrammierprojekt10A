@@ -12,8 +12,8 @@ public class Projectile {
         this.y = y;
     }
 
-    public void draw(Graphics g, Image image, int width, int height, int offsetX, int CHUNK_SIZE) {
-        g.drawImage(image, (int) Math.round(x * CHUNK_SIZE) + offsetX, (int) Math.round(y * CHUNK_SIZE), width, height, null);
+    public void draw(Graphics g, Image image, int offsetX, int CHUNK_SIZE) {
+        g.drawImage(image, (int) Math.round(x * CHUNK_SIZE) + offsetX, (int) Math.round(y * CHUNK_SIZE), null);
     }
 
     public void move(double dx, double dy) {
