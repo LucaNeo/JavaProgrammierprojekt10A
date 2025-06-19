@@ -303,7 +303,7 @@ public class GamePanel extends JPanel {
         Image pathImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pathway.png"))).getImage();
         Image towerFrame = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/towerFrame.png"))).getImage();
         Image separator = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/separator.png"))).getImage();
-        Image gateway2 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/Gateway2.png"))).getImage();
+        Image gateway = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/Gateway2.png"))).getImage();
         Image banner = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/banner.png"))).getImage();
         for (int x = 0; x < cols; x++) {
             for (int y = 0; y < rows; y++) {
@@ -340,7 +340,7 @@ public class GamePanel extends JPanel {
         g.drawImage(towerFrame, 19 * CHUNK_SIZE, 0,null);
         g.drawImage(separator, 80, 0,null);
         g.drawImage(separator,1178,0,null);
-        g.drawImage(gateway2,345,14*CHUNK_SIZE,150,70,null);
+        g.drawImage(gateway,345,14 * CHUNK_SIZE + 2,150,70,null);
         g.drawImage(banner,5*CHUNK_SIZE,0,null);
 
     }
@@ -381,8 +381,8 @@ public class GamePanel extends JPanel {
     public int getHealth() { return health; }
     public int getOffsetX() { return offsetX; }
     public int getCHUNK_SIZE() { return CHUNK_SIZE; }
-    public int getHeight() { return parentFrame.getHeight(); }
-    public int getWidth() { return parentFrame.getWidth(); }
+    public int getHeight() { return 2000; }
+    public int getWidth() { return 1920; }
     public int getCols() { return cols; }
     public int getRows() { return rows; }
     public int getSelectedTowerType() { return selectedTowerType; }
