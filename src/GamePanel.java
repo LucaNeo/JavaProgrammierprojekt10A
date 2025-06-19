@@ -7,6 +7,7 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,9 +30,9 @@ public class GamePanel extends JPanel {
     public Wave wave = new Wave();
 
     private Timer gameLoop; // aktive runde ?
-    int money = 1000; // StartGeld
-    int health = 100; //hp
-    int selectedTowerType = 0;    // 1 = Tower1, 2 = Tower2 etc.
+    public int money = 1000; // StartGeld
+    public int health = 100; //hp
+    public int selectedTowerType = 0;    // 1 = Tower1, 2 = Tower2 etc.
     boolean waveStarted = false;
 
     private final JFrame parentFrame;
@@ -57,13 +58,13 @@ public class GamePanel extends JPanel {
     }
 
     private void updateGame() {
-        for (int i = 0; i < wave.enemy1.size(); i++) {
-            if (wave.enemy1.get(i) != null) {
-                if (wave.enemy1.get(i).getX() == 4 && wave.enemy1.get(i).getY() == 13) {
+        for (int i = 0; i < wave.enemy.size(); i++) {
+            if (wave.enemy.get(i) != null) {
+                if (wave.enemy.get(i).getX() == 4 && wave.enemy.get(i).getY() == 13) {
                     health = 0;
                     wave.clearWave();
                     startButton.setEnabled(true);
-                    i = wave.enemy1.size();
+                    i = wave.enemy.size();
                 }
             }
         }
@@ -294,7 +295,7 @@ public class GamePanel extends JPanel {
             towers3.clear();
             towers4.clear();
             towers5.clear();
-            wave.enemy1.clear();
+            wave.enemy.clear();
             //wave.enemy2.clear();
             //wave.enemy3.clear();
             //wave.enemy4.clear();
@@ -389,5 +390,8 @@ public class GamePanel extends JPanel {
 
     }
 
-
+    public int getOffsetX() { return offsetX; }
+    public int getCHUNK_SIZE() { return CHUNK_SIZE; }
+    public int getHeight() { return parentFrame.getHeight(); }
+    public int getWidth() { return parentFrame.getWidth(); }
 }

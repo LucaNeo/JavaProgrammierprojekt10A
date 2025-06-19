@@ -49,5 +49,10 @@ public class Tower4 extends Tower {
         return damage;
     }
 
+    @Override
+    public int getCoolDown() { return coolDown; }
+
+    @Override
+    public double getShotSpeed() { return shotSpeed; }
 }
 

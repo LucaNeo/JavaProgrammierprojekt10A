@@ -34,7 +34,7 @@ public class Tower5 {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                if (!gamePanel.wave.enemy1.isEmpty()) {
+                if (!gamePanel.wave.enemy.isEmpty()) {
                     gamePanel.money += 75;
                 }
             }

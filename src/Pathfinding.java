@@ -11,10 +11,10 @@ public class Pathfinding {
     }
 
     public void run(Graphics g){
-        for (int a = 0; a < gamePanel.wave.enemy1.size(); a++) {
-            if (gamePanel.wave.enemy1.get(a) != null) {
-                gamePanel.wave.enemy1.get(a).draw(g, gamePanel.offsetX, gamePanel.CHUNK_SIZE);
-                gamePanel.wave.enemy1.get(a).move();
+        for (int a = 0; a < gamePanel.wave.enemy.size(); a++) {
+            if (gamePanel.wave.enemy.get(a) != null) {
+                gamePanel.wave.enemy.get(a).draw(g, gamePanel.offsetX, gamePanel.CHUNK_SIZE);
+                gamePanel.wave.enemy.get(a).move();
             }
         }
     }
