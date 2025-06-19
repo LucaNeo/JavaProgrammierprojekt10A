@@ -44,11 +44,10 @@ public class GamePanel extends JPanel {
         setUI();
         startGameLoop();
         setFocusable(true); // Shortcuts möglich machen (Press Key Event)
-
     }
 
     private void startGameLoop() {
-        gameLoop = new Timer(16, e -> {
+        gameLoop = new Timer(16, _ -> {
             updateGame();
             repaint();
         });
@@ -151,7 +150,7 @@ public class GamePanel extends JPanel {
         tower1Button.setOpaque(false);
         tower1Button.setContentAreaFilled(false);
         tower1Button.setBorderPainted(false);
-        tower1Button.addActionListener(e -> {
+        tower1Button.addActionListener(_ -> {
             placingTower = true;
             selectedTowerType = 1;
             repaint();
@@ -166,7 +165,7 @@ public class GamePanel extends JPanel {
         tower2Button.setOpaque(false);
         tower2Button.setContentAreaFilled(false);
         tower2Button.setBorderPainted(false);
-        tower2Button.addActionListener(e -> {
+        tower2Button.addActionListener(_ -> {
             placingTower = true;
             selectedTowerType = 2;
             repaint();
@@ -181,7 +180,7 @@ public class GamePanel extends JPanel {
         tower3Button.setOpaque(false);
         tower3Button.setContentAreaFilled(false);
         tower3Button.setBorderPainted(false);
-        tower3Button.addActionListener(e -> {
+        tower3Button.addActionListener(_ -> {
             placingTower = true;
             selectedTowerType = 3;
             repaint();
@@ -196,7 +195,7 @@ public class GamePanel extends JPanel {
         tower4Button.setOpaque(false);
         tower4Button.setContentAreaFilled(false);
         tower4Button.setBorderPainted(false);
-        tower4Button.addActionListener(e -> {
+        tower4Button.addActionListener(_ -> {
             placingTower = true;
             selectedTowerType = 4;
             repaint();
@@ -211,7 +210,7 @@ public class GamePanel extends JPanel {
         tower5Button.setOpaque(false);
         tower5Button.setContentAreaFilled(false);
         tower5Button.setBorderPainted(false);
-        tower5Button.addActionListener(e -> {
+        tower5Button.addActionListener(_ -> {
             placingTower = true;
             selectedTowerType = 5;
             repaint();
@@ -228,7 +227,7 @@ public class GamePanel extends JPanel {
         returnToMenu.setOpaque(false);
         returnToMenu.setContentAreaFilled(false);
         returnToMenu.setBorderPainted(false);
-        returnToMenu.addActionListener(e -> {
+        returnToMenu.addActionListener(_ -> {
             returnToMenu();
         });
         add(returnToMenu);
@@ -244,7 +243,7 @@ public class GamePanel extends JPanel {
         startButton.setContentAreaFilled(false);
         startButton.setBorderPainted(false);
         startButton.setDisabledIcon(new ImageIcon(pressedStartImage));
-        startButton.addActionListener(e -> {
+        startButton.addActionListener(_ -> {
             if (!waveStarted && health != 0){
                 wave.createWave1();
                 startButton.setEnabled(false);
@@ -260,7 +259,7 @@ public class GamePanel extends JPanel {
         pauseButton.setBounds(1255, 960, 290, 100);
         pauseButton.setContentAreaFilled(false);
         pauseButton.setBorderPainted(false);
-        pauseButton.addActionListener(e -> {
+        pauseButton.addActionListener(_ -> {
             //if(pausepressed){
             //     for (Shot.Projectile p : Shot.projectile) {
             //        p.setX(0);
@@ -278,7 +277,7 @@ public class GamePanel extends JPanel {
         restartButton.setBounds(1565, 960, 290, 100);
         restartButton.setContentAreaFilled(false);
         restartButton.setBorderPainted(false);
-        restartButton.addActionListener(e -> {
+        restartButton.addActionListener(_ -> {
             health = 100;
             money = 1000;
             towers1.clear();
@@ -315,7 +314,7 @@ public class GamePanel extends JPanel {
                 }
             }
         }
-        drawGrid(g);
+
         //  Türme zeichnen
         for (Tower1 tower1 : towers1) {
             tower1.draw(g, CHUNK_SIZE, offsetX);
@@ -333,10 +332,6 @@ public class GamePanel extends JPanel {
             tower5.draw(g, CHUNK_SIZE, offsetX);
         }
 
-        pathFinding.run(g);
-        shot.run(g);
-
-        drawHUD(g,g);
         //draw ButtonBackground
         g.drawImage(towerFrame, 19 * CHUNK_SIZE, 0,null);
         g.drawImage(separator, 80, 0,null);
@@ -344,6 +339,10 @@ public class GamePanel extends JPanel {
         g.drawImage(gateway,345,14 * CHUNK_SIZE + 2,150,70,null);
         g.drawImage(banner,5*CHUNK_SIZE,0,null);
 
+        pathFinding.run(g);
+        shot.run(g);
+        drawHUD(g,g);
+        drawGrid(g);
     }
 
     private void drawGrid(Graphics g) { //teilt map in chunks
@@ -365,7 +364,7 @@ public class GamePanel extends JPanel {
             }
         }
     }
-    // TODO Maybe shop hinzufügen
+
     private void drawHUD(Graphics g, Graphics g2) { // HP und Geld anzeige
         g.setColor(Color.ORANGE);
         g.setFont(new Font("Arial", Font.BOLD, 40));
@@ -373,9 +372,6 @@ public class GamePanel extends JPanel {
         g2.setColor(Color.RED);
         g2.setFont(new Font("Arial", Font.BOLD, 40));
         g2.drawString("♥️" + health, 1220, 80);
-
-      //  g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-
     }
 
     public int getMoney() { return money; }

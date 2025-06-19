@@ -10,8 +10,6 @@ import java.util.Objects;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
-//Autoren Neo, Luca
-
 public class Shot {
 
     private final GamePanel gamePanel;
@@ -20,6 +18,7 @@ public class Shot {
     private final List<Double> deltaX = new ArrayList<>();
     private final List<Double> deltaY = new ArrayList<>();
     private final Integer[] timer = new Integer[4];
+    Image image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/goatAttack.png"))).getImage();
 
     public Shot(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -189,6 +188,7 @@ public class Shot {
         return false;
     }
 
+    // Autor: Neo, Luca
     public void resetShot() {
         projectile.clear();
         deltaX.clear();

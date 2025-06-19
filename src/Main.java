@@ -5,6 +5,7 @@ package src;
 //TODO: Aktivierungssystem für Wave schreiben
 //TODO: Lebensanzeige Enemies (in irgendeiner Art)
 //TODO: PauseGame Button implementieren
+//TODO: Placement Offset
 //TODO: Hintergrund für Gamepanel erstellen
 //TODO: README schreiben
 //TODO: Größe des Fensters anpassen können
