@@ -10,10 +10,9 @@ public class Wave {
     private final Random random = new Random();
     private int waveCompleted = 0;
 
-    public final List<Enemy> enemy = new ArrayList<>();
+    private final List<Enemy> enemy = new ArrayList<>();
 
-    public Wave() {
-    }
+    public Wave() {}
 
     public void createWave1(){
         for (int i = 0; i < 10; i++) {
@@ -33,6 +32,6 @@ public class Wave {
     }
 
     public Enemy getSpecificEnemy(int index) { return enemy.get(index); }
-    public List getAllEnemies() { return enemy; }
+    public List getEnemyArrayList() { return enemy; }
     public int getWavesCompleted(){ return waveCompleted; }
 }
