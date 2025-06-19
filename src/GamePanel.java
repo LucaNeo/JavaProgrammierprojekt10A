@@ -12,32 +12,31 @@ import java.util.List;
 import java.util.Objects;
 
 public class GamePanel extends JPanel {
-    final int CHUNK_SIZE = 72;
-    final int rows = 15;
-    final int cols = 15;
+    private final int CHUNK_SIZE = 72;
+    private final int rows = 15;
+    private final int cols = 15;
 
-    public boolean[][] placeable;
-    public boolean[][] isPathway;
-    public boolean placingTower = false;  // Ist Platzierungsmodus aktiv?
-    public int offsetX = 100;
-   // private final boolean gridEditorMode = false;
-    final List<Tower1> towers1 = new ArrayList<>();
-    final List<Tower2> towers2 = new ArrayList<>();
-    final List<Tower3> towers3 = new ArrayList<>();
-    final List<Tower4> towers4 = new ArrayList<>();
-    final List<Tower5> towers5 = new ArrayList<>();
-    public Wave wave = new Wave();
+    private boolean[][] placeable;
+    private boolean[][] isPathway;
+    private boolean placingTower = false;  // Ist Platzierungsmodus aktiv?
+    private final int offsetX = 100;
+    private final List<Tower1> towers1 = new ArrayList<>();
+    private final List<Tower2> towers2 = new ArrayList<>();
+    private final List<Tower3> towers3 = new ArrayList<>();
+    private final List<Tower4> towers4 = new ArrayList<>();
+    private final List<Tower5> towers5 = new ArrayList<>();
+    private final Wave wave = new Wave();
 
     private Timer gameLoop; // aktive runde ?
-    int money = 1000; // StartGeld
-    int health = 100; //hp
-    int selectedTowerType = 0;    // 1 = Tower1, 2 = Tower2 etc.
-    boolean waveStarted = false;
+    private int money = 1000; // StartGeld
+    private int health = 100; //hp
+    private int selectedTowerType = 0;    // 1 = Tower1, 2 = Tower2 etc.
+    private final boolean waveStarted = false;
 
     private final JFrame parentFrame;
     private final Pathfinding pathFinding = new Pathfinding(this);
     private final Shot shot = new Shot(this);
-    JButton startButton;
+    private JButton startButton;
 
     public GamePanel(JFrame frame) {
         this.parentFrame = frame;
@@ -57,13 +56,13 @@ public class GamePanel extends JPanel {
     }
 
     private void updateGame() {
-        for (int i = 0; i < wave.enemy1.size(); i++) {
-            if (wave.enemy1.get(i) != null) {
-                if (wave.enemy1.get(i).getX() == 4 && wave.enemy1.get(i).getY() == 13) {
-                    health = 0;
+        for (int i = 0; i < wave.getEnemyArrayList().size(); i++) {
+            if (wave.getEnemyArrayList().get(i) != null) {
+                if (wave.getSpecificEnemy(i).getX() == 4 && wave.getSpecificEnemy(i).getY() == 13) {
+                    setHealth(0);
                     wave.clearWave();
                     startButton.setEnabled(true);
-                    i = wave.enemy1.size();
+                    i = wave.getEnemyArrayList().size();
                 }
             }
         }
@@ -142,13 +141,6 @@ public class GamePanel extends JPanel {
         buttonPanel.setBounds(panelX, panelY, panelWidth, panelHeight);
 
         add(buttonPanel);
-
-        JButton returnButton = new JButton("Menu");
-        returnButton.addActionListener(e -> returnToMenu());
-        returnButton.setFocusPainted(false);
-        returnButton.setForeground(Color.WHITE);
-        returnButton.setBackground(new Color(30, 30, 40));
-        buttonPanel.add(returnButton);
 
         // Tower-Auswahl-Leiste
         ImageIcon originalIcon1 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-guard.png")));
@@ -294,11 +286,7 @@ public class GamePanel extends JPanel {
             towers3.clear();
             towers4.clear();
             towers5.clear();
-            wave.enemy1.clear();
-            //wave.enemy2.clear();
-            //wave.enemy3.clear();
-            //wave.enemy4.clear();
-            //wave.enemy5.clear();
+            wave.getEnemyArrayList().clear();
 
             initGrid();
             startButton.setEnabled(true);
@@ -389,5 +377,32 @@ public class GamePanel extends JPanel {
 
     }
 
+    public int getMoney() { return money; }
+    public int getHealth() { return health; }
+    public int getOffsetX() { return offsetX; }
+    public int getCHUNK_SIZE() { return CHUNK_SIZE; }
+    public int getHeight() { return parentFrame.getHeight(); }
+    public int getWidth() { return parentFrame.getWidth(); }
+    public int getCols() { return cols; }
+    public int getRows() { return rows; }
+    public int getSelectedTowerType() { return selectedTowerType; }
+    public boolean getPlaceable(int col, int row) { return placeable[col][row]; }
+    public boolean getPlacingTower() { return placingTower; }
+    public List<Tower1> getTower1Arraylist() { return towers1; }
+    public List<Tower2> getTower2Arraylist() { return towers2; }
+    public List<Tower3> getTower3Arraylist() { return towers3; }
+    public List<Tower4> getTower4Arraylist() { return towers4; }
+    public List<Tower5> getTower5Arraylist() { return towers5; }
+    public Tower1 getSpecificTower1(int index) { return towers1.get(index); }
+    public Tower2 getSpecificTower2(int index) { return towers2.get(index); }
+    public Tower3 getSpecificTower3(int index) { return towers3.get(index); }
+    public Tower4 getSpecificTower4(int index) { return towers4.get(index); }
+    public Tower5 getSpecificTower5(int index) { return towers5.get(index); }
+    public Wave getWave() { return wave; }
 
+    public void setHealth(int value) { health = value; }
+    public void setMoney(int value) { money = value; }
+    public void setPlaceable(int col, int row, boolean bool) { placeable[col][row] = bool; }
+    public void setPlacingTower(boolean bool) { placingTower = bool; }
+    public void setSelectedTowerType(int value) { selectedTowerType = value; }
 }

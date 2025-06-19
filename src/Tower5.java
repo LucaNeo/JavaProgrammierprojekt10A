@@ -7,16 +7,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Tower5 {
-    public int x, y;
-    public Image image;
-    public GamePanel gamePanel;
-    private Timer timer;
-
-
-
-
-
-
+    private final int x;
+    private final int y;
+    private final Image image;
+    private final GamePanel gamePanel;
 
     public Tower5(int x, int y, GamePanel gamePanel) {
         this.x = x;
@@ -30,12 +24,12 @@ public class Tower5 {
     }
 
     private void startTimer() {
-        timer = new Timer();
+        Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                if (!gamePanel.wave.enemy1.isEmpty()) {
-                    gamePanel.money += 75;
+                if (!gamePanel.getWave().getEnemyArrayList().isEmpty()) {
+                    gamePanel.setMoney(gamePanel.getMoney() + 75);
                 }
             }
         };
