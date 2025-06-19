@@ -3,7 +3,6 @@ package src;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,6 +47,7 @@ public class Shot {
             Tower1 tower = gamePanel.getSpecificTower1(a);
             if (tower != null && getTargetedEnemy(tower) != null) {
                 if (gamePanel.getHealth() > 0 && checkEnemyInRange(tower) && !gamePanel.getWave().getEnemyArrayList().isEmpty()) {
+                    System.out.println(checkEnemyInRange(tower));
                     if (timer[0] % tower.getCoolDown() == 0) {
                         projectile.add(new Projectile(gamePanel.getSpecificTower1(a).getX(), gamePanel.getSpecificTower1(a).getY(), gamePanel.getSpecificTower1(a).getShotSpeed(), g, gamePanel.getSpecificTower1(a)));
                         deltaX.add((getTargetedEnemy(gamePanel.getSpecificTower1(a)).getX() + 0.5) - gamePanel.getSpecificTower1(a).getX());
@@ -187,5 +187,13 @@ public class Shot {
             }
         }
         return false;
+    }
+
+    public void resetShot() {
+        projectile.clear();
+        deltaX.clear();
+        deltaY.clear();
+        targetedEnemy = null;
+        Arrays.fill(timer, 0);
     }
 }

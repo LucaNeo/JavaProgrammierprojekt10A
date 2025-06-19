@@ -287,6 +287,7 @@ public class GamePanel extends JPanel {
             towers4.clear();
             towers5.clear();
             wave.getEnemyArrayList().clear();
+            shot.resetShot();
 
             initGrid();
             startButton.setEnabled(true);

@@ -1,5 +1,14 @@
 package src;
 
+//TODO: Shot Bug Tower1 fixen (schießt weiter/targetEnemy wird versucht weiter abzuschießen, obwohl außer range)
+//TODO: Waves implementieren
+//TODO: Aktivierungssystem für Wave schreiben
+//TODO: Lebensanzeige Enemies (in irgendeiner Art)
+//TODO: PauseGame Button implementieren
+//TODO: Hintergrund für Gamepanel erstellen
+//TODO: README schreiben
+//TODO: Größe des Fensters anpassen können
+
 import javax.swing.*;
 import java.awt.*;
 
