@@ -278,8 +278,8 @@ public class GamePanel extends JPanel {
         restartButton.setContentAreaFilled(false);
         restartButton.setBorderPainted(false);
         restartButton.addActionListener(_ -> {
-            health = 100;
-            money = 1000;
+            setHealth(100); //health = 100;
+            setMoney(1000); //money = 1000;
             towers1.clear();
             towers2.clear();
             towers3.clear();
