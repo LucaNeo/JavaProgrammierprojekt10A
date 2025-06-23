@@ -6,14 +6,16 @@ import java.util.Objects;
 // Autor: Titus
 public class Enemy2 extends Enemy {
     private double x, y;
-    private int health = 100;
-    private double speed = 0.1;
+    private int health = 250;
+    private final int maxHealth;
+    private final double speed = 0.1;
     private final Image image;
 
     public Enemy2(double x, double y) {
         super(x, y);
         this.x = x;
         this.y = y;
+        maxHealth = health;
 
         // Bild laden
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-torchcarrier.png"))); // Pfad anpassen
@@ -35,9 +37,9 @@ public class Enemy2 extends Enemy {
 
     @Override
     public void draw(Graphics2D g2d, int offsetX, int CHUNK_SIZE) {
-        AlphaComposite alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f);
-        g2d.setComposite(alpha);
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) health / maxHealth));
         g2d.drawImage(image, (int) Math.round(x * CHUNK_SIZE) + offsetX, (int) Math.round(y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
     }
 
     @Override

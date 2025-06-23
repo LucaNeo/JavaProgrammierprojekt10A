@@ -7,35 +7,38 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class GamePanel extends JPanel {
+
     private final int CHUNK_SIZE = 72;
     private final int rows = 15;
     private final int cols = 15;
-
     private boolean[][] placeable;
     private boolean[][] isPathway;
-    private boolean placingTower = false;  // Ist Platzierungsmodus aktiv?
     private final int offsetX = 100;
+    private boolean placingTower = false;  // Ist Platzierungsmodus aktiv?
+    private int money = 1000; // StartGeld
+    private int health = 100; //hp
+    private int selectedTowerType = 0;    // 1 = Tower1, 2 = Tower2 etc.se;
+    private boolean paused = false;
+
     private final List<Tower1> towers1 = new ArrayList<>();
     private final List<Tower2> towers2 = new ArrayList<>();
     private final List<Tower3> towers3 = new ArrayList<>();
     private final List<Tower4> towers4 = new ArrayList<>();
     private final List<Tower5> towers5 = new ArrayList<>();
     private final Wave wave = new Wave();
-
+    private final Shot shot = new Shot(this);
+    private final Pathfinding pathFinding = new Pathfinding(this);
     private Timer gameLoop; // aktive runde ?
-    private int money = 1000; // StartGeld
-    private int health = 100; //hp
-    private int selectedTowerType = 0;    // 1 = Tower1, 2 = Tower2 etc.se;
 
     private final JFrame parentFrame;
-    private final Pathfinding pathFinding = new Pathfinding(this);
-    private final Shot shot = new Shot(this);
     private JButton startButton;
+    private JButton restartButton;
 
     public GamePanel(JFrame frame) {
         this.parentFrame = frame;
@@ -66,8 +69,16 @@ public class GamePanel extends JPanel {
         }
     }
 
-    private void pauseGame(){
-
+    private void pauseGame() {
+        if(!paused) {
+            paused = true;
+            startButton.setEnabled(false);
+            restartButton.setEnabled(false);
+        } else {
+            paused = false;
+            startButton.setEnabled(true);
+            restartButton.setEnabled(true);
+        }
     }
 
     private void initGrid() {
@@ -263,29 +274,10 @@ public class GamePanel extends JPanel {
         });
         add(startButton);
 
-        //pauseButton
-        boolean pausepressed = false;
-        ImageIcon pauseIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pauseButton.png")));
-        Image pauseImage = pauseIcon.getImage().getScaledInstance(290, 100, Image.SCALE_SMOOTH);
-        JButton pauseButton = new JButton(new ImageIcon(pauseImage));
-        pauseButton.setBounds(1255, 960, 290, 100);
-        pauseButton.setContentAreaFilled(false);
-        pauseButton.setBorderPainted(false);
-        pauseButton.addActionListener(_ -> {
-            //if(pausepressed){
-            //     for (Shot.Projectile p : Shot.projectile) {
-            //        p.setX(0);
-            //        p.setY(0);
-            //
-            //    }
-            //}
-        });
-        add(pauseButton);
-
         //restartButton
         ImageIcon restartIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/restartButton.png")));
         Image restartImage = restartIcon.getImage().getScaledInstance(290, 100, Image.SCALE_SMOOTH);
-        JButton restartButton = new JButton(new ImageIcon(restartImage));
+        restartButton = new JButton(new ImageIcon(restartImage));
         restartButton.setBounds(1565, 960, 290, 100);
         restartButton.setContentAreaFilled(false);
         restartButton.setBorderPainted(false);
@@ -298,6 +290,7 @@ public class GamePanel extends JPanel {
             towers4.clear();
             towers5.clear();
             wave.getEnemyArrayList().clear();
+            wave.setWavesCompleted(0);
             shot.resetShot();
 
             initGrid();
@@ -305,6 +298,19 @@ public class GamePanel extends JPanel {
             repaint();
         });
         add(restartButton);
+
+        //pauseButton
+        ImageIcon pauseIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pauseButton.png")));
+        Image pauseImage = pauseIcon.getImage().getScaledInstance(290, 100, Image.SCALE_SMOOTH);
+        JButton pauseButton = new JButton(new ImageIcon(pauseImage));
+        pauseButton.setBounds(1255, 960, 290, 100);
+        pauseButton.setContentAreaFilled(false);
+        pauseButton.setBorderPainted(false);
+        pauseButton.addActionListener(_ -> {
+            pauseGame();
+            repaint();
+        });
+        add(pauseButton);
     }
 
     @Override
@@ -315,8 +321,12 @@ public class GamePanel extends JPanel {
         Image pathImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pathway.png"))).getImage();
         Image towerFrame = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/towerFrame.png"))).getImage();
         Image separator = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/separator.png"))).getImage();
-        Image gateway = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/Gateway2.png"))).getImage();
+        Image gateway = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/gateway2.png"))).getImage();
         Image banner = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/banner.png"))).getImage();
+        Image background = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/background.png"))).getImage();
+
+        g.drawImage(background, 0, 0, null);
+
         for (int x = 0; x < cols; x++) {
             for (int y = 0; y < rows; y++) {
                 if (isPathway[x][y]) {
@@ -349,7 +359,7 @@ public class GamePanel extends JPanel {
         g.drawImage(separator, 80, 0,null);
         g.drawImage(separator,1178,0,null);
         g.drawImage(gateway,345,14 * CHUNK_SIZE + 2,150,70,null);
-        g.drawImage(banner,5*CHUNK_SIZE,0,null);
+        g.drawImage(banner,5 * CHUNK_SIZE,0,null);
 
         pathFinding.run((Graphics2D) g);
         shot.run(g);
@@ -397,6 +407,7 @@ public class GamePanel extends JPanel {
     public int getSelectedTowerType() { return selectedTowerType; }
     public boolean getPlaceable(int col, int row) { return placeable[col][row]; }
     public boolean getPlacingTower() { return placingTower; }
+    public boolean getPaused() { return paused; }
     public List<Tower1> getTower1Arraylist() { return towers1; }
     public List<Tower2> getTower2Arraylist() { return towers2; }
     public List<Tower3> getTower3Arraylist() { return towers3; }

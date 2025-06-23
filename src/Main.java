@@ -3,7 +3,6 @@ package src;
 //TODO: Shot Bug Tower1 fixen (schießt weiter/targetEnemy wird versucht weiter abzuschießen, obwohl außer range) <-- Luca
 //TODO: Waves implementieren <-- Titus
 //TODO: Aktivierungssystem für Wave schreiben <-- Titus
-//TODO: Lebensanzeige Enemies (in irgendeiner Art) <-- Luca
 //TODO: PauseGame Button implementieren <-- Neo
 //TODO: Placement Offset <-- Neo?
 //TODO: Hintergrund für Gamepanel erstellen <-- Neo

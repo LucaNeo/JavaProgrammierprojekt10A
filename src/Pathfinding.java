@@ -14,7 +14,9 @@ public class Pathfinding {
         for (int a = 0; a < gamePanel.getWave().getEnemyArrayList().size(); a++) {
             if (gamePanel.getWave().getSpecificEnemy(a) != null) {
                 gamePanel.getWave().getSpecificEnemy(a).draw(g2d, gamePanel.getOffsetX(), gamePanel.getCHUNK_SIZE());
-                gamePanel.getWave().getSpecificEnemy(a).move();
+                if (!gamePanel.getPaused()) {
+                    gamePanel.getWave().getSpecificEnemy(a).move();
+                }
             }
         }
     }

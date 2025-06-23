@@ -18,7 +18,6 @@ public class Shot {
     private final List<Double> deltaX = new ArrayList<>();
     private final List<Double> deltaY = new ArrayList<>();
     private final Integer[] timer = new Integer[4];
-    Image image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/goatAttack.png"))).getImage();
 
     public Shot(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -44,9 +43,8 @@ public class Shot {
         // Logik für das Erstellen neuer Projektile für Tower1
         for (int a = 0; a < gamePanel.getTower1Arraylist().size(); a++) {
             Tower1 tower = gamePanel.getSpecificTower1(a);
-            if (tower != null && getTargetedEnemy(tower) != null) {
+            if (tower != null && getTargetedEnemy(tower) != null && !gamePanel.getPaused()) {
                 if (gamePanel.getHealth() > 0 && checkEnemyInRange(tower) && !gamePanel.getWave().getEnemyArrayList().isEmpty()) {
-                    System.out.println(checkEnemyInRange(tower));
                     if (timer[0] % tower.getCoolDown() == 0) {
                         projectile.add(new Projectile(gamePanel.getSpecificTower1(a).getX(), gamePanel.getSpecificTower1(a).getY(), gamePanel.getSpecificTower1(a).getShotSpeed(), g, gamePanel.getSpecificTower1(a)));
                         deltaX.add((getTargetedEnemy(gamePanel.getSpecificTower1(a)).getX() + 0.5) - gamePanel.getSpecificTower1(a).getX());
@@ -59,7 +57,7 @@ public class Shot {
         // Logik für das Erstellen neuer Projektile für Tower4
         for (int a = 0; a < gamePanel.getTower4Arraylist().size(); a++) {
             Tower4 tower = gamePanel.getSpecificTower4(a);
-            if (tower != null && getTargetedEnemy(tower) != null) {
+            if (tower != null && getTargetedEnemy(tower) != null && !gamePanel.getPaused()) {
                 if (gamePanel.getHealth() > 0 && checkEnemyInRange(tower) && !gamePanel.getWave().getEnemyArrayList().isEmpty()) {
                     if (timer[1] % tower.getCoolDown() == 0) {
                         projectile.add(new Projectile(gamePanel.getSpecificTower4(a).getX(), gamePanel.getSpecificTower4(a).getY(), gamePanel.getSpecificTower4(a).getShotSpeed(), g, gamePanel.getSpecificTower4(a)));
@@ -87,14 +85,16 @@ public class Shot {
                 }
 
                 p.draw(g, getRotatedImage(currentProjectileImage, angle), gamePanel.getOffsetX(), gamePanel.getCHUNK_SIZE());
-                p.setX(p.getX() + currentDeltaX * p.getSpeed());
-                p.setY(p.getY() + currentDeltaY * p.getSpeed());
+                if (!gamePanel.getPaused()) {
+                    p.setX(p.getX() + currentDeltaX * p.getSpeed());
+                    p.setY(p.getY() + currentDeltaY * p.getSpeed());
 
-                if (!hitAndMarkForRemoval(p, p.getOriginTower())) {
-                    if (p.getX() >= 0 && p.getY() >= 0 && p.getX() < gamePanel.getWidth() && p.getY() < gamePanel.getHeight()) {
-                        nextProjectiles.add(p);
-                        nextDeltaX.add(currentDeltaX);
-                        nextDeltaY.add(currentDeltaY);
+                    if (!hitAndMarkForRemoval(p, p.getOriginTower())) {
+                        if (p.getX() >= 0 && p.getY() >= 0 && p.getX() < gamePanel.getWidth() && p.getY() < gamePanel.getHeight()) {
+                            nextProjectiles.add(p);
+                            nextDeltaX.add(currentDeltaX);
+                            nextDeltaY.add(currentDeltaY);
+                        }
                     }
                 }
             }
@@ -127,9 +127,9 @@ public class Shot {
 
         AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
 
-        Graphics2D g2d = originalImage.createGraphics();
-        g2d.drawImage(projectile, 0, 0, null);
-        g2d.dispose();
+        Graphics g = originalImage.createGraphics();
+        g.drawImage(projectile, 0, 0, null);
+        g.dispose();
 
         return op.filter(originalImage, rotatedImage);
     }
@@ -180,7 +180,7 @@ public class Shot {
                 enemy.takeDamage(tower.getDamage());
                 if (enemy.getHealth() <= 0) {
                     gamePanel.getWave().removeEnemy(enemy);
-                    gamePanel.setMoney(gamePanel.getMoney() + 50);
+                    gamePanel.setMoney(gamePanel.getMoney() + 30);
                     if (enemiesToProcess.size() - 1 == 0) {
                         gamePanel.getWave().setWavesCompleted(gamePanel.getWave().getWavesCompleted() + 1);
                         gamePanel.getStartButton().setEnabled(true);

@@ -16,7 +16,6 @@ public class Wave {
 
     public void createWave1(){
         for (int i = 0; i < 10; i++) {
-
             double r = random.doubles(1, 1.25).findFirst().getAsDouble();
             enemy.add(new Enemy1(2, Double.parseDouble(String.format("%.1f", i * -r).replace(',', '.')))); // r = Abstand der Enemies in Chunks
         }
@@ -25,10 +24,9 @@ public class Wave {
 
         for (int i = 0; i < 20; i++) {
             if (Math.random() < 0.7) {
-            double r = random.doubles(1, 1.25).findFirst().getAsDouble();
-            enemy.add(new Enemy2(2, Double.parseDouble(String.format("%.1f", i * -r).replace(',', '.')))); // r = Abstand der Enemies in Chunks
-        }
-            else {
+                double r = random.doubles(1, 1.25).findFirst().getAsDouble();
+                enemy.add(new Enemy2(2, Double.parseDouble(String.format("%.1f", i * -r).replace(',', '.')))); // r = Abstand der Enemies in Chunks
+            } else {
                 double r = random.doubles(1, 1.25).findFirst().getAsDouble();
                 enemy.add(new Enemy1(2, Double.parseDouble(String.format("%.1f", i * -r).replace(',', '.')))); // r = Abstand der Enemies in Chunks
             }
@@ -40,8 +38,7 @@ public class Wave {
             if (Math.random() < 0.5) {
                 double r = random.doubles(1, 1.25).findFirst().getAsDouble();
                 enemy.add(new Enemy2(2, Double.parseDouble(String.format("%.1f", i * -r).replace(',', '.')))); // r = Abstand der Enemies in Chunks
-            }
-            else {
+            } else {
                 double r = random.doubles(1, 1.25).findFirst().getAsDouble();
                 enemy.add(new Enemy1(2, Double.parseDouble(String.format("%.1f", i * -r).replace(',', '.')))); // r = Abstand der Enemies in Chunks
             }
@@ -53,18 +50,18 @@ public class Wave {
             if (Math.random() < 0.2) {
                 double r = random.doubles(1, 1.25).findFirst().getAsDouble();
                 enemy.add(new Enemy2(2, Double.parseDouble(String.format("%.1f", i * -r).replace(',', '.')))); // r = Abstand der Enemies in Chunks
-            }
-            else {
+            } else {
                 double r = random.doubles(1, 1.25).findFirst().getAsDouble();
                 enemy.add(new Enemy1(2, Double.parseDouble(String.format("%.1f", i * -r).replace(',', '.')))); // r = Abstand der Enemies in Chunks
             }
         }
     }
-    public void createWave5(){
+    public void createWave5() {
         for (int i = 0; i < 1; i++) {
             double r = random.doubles(1, 1.25).findFirst().getAsDouble();
             enemy.add(new Enemy3(2, Double.parseDouble(String.format("%.1f", i * -r).replace(',', '.')))); // r = Abstand der Enemies in Chunks
-        }}
+        }
+    }
 
     public void clearWave(){
         //clear Wave 1

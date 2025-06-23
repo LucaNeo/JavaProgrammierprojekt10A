@@ -28,7 +28,7 @@ public class Tower5 {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                if (!gamePanel.getWave().getEnemyArrayList().isEmpty()) {
+                if (!gamePanel.getWave().getEnemyArrayList().isEmpty() && !gamePanel.getPaused()) {
                     gamePanel.setMoney(gamePanel.getMoney() + 75);
                 }
             }
