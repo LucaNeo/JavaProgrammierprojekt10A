@@ -50,4 +50,13 @@ class DifficultySettings {
     public int getEnemyHealth() {
         return enemyHealth;
     }
+    private static Difficulty currentDifficulty = Difficulty.MEDIUM; // Standard
+
+    public static Difficulty getCurrentDifficulty() {
+        return currentDifficulty;
+    }
+
+    public static void setDifficulty(Difficulty difficulty) {
+        currentDifficulty = difficulty;
+    }
 }
