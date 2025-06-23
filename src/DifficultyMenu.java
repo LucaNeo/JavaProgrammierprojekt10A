@@ -8,11 +8,14 @@ import java.util.Objects;
 
 public class DifficultyMenu extends JPanel {
 
-        //   private Image backgroundImage;
+    private final JFrame parentFrame;
+    //   private Image backgroundImage;
         private Font titleFont;
+       
 
 
         public DifficultyMenu(JFrame frame) {
+            this.parentFrame = frame;
             // Layout & Hintergrund
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             setBackground(new Color(30, 30, 40));
@@ -37,7 +40,7 @@ public class DifficultyMenu extends JPanel {
             JButton easyButton = createMenuButton("Easy");
             JButton mediumButton = createMenuButton("Medium");
             JButton hardButton = createMenuButton("Hard");
-          //  JButton exitButton = createMenuButton("Exit");
+            JButton backButton = createMenuButton("Back");
 
             // Button-Actions
             easyButton.addActionListener(e -> {
@@ -57,7 +60,11 @@ public class DifficultyMenu extends JPanel {
                 DifficultySettings.setDifficulty(Difficulty.HARD);
             });
 
-           // exitButton.addActionListener(e -> System.exit(0));
+            backButton.addActionListener(e -> {
+                parentFrame.setContentPane(new SettingsMenu(parentFrame));
+                parentFrame.revalidate();
+                parentFrame.repaint();});
+
 
             // Zusammensetzen von    Komponenten
             add(title);
@@ -67,7 +74,7 @@ public class DifficultyMenu extends JPanel {
             add(Box.createRigidArea(new Dimension(0, 20)));
             add(hardButton);
             add(Box.createRigidArea(new Dimension(0, 20)));
-            //add(exitButton);
+            add(backButton);
         }
         // optimierter button für Settings/Menu
         private JButton createMenuButton(String text) {
