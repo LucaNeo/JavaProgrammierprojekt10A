@@ -12,32 +12,31 @@ import java.util.List;
 import java.util.Objects;
 
 public class GamePanel extends JPanel {
-    final int CHUNK_SIZE = 72;
-    final int rows = 15;
-    final int cols = 15;
+    private final int CHUNK_SIZE = 72;
+    private final int rows = 15;
+    private final int cols = 15;
 
-    public boolean[][] placeable;
-    public boolean[][] isPathway;
-    public boolean placingTower = false;  // Ist Platzierungsmodus aktiv?
-    public int offsetX = 100;
-   // private final boolean gridEditorMode = false;
-    final List<Tower1> towers1 = new ArrayList<>();
-    final List<Tower2> towers2 = new ArrayList<>();
-    final List<Tower3> towers3 = new ArrayList<>();
-    final List<Tower4> towers4 = new ArrayList<>();
-    final List<Tower5> towers5 = new ArrayList<>();
-    public Wave wave = new Wave();
+    private boolean[][] placeable;
+    private boolean[][] isPathway;
+    private boolean placingTower = false;  // Ist Platzierungsmodus aktiv?
+    private final int offsetX = 100;
+    private final List<Tower1> towers1 = new ArrayList<>();
+    private final List<Tower2> towers2 = new ArrayList<>();
+    private final List<Tower3> towers3 = new ArrayList<>();
+    private final List<Tower4> towers4 = new ArrayList<>();
+    private final List<Tower5> towers5 = new ArrayList<>();
+    private final Wave wave = new Wave();
 
     private Timer gameLoop; // aktive runde ?
-    int money = 1000; // StartGeld
-    int health = 100; //hp
-    int selectedTowerType = 0;    // 1 = Tower1, 2 = Tower2 etc.
-    boolean waveStarted = false;
+    private int money = 1000; // StartGeld
+    private int health = 100; //hp
+    private int selectedTowerType = 0;    // 1 = Tower1, 2 = Tower2 etc.
+    private final boolean waveStarted = false;
 
     private final JFrame parentFrame;
     private final Pathfinding pathFinding = new Pathfinding(this);
     private final Shot shot = new Shot(this);
-    JButton startButton;
+    private JButton startButton;
 
     public GamePanel(JFrame frame) {
         this.parentFrame = frame;
@@ -45,11 +44,10 @@ public class GamePanel extends JPanel {
         setUI();
         startGameLoop();
         setFocusable(true); // Shortcuts möglich machen (Press Key Event)
-
     }
 
     private void startGameLoop() {
-        gameLoop = new Timer(16, e -> {
+        gameLoop = new Timer(16, _ -> {
             updateGame();
             repaint();
         });
@@ -57,13 +55,13 @@ public class GamePanel extends JPanel {
     }
 
     private void updateGame() {
-        for (int i = 0; i < wave.enemy1.size(); i++) {
-            if (wave.enemy1.get(i) != null) {
-                if (wave.enemy1.get(i).getX() == 4 && wave.enemy1.get(i).getY() == 13) {
-                    health = 0;
+        for (int i = 0; i < wave.getEnemyArrayList().size(); i++) {
+            if (wave.getEnemyArrayList().get(i) != null) {
+                if (wave.getSpecificEnemy(i).getX() == 4 && wave.getSpecificEnemy(i).getY() == 13) {
+                    setHealth(0);
                     wave.clearWave();
                     startButton.setEnabled(true);
-                    i = wave.enemy1.size();
+                    i = wave.getEnemyArrayList().size();
                 }
             }
         }
@@ -143,23 +141,16 @@ public class GamePanel extends JPanel {
 
         add(buttonPanel);
 
-        JButton returnButton = new JButton("Menu");
-        returnButton.addActionListener(e -> returnToMenu());
-        returnButton.setFocusPainted(false);
-        returnButton.setForeground(Color.WHITE);
-        returnButton.setBackground(new Color(30, 30, 40));
-        buttonPanel.add(returnButton);
-
         // Tower-Auswahl-Leiste
         ImageIcon originalIcon1 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-guard.png")));
         Image scaledImage1 = originalIcon1.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon1 = new ImageIcon(scaledImage1);
         JButton tower1Button = new JButton(scaledIcon1);
-        tower1Button.setBounds(1380,8,64,64);
+        tower1Button.setBounds(1420,28,64,64);
         tower1Button.setOpaque(false);
         tower1Button.setContentAreaFilled(false);
         tower1Button.setBorderPainted(false);
-        tower1Button.addActionListener(e -> {
+        tower1Button.addActionListener(_ -> {
             placingTower = true;
             selectedTowerType = 1;
             repaint();
@@ -170,11 +161,11 @@ public class GamePanel extends JPanel {
         Image scaledImage2 = originalIcon2.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon2 = new ImageIcon(scaledImage2);
         JButton tower2Button = new JButton(scaledIcon2);
-        tower2Button.setBounds(1464,10,64,64);
+        tower2Button.setBounds(1520,32,64,64);
         tower2Button.setOpaque(false);
         tower2Button.setContentAreaFilled(false);
         tower2Button.setBorderPainted(false);
-        tower2Button.addActionListener(e -> {
+        tower2Button.addActionListener(_ -> {
             placingTower = true;
             selectedTowerType = 2;
             repaint();
@@ -185,11 +176,11 @@ public class GamePanel extends JPanel {
         Image scaledImage3 = originalIcon3.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon3 = new ImageIcon(scaledImage3);
         JButton tower3Button = new JButton(scaledIcon3);
-        tower3Button.setBounds(1545,8,64,64);
+        tower3Button.setBounds(1602,25,64,64);
         tower3Button.setOpaque(false);
         tower3Button.setContentAreaFilled(false);
         tower3Button.setBorderPainted(false);
-        tower3Button.addActionListener(e -> {
+        tower3Button.addActionListener(_ -> {
             placingTower = true;
             selectedTowerType = 3;
             repaint();
@@ -200,11 +191,11 @@ public class GamePanel extends JPanel {
         Image scaledImage4 = originalIcon4.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon4= new ImageIcon(scaledImage4);
         JButton tower4Button = new JButton(scaledIcon4);
-        tower4Button.setBounds(1624,8,64,64);
+        tower4Button.setBounds(1685,25,64,64);
         tower4Button.setOpaque(false);
         tower4Button.setContentAreaFilled(false);
         tower4Button.setBorderPainted(false);
-        tower4Button.addActionListener(e -> {
+        tower4Button.addActionListener(_ -> {
             placingTower = true;
             selectedTowerType = 4;
             repaint();
@@ -215,11 +206,11 @@ public class GamePanel extends JPanel {
         Image scaledImage5 = originalIcon5.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon5= new ImageIcon(scaledImage5);
         JButton tower5Button = new JButton(scaledIcon5);
-        tower5Button.setBounds(1705,8,64,64);
+        tower5Button.setBounds(1780,25,64,64);
         tower5Button.setOpaque(false);
         tower5Button.setContentAreaFilled(false);
         tower5Button.setBorderPainted(false);
-        tower5Button.addActionListener(e -> {
+        tower5Button.addActionListener(_ -> {
             placingTower = true;
             selectedTowerType = 5;
             repaint();
@@ -236,7 +227,7 @@ public class GamePanel extends JPanel {
         returnToMenu.setOpaque(false);
         returnToMenu.setContentAreaFilled(false);
         returnToMenu.setBorderPainted(false);
-        returnToMenu.addActionListener(e -> {
+        returnToMenu.addActionListener(_ -> {
             returnToMenu();
         });
         add(returnToMenu);
@@ -252,7 +243,7 @@ public class GamePanel extends JPanel {
         startButton.setContentAreaFilled(false);
         startButton.setBorderPainted(false);
         startButton.setDisabledIcon(new ImageIcon(pressedStartImage));
-        startButton.addActionListener(e -> {
+        startButton.addActionListener(_ -> {
             if (!waveStarted && health != 0){
                 wave.createWave1();
                 startButton.setEnabled(false);
@@ -261,14 +252,21 @@ public class GamePanel extends JPanel {
         add(startButton);
 
         //pauseButton
+        boolean pausepressed = false;
         ImageIcon pauseIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pauseButton.png")));
         Image pauseImage = pauseIcon.getImage().getScaledInstance(290, 100, Image.SCALE_SMOOTH);
         JButton pauseButton = new JButton(new ImageIcon(pauseImage));
         pauseButton.setBounds(1255, 960, 290, 100);
         pauseButton.setContentAreaFilled(false);
         pauseButton.setBorderPainted(false);
-        pauseButton.addActionListener(e -> {
-            //pauseGame Methode einfügen
+        pauseButton.addActionListener(_ -> {
+            //if(pausepressed){
+            //     for (Shot.Projectile p : Shot.projectile) {
+            //        p.setX(0);
+            //        p.setY(0);
+            //
+            //    }
+            //}
         });
         add(pauseButton);
 
@@ -279,19 +277,16 @@ public class GamePanel extends JPanel {
         restartButton.setBounds(1565, 960, 290, 100);
         restartButton.setContentAreaFilled(false);
         restartButton.setBorderPainted(false);
-        restartButton.addActionListener(e -> {
-            health = 100;
-            money = 1000;
+        restartButton.addActionListener(_ -> {
+            setHealth(100); //health = 100;
+            setMoney(1000); //money = 1000;
             towers1.clear();
             towers2.clear();
             towers3.clear();
             towers4.clear();
             towers5.clear();
-            wave.enemy1.clear();
-            //wave.enemy2.clear();
-            //wave.enemy3.clear();
-            //wave.enemy4.clear();
-            //wave.enemy5.clear();
+            wave.getEnemyArrayList().clear();
+            shot.resetShot();
 
             initGrid();
             startButton.setEnabled(true);
@@ -308,7 +303,7 @@ public class GamePanel extends JPanel {
         Image pathImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pathway.png"))).getImage();
         Image towerFrame = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/towerFrame.png"))).getImage();
         Image separator = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/separator.png"))).getImage();
-        Image gateway2 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/Gateway2.png"))).getImage();
+        Image gateway = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/Gateway2.png"))).getImage();
         Image banner = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/banner.png"))).getImage();
         for (int x = 0; x < cols; x++) {
             for (int y = 0; y < rows; y++) {
@@ -319,7 +314,7 @@ public class GamePanel extends JPanel {
                 }
             }
         }
-        drawGrid(g);
+
         //  Türme zeichnen
         for (Tower1 tower1 : towers1) {
             tower1.draw(g, CHUNK_SIZE, offsetX);
@@ -337,17 +332,17 @@ public class GamePanel extends JPanel {
             tower5.draw(g, CHUNK_SIZE, offsetX);
         }
 
-        pathFinding.run(g);
-        shot.run(g, (Graphics2D) g);
-
-        drawHUD(g,g);
         //draw ButtonBackground
-        g.drawImage(towerFrame, 19 * CHUNK_SIZE, 0,null);
+        g.drawImage(towerFrame, 1405, 10,null);
         g.drawImage(separator, 80, 0,null);
         g.drawImage(separator,1178,0,null);
-        g.drawImage(gateway2,345,14*CHUNK_SIZE,150,70,null);
+        g.drawImage(gateway,345,14 * CHUNK_SIZE + 2,150,70,null);
         g.drawImage(banner,5*CHUNK_SIZE,0,null);
 
+        pathFinding.run(g);
+        shot.run(g);
+        drawHUD(g,g);
+        drawGrid(g);
     }
 
     private void drawGrid(Graphics g) { //teilt map in chunks
@@ -369,18 +364,42 @@ public class GamePanel extends JPanel {
             }
         }
     }
-    // TODO Maybe shop hinzufügen
+
     private void drawHUD(Graphics g, Graphics g2) { // HP und Geld anzeige
         g.setColor(Color.ORANGE);
         g.setFont(new Font("Arial", Font.BOLD, 40));
-        g.drawString("$" + money, 1220, 40);
+        g.drawString("$" + money, 1240, 60);
         g2.setColor(Color.RED);
         g2.setFont(new Font("Arial", Font.BOLD, 40));
-        g2.drawString("♥️" + health, 1220, 80);
-
-      //  g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-
+        g2.drawString("♥️" + health, 1240, 100);
     }
 
+    public int getMoney() { return money; }
+    public int getHealth() { return health; }
+    public int getOffsetX() { return offsetX; }
+    public int getCHUNK_SIZE() { return CHUNK_SIZE; }
+    public int getHeight() { return 2000; }
+    public int getWidth() { return 1920; }
+    public int getCols() { return cols; }
+    public int getRows() { return rows; }
+    public int getSelectedTowerType() { return selectedTowerType; }
+    public boolean getPlaceable(int col, int row) { return placeable[col][row]; }
+    public boolean getPlacingTower() { return placingTower; }
+    public List<Tower1> getTower1Arraylist() { return towers1; }
+    public List<Tower2> getTower2Arraylist() { return towers2; }
+    public List<Tower3> getTower3Arraylist() { return towers3; }
+    public List<Tower4> getTower4Arraylist() { return towers4; }
+    public List<Tower5> getTower5Arraylist() { return towers5; }
+    public Tower1 getSpecificTower1(int index) { return towers1.get(index); }
+    public Tower2 getSpecificTower2(int index) { return towers2.get(index); }
+    public Tower3 getSpecificTower3(int index) { return towers3.get(index); }
+    public Tower4 getSpecificTower4(int index) { return towers4.get(index); }
+    public Tower5 getSpecificTower5(int index) { return towers5.get(index); }
+    public Wave getWave() { return wave; }
 
+    public void setHealth(int value) { health = value; }
+    public void setMoney(int value) { money = value; }
+    public void setPlaceable(int col, int row, boolean bool) { placeable[col][row] = bool; }
+    public void setPlacingTower(boolean bool) { placingTower = bool; }
+    public void setSelectedTowerType(int value) { selectedTowerType = value; }
 }

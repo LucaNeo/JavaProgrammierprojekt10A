@@ -8,11 +8,11 @@ public class Tower1 extends Tower {
 
     private final double x;
     private final double y;
-    public Image image;
+    private final Image image;
     public int damage = 25;
     public int coolDown = 10; // in ms
-    private int range = 5;
-    public double shotSpeed = 0.1;
+    private int range = 2;
+    private double shotSpeed = 0.1;
 
     public Tower1(int x, int y) {
         super(x, y);
@@ -48,5 +48,15 @@ public class Tower1 extends Tower {
     @Override
     public int getDamage() {
         return damage;
+    }
+
+    @Override
+    public int getCoolDown() {
+        return coolDown;
+    }
+
+    @Override
+    public double getShotSpeed() {
+        return shotSpeed;
     }
 }

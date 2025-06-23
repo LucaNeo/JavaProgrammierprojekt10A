@@ -37,4 +37,12 @@ public class Tower {
     public int getDamage() {
         return damage;
     }
+
+    public int getCoolDown() {
+        return coolDown;
+    }
+
+    public double getShotSpeed() {
+        return shotSpeed;
+    }
 }

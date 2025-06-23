@@ -1,19 +1,25 @@
 package src;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
+// Autor: Luca
 public class Projectile {
 
     private double x;
     private double y;
+    private double speed;
+    private Tower originTower;
 
-    public Projectile(double x, double y, double speed, Graphics g) {
+    public Projectile(double x, double y, double speed, Graphics g, Tower originTower) {
         this.x = x;
         this.y = y;
+        this.speed = speed;
+        this.originTower = originTower;
     }
 
-    public void draw(Graphics g, Image image, int width, int height, int offsetX, int CHUNK_SIZE) {
-        g.drawImage(image, (int) Math.round(x * CHUNK_SIZE) + offsetX, (int) Math.round(y * CHUNK_SIZE), width, height, null);
+    public void draw(Graphics g, BufferedImage image, int offsetX, int CHUNK_SIZE) {
+        g.drawImage(image, (int) Math.round(x * CHUNK_SIZE) + offsetX, (int) Math.round(y * CHUNK_SIZE), null);
     }
 
     public void move(double dx, double dy) {
@@ -27,6 +33,8 @@ public class Projectile {
     public double getY(){
         return y;
     }
+    public double getSpeed(){ return speed; }
+    public Tower getOriginTower(){ return originTower; }
     public void setX(double x){
         this.x = x;
     }
