@@ -20,6 +20,19 @@ public class Wave {
             enemy.add(new Enemy1(2, Double.parseDouble(String.format("%.1f", i * -r).replace(',', '.')))); // r = Abstand der Enemies in Chunks
         }
     }
+    public void createWave2(){
+
+        for (int i = 0; i < 20; i++) {
+            if (Math.random() < 0.5) {
+            double r = random.doubles(1, 1.25).findFirst().getAsDouble();
+            enemy.add(new Enemy2(2, Double.parseDouble(String.format("%.1f", i * -r).replace(',', '.')))); // r = Abstand der Enemies in Chunks
+        }
+            else {
+                double r = random.doubles(1, 1.25).findFirst().getAsDouble();
+                enemy.add(new Enemy1(2, Double.parseDouble(String.format("%.1f", i * -r).replace(',', '.')))); // r = Abstand der Enemies in Chunks
+            }
+        }
+    }
 
     public void clearWave(){
         //clear Wave 1
