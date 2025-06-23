@@ -34,6 +34,8 @@ public class SettingsMenu extends JPanel {
              JButton difficultyButton = styleButton("Difficulty");
              JButton AutoStartButton = styleButton("Auto-Start");
 
+             difficultyButton.addActionListener(e -> showDifficultyDialog());
+
             //TODO Button-Actions
              JButton backButton = styleButton("Back");
              backButton.addActionListener(e -> {
@@ -51,6 +53,25 @@ public class SettingsMenu extends JPanel {
              add(Box.createRigidArea(new Dimension(0, 20)));
              add(backButton);
 
+         }
+         private void showDifficultyDialog() {
+             String[] options = { "Easy", "Medium", "Hard" };
+             int choice = JOptionPane.showOptionDialog(
+                     parentFrame,
+                     "Select Difficulty :",
+                     "Difficulty Settings",
+                     JOptionPane.DEFAULT_OPTION,
+                     JOptionPane.QUESTION_MESSAGE,
+                     null,
+                     options,
+                     options[1]
+             );
+             switch (choice) {
+                 case 0 -> DifficultySettings.setDifficulty(Difficulty.EASY);
+                 case 1 -> DifficultySettings.setDifficulty(Difficulty.MEDIUM);
+                 case 2 -> DifficultySettings.setDifficulty(Difficulty.HARD);
+                 default -> {}//nichts ändern wenn abruch
+             }
          }
 
          private JButton styleButton(String text) { // mainMenu copy 
