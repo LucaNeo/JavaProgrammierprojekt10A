@@ -1,13 +1,13 @@
 package src;
 
-//TODO: Shot Bug Tower1 fixen (schießt weiter/targetEnemy wird versucht weiter abzuschießen, obwohl außer range)
-//TODO: Waves implementieren
-//TODO: Aktivierungssystem für Wave schreiben
-//TODO: Lebensanzeige Enemies (in irgendeiner Art)
-//TODO: PauseGame Button implementieren
-//TODO: Placement Offset
-//TODO: Hintergrund für Gamepanel erstellen
-//TODO: README schreiben
+//TODO: Shot Bug Tower1 fixen (schießt weiter/targetEnemy wird versucht weiter abzuschießen, obwohl außer range) <-- Luca
+//TODO: Waves implementieren <-- Titus
+//TODO: Aktivierungssystem für Wave schreiben <-- Titus
+//TODO: Lebensanzeige Enemies (in irgendeiner Art) <-- Luca
+//TODO: PauseGame Button implementieren <-- Neo
+//TODO: Placement Offset <-- Neo?
+//TODO: Hintergrund für Gamepanel erstellen <-- Neo
+//TODO: README schreiben <-- Mal schauen (evtl. Luca)
 //TODO: Größe des Fensters anpassen können
 
 import javax.swing.*;
@@ -15,10 +15,6 @@ import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
-        JCheckBox developerModeCheckBox = new JCheckBox("Developer mode");
-        developerModeCheckBox.setAlignmentX(Component.CENTER_ALIGNMENT);
-        developerModeCheckBox.setForeground(Color.LIGHT_GRAY);
-        developerModeCheckBox.setBackground(new Color(30, 30, 40));
 
         JFrame frame = new JFrame("Tower Defense");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
