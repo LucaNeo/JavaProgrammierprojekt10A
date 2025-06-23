@@ -7,10 +7,10 @@ import java.util.Objects;
 
 
 public class Enemy {
-    public double x, y;
-    public int health;
-    public double speed;
-    public Image image;
+    private double x, y;
+    private int health;
+    private double speed;
+    private Image image;
 
     public Enemy(double x, double y) {
         this.x = x;
@@ -27,7 +27,7 @@ public class Enemy {
 
     public int getHealth() { return health; }
     //public void reward(){if(health==0){}}
-    public void draw(Graphics g, int offsetX, int CHUNK_SIZE) {
+    public void draw(Graphics2D g2d, int offsetX, int CHUNK_SIZE) {
     }
 
     public void move() {

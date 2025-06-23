@@ -6,10 +6,11 @@ import java.awt.*;
 import java.util.Objects;
 
 public class Enemy1 extends Enemy {
-    public double x, y;
-    public int health = 100;
-    public double speed = 0.05;
-    public Image image;
+
+    private double x, y;
+    private int health = 100;
+    private double speed = 0.05;
+    private final Image image;
 
 
     public Enemy1(double x, double y) {
@@ -36,8 +37,10 @@ public class Enemy1 extends Enemy {
     public int getHealth() { return health; }
 
     @Override
-    public void draw(Graphics g, int offsetX, int CHUNK_SIZE) {
-        g.drawImage(image, (int) Math.round(x * CHUNK_SIZE) + offsetX, (int) Math.round(y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
+    public void draw(Graphics2D g2d, int offsetX, int CHUNK_SIZE) {
+        AlphaComposite alpha = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) health / 100);
+        g2d.setComposite(alpha);
+        g2d.drawImage(image, (int) Math.round(x * CHUNK_SIZE) + offsetX, (int) Math.round(y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
     }
 
     @Override
@@ -82,4 +85,4 @@ public class Enemy1 extends Enemy {
     public void takeDamage(int damage){
         health -= damage;
     }
-    }
+}

@@ -10,10 +10,10 @@ public class Pathfinding {
         this.gamePanel = gamePanel;
     }
 
-    public void run(Graphics g){
+    public void run(Graphics2D g2d){
         for (int a = 0; a < gamePanel.getWave().getEnemyArrayList().size(); a++) {
             if (gamePanel.getWave().getSpecificEnemy(a) != null) {
-                gamePanel.getWave().getSpecificEnemy(a).draw(g, gamePanel.getOffsetX(), gamePanel.getCHUNK_SIZE());
+                gamePanel.getWave().getSpecificEnemy(a).draw(g2d, gamePanel.getOffsetX(), gamePanel.getCHUNK_SIZE());
                 gamePanel.getWave().getSpecificEnemy(a).move();
             }
         }

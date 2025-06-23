@@ -181,6 +181,10 @@ public class Shot {
                 if (enemy.getHealth() <= 0) {
                     gamePanel.getWave().removeEnemy(enemy);
                     gamePanel.setMoney(gamePanel.getMoney() + 50);
+                    if (enemiesToProcess.size() - 1 == 0) {
+                        gamePanel.getWave().setWavesCompleted(gamePanel.getWave().getWavesCompleted() + 1);
+                        gamePanel.getStartButton().setEnabled(true);
+                    }
                 }
                 return true;
             }

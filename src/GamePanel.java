@@ -30,8 +30,7 @@ public class GamePanel extends JPanel {
     private Timer gameLoop; // aktive runde ?
     private int money = 1000; // StartGeld
     private int health = 100; //hp
-    private int selectedTowerType = 0;    // 1 = Tower1, 2 = Tower2 etc.
-    private final boolean waveStarted = false;
+    private int selectedTowerType = 0;    // 1 = Tower1, 2 = Tower2 etc.se;
 
     private final JFrame parentFrame;
     private final Pathfinding pathFinding = new Pathfinding(this);
@@ -244,8 +243,21 @@ public class GamePanel extends JPanel {
         startButton.setBorderPainted(false);
         startButton.setDisabledIcon(new ImageIcon(pressedStartImage));
         startButton.addActionListener(_ -> {
-            if (!waveStarted && health != 0){
-                wave.createWave1();
+            if (startButton.isEnabled() && health != 0){
+                if (wave.getWavesCompleted() == 0) {
+                    wave.createWave1();
+                } else if (wave.getWavesCompleted() == 1) {
+                    wave.createWave2();
+                } else if (wave.getWavesCompleted() == 2) {
+                    wave.createWave3();
+                } else if (wave.getWavesCompleted() == 3) {
+                    wave.createWave4();
+                } else if (wave.getWavesCompleted() == 4) {
+                    wave.createWave5();
+                } else if (wave.getWavesCompleted() == 5) {
+                    System.out.println("Victory!");
+                }
+
                 startButton.setEnabled(false);
             }
         });
@@ -339,7 +351,7 @@ public class GamePanel extends JPanel {
         g.drawImage(gateway,345,14 * CHUNK_SIZE + 2,150,70,null);
         g.drawImage(banner,5*CHUNK_SIZE,0,null);
 
-        pathFinding.run(g);
+        pathFinding.run((Graphics2D) g);
         shot.run(g);
         drawHUD(g,g);
         drawGrid(g);
@@ -396,6 +408,7 @@ public class GamePanel extends JPanel {
     public Tower4 getSpecificTower4(int index) { return towers4.get(index); }
     public Tower5 getSpecificTower5(int index) { return towers5.get(index); }
     public Wave getWave() { return wave; }
+    public JButton getStartButton() { return startButton; }
 
     public void setHealth(int value) { health = value; }
     public void setMoney(int value) { money = value; }

@@ -16,6 +16,7 @@ public class Wave {
 
     public void createWave1(){
         for (int i = 0; i < 10; i++) {
+
             double r = random.doubles(1, 1.25).findFirst().getAsDouble();
             enemy.add(new Enemy1(2, Double.parseDouble(String.format("%.1f", i * -r).replace(',', '.')))); // r = Abstand der Enemies in Chunks
         }
@@ -78,4 +79,5 @@ public class Wave {
     public Enemy getSpecificEnemy(int index) { return enemy.get(index); }
     public List getEnemyArrayList() { return enemy; }
     public int getWavesCompleted(){ return waveCompleted; }
+    public int setWavesCompleted(int value) { return waveCompleted = value; }
 }
