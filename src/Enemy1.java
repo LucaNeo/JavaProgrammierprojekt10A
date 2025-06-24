@@ -8,8 +8,8 @@ import java.util.Objects;
 public class Enemy1 extends Enemy {
 
     private double x, y;
-    private int health = 100;
-    private final int maxHealth;
+    private float health = 100;
+    private final float maxHealth;
     private double speed = 0.05;
     private final Image image;
 
@@ -17,9 +17,10 @@ public class Enemy1 extends Enemy {
         super(x, y);
         this.x = x;
         this.y = y;
-        this.health = health * DifficultySettings.getEnemyHealthMultiplier();
-        this.speed = speed * DifficultySettings.getEnemySpeedMultiplier();
         maxHealth = health * DifficultySettings.getEnemyHealthMultiplier();
+        System.out.println(DifficultySettings.getEnemyHealthMultiplier());
+        this.health = (int) (health * DifficultySettings.getEnemyHealthMultiplier());
+        this.speed = speed * DifficultySettings.getEnemySpeedMultiplier();
 
         // Bild laden
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-midlander.png"))); // Pfad anpassen
@@ -37,11 +38,12 @@ public class Enemy1 extends Enemy {
     }
 
     @Override
-    public int getHealth() { return health; }
+    public int getHealth() { return (int) health; }
 
     @Override
     public void draw(Graphics2D g2d, int offsetX, int CHUNK_SIZE) {
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) health / maxHealth));
+        System.out.println(health / maxHealth);
         g2d.drawImage(image, (int) Math.round(x * CHUNK_SIZE) + offsetX, (int) Math.round(y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
     }

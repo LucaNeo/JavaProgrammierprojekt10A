@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Enemy3 extends Enemy {
     private double x, y;
-    private int health = 30000;
+    private float health = 30000;
     private final int maxHealth;
     private double speed = 0.01;
     private final Image image;
@@ -17,7 +17,7 @@ public class Enemy3 extends Enemy {
         this.y = y;
         this.health = health * DifficultySettings.getEnemyHealthMultiplier();
         this.speed = speed * DifficultySettings.getEnemySpeedMultiplier();
-        maxHealth = health * DifficultySettings.getEnemyHealthMultiplier();
+        maxHealth = (int) (health * DifficultySettings.getEnemyHealthMultiplier());
 
         // Bild laden
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-midleader.png"))); // Pfad anpassen
@@ -35,7 +35,7 @@ public class Enemy3 extends Enemy {
     }
 
     @Override
-    public int getHealth() { return health; }
+    public int getHealth() { return (int) health; }
 
     @Override
     public void draw(Graphics2D g2d, int offsetX, int CHUNK_SIZE) {

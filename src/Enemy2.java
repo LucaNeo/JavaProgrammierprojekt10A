@@ -6,7 +6,7 @@ import java.util.Objects;
 // Autor: Titus
 public class Enemy2 extends Enemy {
     private double x, y;
-    private int health = 250;
+    private float health = 250;
     private final int maxHealth;
     private double speed = 0.1;
     private final Image image;
@@ -17,7 +17,7 @@ public class Enemy2 extends Enemy {
         this.y = y;
         this.health = health * DifficultySettings.getEnemyHealthMultiplier();
         this.speed = speed * DifficultySettings.getEnemySpeedMultiplier();
-        maxHealth = health * DifficultySettings.getEnemyHealthMultiplier();
+        maxHealth = (int) (health * DifficultySettings.getEnemyHealthMultiplier());
 
         // Bild laden
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-torchcarrier.png"))); // Pfad anpassen
@@ -35,7 +35,7 @@ public class Enemy2 extends Enemy {
     }
 
     @Override
-    public int getHealth() { return health; }
+    public int getHealth() { return (int) health; }
 
     @Override
     public void draw(Graphics2D g2d, int offsetX, int CHUNK_SIZE) {

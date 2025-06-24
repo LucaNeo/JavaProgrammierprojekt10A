@@ -35,15 +35,35 @@ class DifficultySettings {
      }
  }
 
-    public static int getEnemySpeedMultiplier() {
-        return (int) switch (currentDifficulty) {
-            case EASY -> 0.9;   // Gegner sind 10% langsamer
-            case MEDIUM -> 1.0; // Standard-Geschwindigkeit
-            case HARD -> 1.2;    // Gegner sind 20% schneller
-        };
+    public static float getEnemySpeedMultiplier() {
+     if (currentDifficulty == Difficulty.EASY) {
+         return 0.9F;
+     }
+     if (currentDifficulty == Difficulty.MEDIUM) {
+         return 1F;
+     }
+     if (currentDifficulty == Difficulty.HARD) {
+         return 1.2F;
+     }else
+         return 1.0F;
+//        return ((long) switch (currentDifficulty) {
+//            case EASY -> 0.9;   // Gegner sind 10% langsamer
+//            case MEDIUM -> 1.0; // Standard-Geschwindigkeit
+//            case HARD -> 1.2;    // Gegner sind 20% schneller
+//        });
+
     }
 
-    public static int getEnemyHealthMultiplier() {
+    public static float getEnemyHealthMultiplier() {
+     if (currentDifficulty == Difficulty.EASY) {
+         return 0.8F;
+     }
+     if (currentDifficulty == Difficulty.MEDIUM) {
+         return 1F;
+     }
+     if (currentDifficulty == Difficulty.HARD) {
+         return 1.2F;
+     }
         return (int) switch (currentDifficulty) {
             case EASY -> 0.8;   // Gegner sind 20% weniger hp
             case MEDIUM -> 1.0; // Standard hp
