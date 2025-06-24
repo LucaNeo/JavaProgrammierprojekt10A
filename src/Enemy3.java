@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Enemy3 extends Enemy {
     private double x, y;
     private float health = 30000;
-    private final int maxHealth;
+    private final float maxHealth;
     private double speed = 0.01;
     private final Image image;
 
@@ -15,9 +15,13 @@ public class Enemy3 extends Enemy {
         super(x, y);
         this.x = x;
         this.y = y;
-        this.health = health * DifficultySettings.getEnemyHealthMultiplier();
-        this.speed = speed * DifficultySettings.getEnemySpeedMultiplier();
-        maxHealth = (int) (health * DifficultySettings.getEnemyHealthMultiplier());
+
+        float healthMultiplier = DifficultySettings.getEnemyHealthMultiplier();
+        float speedMultiplier = DifficultySettings.getEnemySpeedMultiplier();
+
+        maxHealth = health * healthMultiplier;
+        health *= healthMultiplier;
+        speed *= speedMultiplier;
 
         // Bild laden
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-midleader.png"))); // Pfad anpassen
@@ -39,7 +43,7 @@ public class Enemy3 extends Enemy {
 
     @Override
     public void draw(Graphics2D g2d, int offsetX, int CHUNK_SIZE) {
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) health / maxHealth));
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, health / maxHealth));
         g2d.drawImage(image, (int) Math.round(x * CHUNK_SIZE) + offsetX, (int) Math.round(y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
     }
@@ -49,23 +53,29 @@ public class Enemy3 extends Enemy {
         if (x == 2 && y < 7) {
             y = Double.parseDouble(String.format("%.2f", y += speed).replace(',', '.'));
         }
-        if (x < 6 && y == 7){
+        if (x < 6 && y >= 7 && y < 8) {
             x = Double.parseDouble(String.format("%.2f", x += speed).replace(',', '.'));
+            y = 7;
         }
-        if (x == 6 && y > 4 && y < 8){
+        if (x >= 6 && x < 7 && y > 4 && y < 8) {
             y = Double.parseDouble(String.format("%.2f", y -= speed).replace(',', '.'));
+            x = 6;
         }
-        if (x < 10 && x > 5 && y == 4){
+        if (x < 10 && x > 5 && y <= 4) {
             x = Double.parseDouble(String.format("%.2f", x += speed).replace(',', '.'));
+            y = 4;
         }
-        if (x == 10 && y < 10){
+        if (x >= 10 && y < 10) {
             y = Double.parseDouble(String.format("%.2f", y += speed).replace(',', '.'));
+            x = 10;
         }
-        if (x > 4 && y == 10){
+        if (x > 4 && y >= 10) {
             x = Double.parseDouble(String.format("%.2f", x -= speed).replace(',', '.'));
+            y = 10;
         }
-        if (x == 4 && y > 9 && y < 14){
+        if (x <= 4 && y > 9 && y < 14){
             y = Double.parseDouble(String.format("%.2f", y += speed).replace(',', '.'));
+            x = 4;
         }
     }
 

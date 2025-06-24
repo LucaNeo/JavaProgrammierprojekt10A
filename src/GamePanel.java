@@ -7,7 +7,6 @@ package src;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,8 +20,8 @@ public class GamePanel extends JPanel {
     private boolean[][] isPathway;
     private final int offsetX = 100;
     private boolean placingTower = false;  // Ist Platzierungsmodus aktiv?
-    private int money  ; // StartGeld
-    private int health ; //hp
+    private int money; // StartGeld
+    private int health; //hp
     private int selectedTowerType = 0;    // 1 = Tower1, 2 = Tower2 etc.se;
     private boolean paused = false;
 
