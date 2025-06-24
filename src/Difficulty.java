@@ -9,38 +9,68 @@ class DifficultySettings {
  private int enemyHealth;
  private int enemySpeed;
  private int startingMoney;
- private int TowerCost;
+
 
  public DifficultySettings(Difficulty difficulty) {
      switch (difficulty) {
          case EASY:
-             enemyHealth  = 50;
-             enemySpeed = 1;
-             startingMoney = 3500;
-             TowerCost = 250;
+             setEnemyHealth(50);
+             setEnemySpeed(1);
+             setStartingMoney(3500);
+
              break;
              case MEDIUM:
-                 enemyHealth = 100;
-                 enemySpeed = 2;
-                 startingMoney = 2000;
-                 TowerCost = 250;
+                 setEnemyHealth(100);
+                 setEnemySpeed(2);
+                 setStartingMoney(2000);
+
                  break;
                  case HARD:
-                     enemyHealth  = 200;
-                     enemySpeed = 3;
-                     startingMoney = 1000;
-                     TowerCost = 450;
+                     setEnemyHealth(200);
+                     setEnemySpeed(3);
+                     setStartingMoney(1000);
+
                      break;
 
      }
  }
 
-    public int getEnemySpeed() {
-        return enemySpeed;
+    public static int getEnemySpeedMultiplier() {
+        return (int) switch (currentDifficulty) {
+            case EASY -> 0.9;   // Gegner sind 10% langsamer
+            case MEDIUM -> 1.0; // Standard-Geschwindigkeit
+            case HARD -> 1.2;    // Gegner sind 20% schneller
+        };
     }
 
-    public int getTowerCost() {
-        return TowerCost;
+    public static int getEnemyHealthMultiplier() {
+        return (int) switch (currentDifficulty) {
+            case EASY -> 0.8;   // Gegner sind 20% weniger hp
+            case MEDIUM -> 1.0; // Standard hp
+            case HARD -> 1.2;    // Gegner sind 20% mehr hp
+        };
+    }
+
+    public void setEnemyHealth(int enemyHealth) {
+        this.enemyHealth = enemyHealth;
+    }
+
+    public void setEnemySpeed(int enemySpeed) {
+        this.enemySpeed = enemySpeed;
+    }
+
+    public void setStartingMoney(int startingMoney) {
+        this.startingMoney = startingMoney;
+    }
+
+    public static void setCurrentDifficulty(Difficulty currentDifficulty) {
+        DifficultySettings.currentDifficulty = currentDifficulty;
+    }
+
+
+
+    public int getEnemySpeed() {
+        return enemySpeed;
     }
 
     public int getStartingMoney() {
