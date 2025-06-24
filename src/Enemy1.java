@@ -19,7 +19,7 @@ public class Enemy1 extends Enemy {
         this.y = y;
         this.health = health * DifficultySettings.getEnemyHealthMultiplier();
         this.speed = speed * DifficultySettings.getEnemySpeedMultiplier();
-        maxHealth = health;
+        maxHealth = health * DifficultySettings.getEnemyHealthMultiplier();
 
         // Bild laden
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-midlander.png"))); // Pfad anpassen
