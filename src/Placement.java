@@ -22,34 +22,41 @@ public class Placement extends MouseAdapter {
                 gridY >= 0 && gridY < gamePanel.getRows() &&
                 gamePanel.getPlaceable(gridX, gridY)) {
             // Neuen Turm mit PNG erstellen
-            if (gamePanel.getSelectedTowerType() == 1 && gamePanel.getMoney() >= 250) {
+            if (gamePanel.getSelectedTowerType() == 1 && gamePanel.getMoney() >= 250 * getCostMultiplier()) {
                 gamePanel.getTower1Arraylist().add(new Tower1(gridX, gridY));
-                gamePanel.setMoney(gamePanel.getMoney() - 250);  // Geld abziehen
+                gamePanel.setMoney((int)(gamePanel.getMoney() - 250 * getCostMultiplier()));  // Geld abziehen
                 gamePanel.setPlaceable(gridX, gridY, false);  // Feld als belegt markieren
             }
-            if (gamePanel.getSelectedTowerType() == 2 && gamePanel.getMoney() >= 350) {
+            if (gamePanel.getSelectedTowerType() == 2 && gamePanel.getMoney() >= 350 * getCostMultiplier()) {
                 gamePanel.getTower2Arraylist().add(new Tower2(gridX, gridY));
-                gamePanel.setMoney(gamePanel.getMoney() - 350); // Geld abziehen
+                gamePanel.setMoney((int)(gamePanel.getMoney() - 350 * getCostMultiplier())); // Geld abziehen
                 gamePanel.setPlaceable(gridX, gridY, false);
             }
-            if (gamePanel.getSelectedTowerType() == 3 && gamePanel.getMoney() >= 500) {
+            if (gamePanel.getSelectedTowerType() == 3 && gamePanel.getMoney() >= 500 * getCostMultiplier()) {
                 gamePanel.getTower3Arraylist().add(new Tower3(gridX, gridY));
-                gamePanel.setMoney(gamePanel.getMoney() - 500); // Geld abziehen
+                gamePanel.setMoney((int)(gamePanel.getMoney() - 500 * getCostMultiplier())); // Geld abziehen
                 gamePanel.setPlaceable(gridX, gridY, false);
             }
-            if (gamePanel.getSelectedTowerType() == 4 && gamePanel.getMoney() >= 60) {
+            if (gamePanel.getSelectedTowerType() == 4 && gamePanel.getMoney() >= 60 * getCostMultiplier()) {
                 gamePanel.getTower4Arraylist().add(new Tower4(gridX, gridY));
-                gamePanel.setMoney(gamePanel.getMoney() - 60); // Geld abziehen
+                gamePanel.setMoney((int) (gamePanel.getMoney() - 60 * getCostMultiplier())); // Geld abziehen
                 gamePanel.setPlaceable(gridX, gridY, false);
             }
-            if (gamePanel.getSelectedTowerType() == 5 && gamePanel.getMoney() >= 400) {
+            if (gamePanel.getSelectedTowerType() == 5 && gamePanel.getMoney() >= 400 * getCostMultiplier()) {
                 gamePanel.getTower5Arraylist().add(new Tower5(gridX, gridY, gamePanel));
-                gamePanel.setMoney(gamePanel.getMoney() - 400); // Geld abziehen
+                gamePanel.setMoney((int) (gamePanel.getMoney() - 400 * getCostMultiplier())); // Geld abziehen
                 gamePanel.setPlaceable(gridX, gridY, false);
             }
             gamePanel.setSelectedTowerType(0);
             gamePanel.setPlacingTower(false);
             gamePanel.repaint();
         }
+    }
+    private double getCostMultiplier() {
+        return switch (DifficultySettings.getCurrentDifficulty()){
+            case HARD -> 1.2; //20%
+            case MEDIUM -> 1; // default
+            case EASY -> 0.8; // -20%
+        };
     }
 }

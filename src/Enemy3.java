@@ -8,13 +8,15 @@ public class Enemy3 extends Enemy {
     private double x, y;
     private int health = 30000;
     private final int maxHealth;
-    private final double speed = 0.01;
+    private double speed = 0.01;
     private final Image image;
 
     public Enemy3(double x, double y) {
         super(x, y);
         this.x = x;
         this.y = y;
+        this.health = health * DifficultySettings.getEnemyHealthMultiplier();
+        this.speed = speed * DifficultySettings.getEnemySpeedMultiplier();
         maxHealth = health;
 
         // Bild laden

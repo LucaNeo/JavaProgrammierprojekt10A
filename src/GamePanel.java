@@ -21,8 +21,8 @@ public class GamePanel extends JPanel {
     private boolean[][] isPathway;
     private final int offsetX = 100;
     private boolean placingTower = false;  // Ist Platzierungsmodus aktiv?
-    private int money = 1000; // StartGeld
-    private int health = 100; //hp
+    private int money  ; // StartGeld
+    private int health ; //hp
     private int selectedTowerType = 0;    // 1 = Tower1, 2 = Tower2 etc.se;
     private boolean paused = false;
 
@@ -46,6 +46,19 @@ public class GamePanel extends JPanel {
         setUI();
         startGameLoop();
         setFocusable(true); // Shortcuts möglich machen (Press Key Event)
+        checkDifficulty();
+    }
+    private void checkDifficulty(){
+        switch (DifficultySettings.getCurrentDifficulty()){
+            case EASY:      setHealth(100);
+                            setMoney(2500);
+                            break;
+            case MEDIUM:    setHealth(50);
+                            setMoney(2000);
+                            break;
+            case HARD:      setHealth(1);
+                            setMoney(1000);
+        }
     }
 
     private void startGameLoop() {
@@ -282,8 +295,7 @@ public class GamePanel extends JPanel {
         restartButton.setContentAreaFilled(false);
         restartButton.setBorderPainted(false);
         restartButton.addActionListener(_ -> {
-            setHealth(100); //health = 100;
-            setMoney(1000); //money = 1000;
+            checkDifficulty();
             towers1.clear();
             towers2.clear();
             towers3.clear();
@@ -395,7 +407,25 @@ public class GamePanel extends JPanel {
         g2.setFont(new Font("Arial", Font.BOLD, 40));
         g2.drawString("♥️" + health, 1240, 100);
     }
-
+    private double getCostMultiplier() {
+        // Multiplikator basierend auf Schwierigkeit
+        return switch (DifficultySettings.getCurrentDifficulty()) {
+            case EASY -> 0.8;  // Türme 20% günstiger
+            case MEDIUM -> 1.0; // Standard
+            case HARD -> 1.2;   // Türme 20% teurer
+        };
+    }
+    public int getTowerCost(int towerType) {
+        int baseCost = switch (towerType) {
+            case 1 -> 250;
+            case 2 -> 350;
+            case 3 -> 500;
+            case 4 -> 60;
+            case 5 -> 400;
+            default -> 0;
+        };
+        return (int)(baseCost * getCostMultiplier());
+    }
     public int getMoney() { return money; }
     public int getHealth() { return health; }
     public int getOffsetX() { return offsetX; }
@@ -426,4 +456,5 @@ public class GamePanel extends JPanel {
     public void setPlaceable(int col, int row, boolean bool) { placeable[col][row] = bool; }
     public void setPlacingTower(boolean bool) { placingTower = bool; }
     public void setSelectedTowerType(int value) { selectedTowerType = value; }
+
 }

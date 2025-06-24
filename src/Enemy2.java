@@ -8,14 +8,16 @@ public class Enemy2 extends Enemy {
     private double x, y;
     private int health = 250;
     private final int maxHealth;
-    private final double speed = 0.1;
+    private double speed = 0.1;
     private final Image image;
 
     public Enemy2(double x, double y) {
         super(x, y);
         this.x = x;
         this.y = y;
-        maxHealth = health;
+        this.health = health * DifficultySettings.getEnemyHealthMultiplier();
+        this.speed = speed * DifficultySettings.getEnemySpeedMultiplier();
+        maxHealth = health * DifficultySettings.getEnemyHealthMultiplier();
 
         // Bild laden
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-torchcarrier.png"))); // Pfad anpassen
