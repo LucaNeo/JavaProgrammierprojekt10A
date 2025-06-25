@@ -3,18 +3,15 @@ package src;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 public class Shot {
 
     private final GamePanel gamePanel;
     private final List<Projectile> projectile = new ArrayList<>();
-    private Enemy targetedEnemy;
     private final List<Double> deltaX = new ArrayList<>();
     private final List<Double> deltaY = new ArrayList<>();
     private final Integer[] timer = new Integer[4];
@@ -38,6 +35,7 @@ public class Shot {
         List<Double> nextDeltaY = new ArrayList<>();
 
         Image projectile1Image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/goatAttack.png"))).getImage();
+        Image projectile2Image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/magicSpell.png"))).getImage();
         Image projectile4Image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/arrow.png"))).getImage();
 
         // Logik für das Erstellen neuer Projektile für Tower1
@@ -49,6 +47,20 @@ public class Shot {
                         projectile.add(new Projectile(gamePanel.getSpecificTower1(a).getX(), gamePanel.getSpecificTower1(a).getY(), gamePanel.getSpecificTower1(a).getShotSpeed(), g, gamePanel.getSpecificTower1(a)));
                         deltaX.add((getTargetedEnemy(gamePanel.getSpecificTower1(a)).getX() + 0.5) - gamePanel.getSpecificTower1(a).getX());
                         deltaY.add((getTargetedEnemy(gamePanel.getSpecificTower1(a)).getY() + 0.5) - gamePanel.getSpecificTower1(a).getY());
+                    }
+                }
+            }
+        }
+
+        // Logik für das Erstellen neuer Projektile für Tower4
+        for (int a = 0; a < gamePanel.getTower2Arraylist().size(); a++) {
+            Tower2 tower = gamePanel.getSpecificTower2(a);
+            if (tower != null && getTargetedEnemy(tower) != null && !gamePanel.getPaused()) {
+                if (gamePanel.getHealth() > 0 && checkEnemyInRange(tower) && !gamePanel.getWave().getEnemyArrayList().isEmpty()) {
+                    if (timer[1] % tower.getCoolDown() == 0) {
+                        projectile.add(new Projectile(gamePanel.getSpecificTower2(a).getX(), gamePanel.getSpecificTower2(a).getY(), gamePanel.getSpecificTower2(a).getShotSpeed(), g, gamePanel.getSpecificTower2(a)));
+                        deltaX.add((getTargetedEnemy(gamePanel.getSpecificTower2(a)).getX() + 0.5) - gamePanel.getSpecificTower2(a).getX());
+                        deltaY.add((getTargetedEnemy(gamePanel.getSpecificTower2(a)).getY() + 0.5) - gamePanel.getSpecificTower2(a).getY());
                     }
                 }
             }
@@ -80,7 +92,9 @@ public class Shot {
                     currentProjectileImage = projectile1Image;
                 } else if (p.getOriginTower().getClass() == Tower4.class) {
                     currentProjectileImage = projectile4Image;
-                } else {
+                } else if (p.getOriginTower().getClass() == Tower2.class) {
+                   currentProjectileImage = projectile2Image;
+                }  else {
                     currentProjectileImage = projectile4Image;
                 }
 
@@ -99,7 +113,6 @@ public class Shot {
                 }
             }
         }
-
         projectile.clear();
         projectile.addAll(nextProjectiles);
         nextProjectiles.clear();
@@ -134,35 +147,43 @@ public class Shot {
         return op.filter(originalImage, rotatedImage);
     }
 
-    // gibt den vordersten Enemy zurück, der in der Range des Towers ist. Autor: Neo
+    // Autor: Neo
     private Enemy getTargetedEnemy(Tower tower) {
+        Enemy closestEnemy = null;
+        double smallestDistance = Double.MAX_VALUE;
 
-        double smallestdistance = tower.getRange();
-        boolean targeting = true;
+        for (int a = 0; a < gamePanel.getWave().getEnemyArrayList().size(); a++) {
+            Enemy enemy = gamePanel.getWave().getSpecificEnemy(a);
 
-        for (int a = 0; a < gamePanel.getWave().getEnemyArrayList().size() && targeting; a++) {
-            if (gamePanel.getWave().getSpecificEnemy(a) != null) {
+            if (enemy != null) {
                 double tempDeltaX = tower.getX() - gamePanel.getWave().getSpecificEnemy(a).getX();
                 double tempDeltaY = tower.getY() - gamePanel.getWave().getSpecificEnemy(a).getY();
                 double distance = Math.sqrt(tempDeltaX * tempDeltaX + tempDeltaY * tempDeltaY);
 
-                if (distance <= smallestdistance) {
-                    smallestdistance = distance;
+                if (distance <= tower.getRange()) {
+                    return enemy;
                 }
 
-                if (distance <= tower.getRange() && distance == smallestdistance) {
-                    targetedEnemy = gamePanel.getWave().getSpecificEnemy(a);
-                    targeting = false;
+                if (distance < smallestDistance) {
+                    smallestDistance = distance;
+                    closestEnemy = enemy;
                 }
             }
         }
-        return targetedEnemy;
+        return closestEnemy;
     }
 
     // Autor: Luca
     private boolean checkEnemyInRange(Tower tower) {
-        double tempDeltaX = tower.getX() - getTargetedEnemy(tower).getX();
-        double tempDeltaY = tower.getY() - getTargetedEnemy(tower).getY();
+
+        Enemy target = getTargetedEnemy(tower);
+
+        if (target == null) {
+            return false;
+        }
+
+        double tempDeltaX = tower.getX() - target.getX();
+        double tempDeltaY = tower.getY() - target.getY();
         double distance = Math.sqrt(tempDeltaX * tempDeltaX + tempDeltaY * tempDeltaY);
 
         if (distance <= tower.getRange()) {
@@ -184,6 +205,11 @@ public class Shot {
                     if (enemiesToProcess.size() - 1 == 0) {
                         gamePanel.getWave().setWavesCompleted(gamePanel.getWave().getWavesCompleted() + 1);
                         gamePanel.getStartButton().setEnabled(true);
+                        resetShot();
+                        if (gamePanel.getWave().getWavesCompleted() == 5) {
+                            gamePanel.showVictoryScreen();
+                            System.out.println("You won!");
+                        }
                     }
                 }
                 return true;
@@ -197,7 +223,6 @@ public class Shot {
         projectile.clear();
         deltaX.clear();
         deltaY.clear();
-        targetedEnemy = null;
         Arrays.fill(timer, 0);
     }
 }

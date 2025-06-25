@@ -38,6 +38,12 @@ public class GamePanel extends JPanel {
     private final JFrame parentFrame;
     private JButton startButton;
     private JButton restartButton;
+    private JButton pauseButton;
+
+    ImageIcon pauseIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pauseButton.png")));
+    Image pauseImage = pauseIcon.getImage().getScaledInstance(290, 100, Image.SCALE_SMOOTH);
+    ImageIcon pauseIconPressed = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pauseButtonPressed.png")));
+    Image pauseImagePressed = pauseIconPressed.getImage().getScaledInstance(290, 100, Image.SCALE_SMOOTH);
 
     public GamePanel(JFrame frame) {
         this.parentFrame = frame;
@@ -75,6 +81,7 @@ public class GamePanel extends JPanel {
                     setHealth(0);
                     wave.clearWave();
                     startButton.setEnabled(true);
+                    showDefeatScreen();
                     i = wave.getEnemyArrayList().size();
                 }
             }
@@ -86,11 +93,39 @@ public class GamePanel extends JPanel {
             paused = true;
             startButton.setEnabled(false);
             restartButton.setEnabled(false);
+            pauseButton.setIcon(new ImageIcon(pauseImagePressed));
         } else {
             paused = false;
             startButton.setEnabled(true);
             restartButton.setEnabled(true);
+            pauseButton.setIcon(new ImageIcon(pauseImage));
         }
+    }
+
+    public void showVictoryScreen() {
+        ImageIcon victoryIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/victoryScreen.png")));
+        JButton victoryButton = new JButton(victoryIcon);
+        victoryButton.setBounds(0, 0, 1920, 1080);
+        victoryButton.setOpaque(false);
+        victoryButton.setContentAreaFilled(false);
+        victoryButton.setBorderPainted(false);
+        victoryButton.addActionListener(_ -> {
+            returnToMenu();
+        });
+        add(victoryButton);
+    }
+
+    public void showDefeatScreen() {
+        ImageIcon defeatIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/defeatScreen.png")));
+        JButton defeatButton = new JButton(defeatIcon);
+        defeatButton.setBounds(0, 0, 1920, 1080);
+        defeatButton.setOpaque(false);
+        defeatButton.setContentAreaFilled(false);
+        defeatButton.setBorderPainted(false);
+        defeatButton.addActionListener(_ -> {
+            returnToMenu();
+        });
+        add(defeatButton);
     }
 
     private void initGrid() {
@@ -289,10 +324,13 @@ public class GamePanel extends JPanel {
         //restartButton
         ImageIcon restartIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/restartButton.png")));
         Image restartImage = restartIcon.getImage().getScaledInstance(290, 100, Image.SCALE_SMOOTH);
+        ImageIcon restartIconPressed = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/restartButtonPressed.png")));
+        Image restartImagePressed = restartIconPressed.getImage().getScaledInstance(290, 100, Image.SCALE_SMOOTH);
         restartButton = new JButton(new ImageIcon(restartImage));
         restartButton.setBounds(1565, 960, 290, 100);
         restartButton.setContentAreaFilled(false);
         restartButton.setBorderPainted(false);
+        restartButton.setDisabledIcon(new ImageIcon(restartImagePressed));
         restartButton.addActionListener(_ -> {
             checkDifficulty();
             towers1.clear();
@@ -311,9 +349,7 @@ public class GamePanel extends JPanel {
         add(restartButton);
 
         //pauseButton
-        ImageIcon pauseIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pauseButton.png")));
-        Image pauseImage = pauseIcon.getImage().getScaledInstance(290, 100, Image.SCALE_SMOOTH);
-        JButton pauseButton = new JButton(new ImageIcon(pauseImage));
+        pauseButton = new JButton(new ImageIcon(pauseImage));
         pauseButton.setBounds(1255, 960, 290, 100);
         pauseButton.setContentAreaFilled(false);
         pauseButton.setBorderPainted(false);
@@ -455,5 +491,4 @@ public class GamePanel extends JPanel {
     public void setPlaceable(int col, int row, boolean bool) { placeable[col][row] = bool; }
     public void setPlacingTower(boolean bool) { placingTower = bool; }
     public void setSelectedTowerType(int value) { selectedTowerType = value; }
-
 }

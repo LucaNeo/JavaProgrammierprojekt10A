@@ -1,8 +1,7 @@
 package src;
 
-//TODO: Shot Bug Tower1 fixen (schießt weiter/targetEnemy wird versucht weiter abzuschießen, obwohl außer range) <-- Luca
 //TODO: Placement Offset <-- Neo?
-//TODO: README schreiben <-- Mal schauen (evtl. Luca)
+//TODO: README schreiben <-- Neo
 //TODO: Größe des Fensters anpassen können
 
 import javax.swing.*;
