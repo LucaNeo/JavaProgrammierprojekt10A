@@ -39,6 +39,12 @@ public class GamePanel extends JPanel {
     private JButton startButton;
     private JButton restartButton;
     private JButton pauseButton;
+    private JButton returnToMenu;
+    private JButton tower1Button;
+    private JButton tower2Button;
+    private JButton tower3Button;
+    private JButton tower4Button;
+    private JButton tower5Button;
 
     ImageIcon pauseIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/pauseButton.png")));
     Image pauseImage = pauseIcon.getImage().getScaledInstance(290, 100, Image.SCALE_SMOOTH);
@@ -113,6 +119,18 @@ public class GamePanel extends JPanel {
             returnToMenu();
         });
         add(victoryButton);
+
+        remove(startButton);
+        remove(restartButton);
+        remove(pauseButton);
+        remove(returnToMenu);
+        remove(tower1Button);
+        remove(tower2Button);
+        remove(tower3Button);
+        remove(tower4Button);
+        remove(tower5Button);
+
+        gameLoop.stop();
     }
 
     public void showDefeatScreen() {
@@ -126,6 +144,18 @@ public class GamePanel extends JPanel {
             returnToMenu();
         });
         add(defeatButton);
+
+        remove(startButton);
+        remove(restartButton);
+        remove(pauseButton);
+        remove(returnToMenu);
+        remove(tower1Button);
+        remove(tower2Button);
+        remove(tower3Button);
+        remove(tower4Button);
+        remove(tower5Button);
+
+        gameLoop.stop();
     }
 
     private void initGrid() {
@@ -202,7 +232,7 @@ public class GamePanel extends JPanel {
         ImageIcon originalIcon1 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-guard.png")));
         Image scaledImage1 = originalIcon1.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon1 = new ImageIcon(scaledImage1);
-        JButton tower1Button = new JButton(scaledIcon1);
+        tower1Button = new JButton(scaledIcon1);
         tower1Button.setBounds(1420,28,64,64);
         tower1Button.setOpaque(false);
         tower1Button.setContentAreaFilled(false);
@@ -217,7 +247,7 @@ public class GamePanel extends JPanel {
         ImageIcon originalIcon2 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-ketoon.png")));
         Image scaledImage2 = originalIcon2.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon2 = new ImageIcon(scaledImage2);
-        JButton tower2Button = new JButton(scaledIcon2);
+        tower2Button = new JButton(scaledIcon2);
         tower2Button.setBounds(1520,32,64,64);
         tower2Button.setOpaque(false);
         tower2Button.setContentAreaFilled(false);
@@ -232,7 +262,7 @@ public class GamePanel extends JPanel {
         ImageIcon originalIcon3 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-priest.png")));
         Image scaledImage3 = originalIcon3.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon3 = new ImageIcon(scaledImage3);
-        JButton tower3Button = new JButton(scaledIcon3);
+        tower3Button = new JButton(scaledIcon3);
         tower3Button.setBounds(1602,25,64,64);
         tower3Button.setOpaque(false);
         tower3Button.setContentAreaFilled(false);
@@ -247,7 +277,7 @@ public class GamePanel extends JPanel {
         ImageIcon originalIcon4 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-archer.png")));
         Image scaledImage4 = originalIcon4.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon4= new ImageIcon(scaledImage4);
-        JButton tower4Button = new JButton(scaledIcon4);
+        tower4Button = new JButton(scaledIcon4);
         tower4Button.setBounds(1685,25,64,64);
         tower4Button.setOpaque(false);
         tower4Button.setContentAreaFilled(false);
@@ -262,7 +292,7 @@ public class GamePanel extends JPanel {
         ImageIcon originalIcon5 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-trader.png")));
         Image scaledImage5 = originalIcon5.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon5= new ImageIcon(scaledImage5);
-        JButton tower5Button = new JButton(scaledIcon5);
+        tower5Button = new JButton(scaledIcon5);
         tower5Button.setBounds(1780,25,64,64);
         tower5Button.setOpaque(false);
         tower5Button.setContentAreaFilled(false);
@@ -279,7 +309,7 @@ public class GamePanel extends JPanel {
         ImageIcon returnIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/returnToMenu.png")));
         Image returnImage = returnIcon.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
         ImageIcon scaledReturnIcon = new ImageIcon(returnImage);
-        JButton returnToMenu = new JButton(scaledReturnIcon);
+        returnToMenu = new JButton(scaledReturnIcon);
         returnToMenu.setBounds(8, 10, 64, 64);
         returnToMenu.setOpaque(false);
         returnToMenu.setContentAreaFilled(false);
@@ -402,11 +432,14 @@ public class GamePanel extends JPanel {
         }
 
         //draw ButtonBackground
-        g.drawImage(towerFrame, 1405, 10,null);
         g.drawImage(separator, 80, 0,null);
         g.drawImage(separator,1178,0,null);
         g.drawImage(gateway,345,14 * CHUNK_SIZE + 2,150,70,null);
         g.drawImage(banner,5 * CHUNK_SIZE,0,null);
+
+        if (gameLoop.isRunning()) {
+            g.drawImage(towerFrame, 1405, 10,null);
+        }
 
         pathFinding.run((Graphics2D) g);
         shot.run(g);
