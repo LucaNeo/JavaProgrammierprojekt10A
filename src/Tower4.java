@@ -8,17 +8,19 @@ public class Tower4 extends Tower {
 
     private final double x;
     private final double y;
-    public Image image;
+    private final Image image;
     public int damage = 1;
     public int coolDown = 40; // in ms
-    private int range = 10;
-    public double shotSpeed = 0.1;
+    private final int range = 10;
+    private final double shotSpeed = 0.1;
+    private int timer;
 
-    public Tower4(int x, int y) {
-        super(x, y);
+    public Tower4(int x, int y, int timer) {
+        super(x, y, timer);
 
         this.x = x;
         this.y = y;
+        this.timer = timer;
 
         // Bild laden
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-archer.png"))); // Pfad anpassen
@@ -55,5 +57,11 @@ public class Tower4 extends Tower {
 
     @Override
     public double getShotSpeed() { return shotSpeed; }
+
+    @Override
+    public int getTimer() { return timer; }
+
+    @Override
+    public void setTimer(int value) { this.timer = value; }
 }
 
