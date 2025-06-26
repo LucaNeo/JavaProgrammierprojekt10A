@@ -6,10 +6,11 @@ import java.util.Objects;
 // Autor: Titus
 public class Enemy2 extends Enemy {
     private double x, y;
-    private float health = 250;
+    private float health = 60;
     private final float maxHealth;
-    private double speed = 0.1;
+    private double speed = 0.075;
     private final Image image;
+    private int damageToCastle = 40;
 
     public Enemy2(double x, double y) {
         super(x, y);
@@ -40,6 +41,8 @@ public class Enemy2 extends Enemy {
 
     @Override
     public int getHealth() { return (int) health; }
+
+    public int getDamageToCastle() {return (int)damageToCastle;}
 
     @Override
     public void draw(Graphics2D g2d, int offsetX, int CHUNK_SIZE) {

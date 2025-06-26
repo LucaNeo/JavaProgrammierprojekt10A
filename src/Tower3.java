@@ -4,11 +4,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-public class Tower3 {
-    public int x, y;
-    public Image image;
+public class Tower3 extends Tower {
+
+    private final double x;
+    private final double y;
+    private final Image image;
+    public int damage = 10;
+    public int coolDown = 100; // in ms
+    private final int range = 10;
+    private final double shotSpeed = 0.1;
 
     public Tower3(int x, int y) {
+        super(x, y);
+
         this.x = x;
         this.y = y;
 
@@ -17,7 +25,38 @@ public class Tower3 {
         this.image = icon.getImage();
     }
 
+    @Override
     public void draw(Graphics g, int CHUNK_SIZE, int offsetX) {
-        g.drawImage(image, x * CHUNK_SIZE + offsetX, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
+        g.drawImage(image, (int) (x * CHUNK_SIZE + offsetX), (int) (y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
+    }
+
+    @Override
+    public double getX(){
+        return x;
+    }
+
+    @Override
+    public double getY(){
+        return y;
+    }
+
+    @Override
+    public int getRange() {
+        return range;
+    }
+
+    @Override
+    public int getDamage() {
+        return damage;
+    }
+
+    @Override
+    public int getCoolDown() {
+        return coolDown;
+    }
+
+    @Override
+    public double getShotSpeed() {
+        return shotSpeed;
     }
 }

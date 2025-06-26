@@ -12,6 +12,7 @@ public class Enemy {
     private double speed;
     private Image image;
 
+    private int damageToCastle ;
     public Enemy(double x, double y) {
         this.x = x;
         this.y = y;
@@ -39,4 +40,4 @@ public class Enemy {
 
     public void takeDamage(int damage){
     }
-}
+    public int getDamageToCastle() {return (int)damageToCastle;}}

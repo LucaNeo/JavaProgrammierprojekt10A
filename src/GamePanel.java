@@ -61,14 +61,14 @@ public class GamePanel extends JPanel {
     }
     private void checkDifficulty(){
         switch (DifficultySettings.getCurrentDifficulty()){
-            case EASY:      setHealth(100);
-                            setMoney(2500);
+            case EASY:      health = 100;
+                            money = 2500;
                             break;
-            case MEDIUM:    setHealth(50);
-                            setMoney(2000);
+            case MEDIUM:    health = 50;
+                            money = 2000;
                             break;
-            case HARD:      setHealth(1);
-                            setMoney(1000);
+            case HARD:      health = 1;
+                            money = 1000;
         }
     }
 
@@ -83,11 +83,17 @@ public class GamePanel extends JPanel {
     private void updateGame() {
         for (int i = 0; i < wave.getEnemyArrayList().size(); i++) {
             if (wave.getEnemyArrayList().get(i) != null) {
-                if (wave.getSpecificEnemy(i).getX() == 4 && wave.getSpecificEnemy(i).getY() == 13) {
-                    setHealth(0);
+                if (wave.getSpecificEnemy(i).getX() == 4 && wave.getSpecificEnemy(i).getY() >= 14) {
+                    if (health - wave.getSpecificEnemy(i).getDamageToCastle() < 0) {
+                        health = 0;
+                    } else {
+                        health -= wave.getSpecificEnemy(i).getDamageToCastle();
+                    }
                     wave.clearWave();
                     startButton.setEnabled(true);
-                    showDefeatScreen();
+                    if (health == 0) {
+                        showDefeatScreen();
+                    }
                     i = wave.getEnemyArrayList().size();
                 }
             }
@@ -115,9 +121,7 @@ public class GamePanel extends JPanel {
         victoryButton.setOpaque(false);
         victoryButton.setContentAreaFilled(false);
         victoryButton.setBorderPainted(false);
-        victoryButton.addActionListener(_ -> {
-            returnToMenu();
-        });
+        victoryButton.addActionListener(_ -> returnToMenu());
         add(victoryButton);
 
         remove(startButton);
@@ -140,9 +144,7 @@ public class GamePanel extends JPanel {
         defeatButton.setOpaque(false);
         defeatButton.setContentAreaFilled(false);
         defeatButton.setBorderPainted(false);
-        defeatButton.addActionListener(_ -> {
-            returnToMenu();
-        });
+        defeatButton.addActionListener(_ -> returnToMenu());
         add(defeatButton);
 
         remove(startButton);
@@ -314,9 +316,7 @@ public class GamePanel extends JPanel {
         returnToMenu.setOpaque(false);
         returnToMenu.setContentAreaFilled(false);
         returnToMenu.setBorderPainted(false);
-        returnToMenu.addActionListener(_ -> {
-            returnToMenu();
-        });
+        returnToMenu.addActionListener(_ -> returnToMenu());
         add(returnToMenu);
 
         //startButton
@@ -451,8 +451,7 @@ public class GamePanel extends JPanel {
         Image placementImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isPlaceable.png"))).getImage();
         Image nonPlaceableImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isNotPlaceable.png"))).getImage();
 
-        if (placingTower) {
-        } else {
+        if (!placingTower) {
             return;
         }
         for (int x = 0; x < cols; x++) {
@@ -515,11 +514,9 @@ public class GamePanel extends JPanel {
     public Tower2 getSpecificTower2(int index) { return towers2.get(index); }
     public Tower3 getSpecificTower3(int index) { return towers3.get(index); }
     public Tower4 getSpecificTower4(int index) { return towers4.get(index); }
-    public Tower5 getSpecificTower5(int index) { return towers5.get(index); }
     public Wave getWave() { return wave; }
     public JButton getStartButton() { return startButton; }
 
-    public void setHealth(int value) { health = value; }
     public void setMoney(int value) { money = value; }
     public void setPlaceable(int col, int row, boolean bool) { placeable[col][row] = bool; }
     public void setPlacingTower(boolean bool) { placingTower = bool; }

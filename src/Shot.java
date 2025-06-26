@@ -26,6 +26,8 @@ public class Shot {
 
         timer[0]++;
         timer[1]++;
+        timer[2]++;
+        timer[3]++;
     }
 
     // Autor: Neo, Luca
@@ -44,7 +46,7 @@ public class Shot {
             if (tower != null && getTargetedEnemy(tower) != null && !gamePanel.getPaused()) {
                 if (gamePanel.getHealth() > 0 && checkEnemyInRange(tower) && !gamePanel.getWave().getEnemyArrayList().isEmpty()) {
                     if (timer[0] % tower.getCoolDown() == 0) {
-                        projectile.add(new Projectile(gamePanel.getSpecificTower1(a).getX(), gamePanel.getSpecificTower1(a).getY(), gamePanel.getSpecificTower1(a).getShotSpeed(), g, gamePanel.getSpecificTower1(a)));
+                        projectile.add(new Projectile(gamePanel.getSpecificTower1(a).getX(), gamePanel.getSpecificTower1(a).getY(), gamePanel.getSpecificTower1(a).getShotSpeed(), gamePanel.getSpecificTower1(a)));
                         deltaX.add((getTargetedEnemy(gamePanel.getSpecificTower1(a)).getX() + 0.5) - gamePanel.getSpecificTower1(a).getX());
                         deltaY.add((getTargetedEnemy(gamePanel.getSpecificTower1(a)).getY() + 0.5) - gamePanel.getSpecificTower1(a).getY());
                     }
@@ -52,15 +54,29 @@ public class Shot {
             }
         }
 
-        // Logik für das Erstellen neuer Projektile für Tower4
+        // Logik für das Erstellen neuer Projektile für Tower2
         for (int a = 0; a < gamePanel.getTower2Arraylist().size(); a++) {
             Tower2 tower = gamePanel.getSpecificTower2(a);
             if (tower != null && getTargetedEnemy(tower) != null && !gamePanel.getPaused()) {
                 if (gamePanel.getHealth() > 0 && checkEnemyInRange(tower) && !gamePanel.getWave().getEnemyArrayList().isEmpty()) {
                     if (timer[1] % tower.getCoolDown() == 0) {
-                        projectile.add(new Projectile(gamePanel.getSpecificTower2(a).getX(), gamePanel.getSpecificTower2(a).getY(), gamePanel.getSpecificTower2(a).getShotSpeed(), g, gamePanel.getSpecificTower2(a)));
+                        projectile.add(new Projectile(gamePanel.getSpecificTower2(a).getX(), gamePanel.getSpecificTower2(a).getY(), gamePanel.getSpecificTower2(a).getShotSpeed(), gamePanel.getSpecificTower2(a)));
                         deltaX.add((getTargetedEnemy(gamePanel.getSpecificTower2(a)).getX() + 0.5) - gamePanel.getSpecificTower2(a).getX());
                         deltaY.add((getTargetedEnemy(gamePanel.getSpecificTower2(a)).getY() + 0.5) - gamePanel.getSpecificTower2(a).getY());
+                    }
+                }
+            }
+        }
+
+        // Logik für das Erstellen neuer Projektile für Tower3
+        for (int a = 0; a < gamePanel.getTower3Arraylist().size(); a++) {
+            Tower3 tower = gamePanel.getSpecificTower3(a);
+            if (tower != null && getTargetedEnemy(tower) != null && !gamePanel.getPaused()) {
+                if (gamePanel.getHealth() > 0 && checkEnemyInRange(tower) && !gamePanel.getWave().getEnemyArrayList().isEmpty()) {
+                    if (timer[2] % tower.getCoolDown() == 0) {
+                        projectile.add(new Projectile(gamePanel.getSpecificTower3(a).getX(), gamePanel.getSpecificTower3(a).getY(), gamePanel.getSpecificTower3(a).getShotSpeed(), gamePanel.getSpecificTower3(a)));
+                        deltaX.add((getTargetedEnemy(gamePanel.getSpecificTower3(a)).getX() + 0.5) - gamePanel.getSpecificTower3(a).getX());
+                        deltaY.add((getTargetedEnemy(gamePanel.getSpecificTower3(a)).getY() + 0.5) - gamePanel.getSpecificTower3(a).getY());
                     }
                 }
             }
@@ -71,8 +87,8 @@ public class Shot {
             Tower4 tower = gamePanel.getSpecificTower4(a);
             if (tower != null && getTargetedEnemy(tower) != null && !gamePanel.getPaused()) {
                 if (gamePanel.getHealth() > 0 && checkEnemyInRange(tower) && !gamePanel.getWave().getEnemyArrayList().isEmpty()) {
-                    if (timer[1] % tower.getCoolDown() == 0) {
-                        projectile.add(new Projectile(gamePanel.getSpecificTower4(a).getX(), gamePanel.getSpecificTower4(a).getY(), gamePanel.getSpecificTower4(a).getShotSpeed(), g, gamePanel.getSpecificTower4(a)));
+                    if (timer[3] % tower.getCoolDown() == 0) {
+                        projectile.add(new Projectile(gamePanel.getSpecificTower4(a).getX(), gamePanel.getSpecificTower4(a).getY(), gamePanel.getSpecificTower4(a).getShotSpeed(), gamePanel.getSpecificTower4(a)));
                         deltaX.add((getTargetedEnemy(gamePanel.getSpecificTower4(a)).getX() + 0.5) - gamePanel.getSpecificTower4(a).getX());
                         deltaY.add((getTargetedEnemy(gamePanel.getSpecificTower4(a)).getY() + 0.5) - gamePanel.getSpecificTower4(a).getY());
                     }
@@ -90,11 +106,13 @@ public class Shot {
                 Image currentProjectileImage;
                 if (p.getOriginTower().getClass() == Tower1.class) {
                     currentProjectileImage = projectile1Image;
+                } else if (p.getOriginTower().getClass() == Tower2.class) {
+                    currentProjectileImage = projectile2Image;
+                } else if (p.getOriginTower().getClass() == Tower3.class) {
+                   currentProjectileImage = projectile4Image;
                 } else if (p.getOriginTower().getClass() == Tower4.class) {
                     currentProjectileImage = projectile4Image;
-                } else if (p.getOriginTower().getClass() == Tower2.class) {
-                   currentProjectileImage = projectile2Image;
-                }  else {
+                } else {
                     currentProjectileImage = projectile4Image;
                 }
 
@@ -175,7 +193,6 @@ public class Shot {
 
     // Autor: Luca
     private boolean checkEnemyInRange(Tower tower) {
-
         Enemy target = getTargetedEnemy(tower);
 
         if (target == null) {
@@ -208,7 +225,6 @@ public class Shot {
                         resetShot();
                         if (gamePanel.getWave().getWavesCompleted() == 5) {
                             gamePanel.showVictoryScreen();
-                            System.out.println("You won!");
                         }
                     }
                 }

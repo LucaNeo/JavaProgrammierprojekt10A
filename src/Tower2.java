@@ -9,9 +9,9 @@ public class Tower2 extends Tower {
     private final double x;
     private final double y;
     private final Image image;
-    public int damage = 25;
-    public int coolDown = 10; // in ms
-    private final int range = 5;
+    public int damage = 10;
+    public int coolDown = 100; // in ms
+    private final int range = 10;
     private final double shotSpeed = 0.1;
 
     public Tower2(int x, int y) {
@@ -25,6 +25,7 @@ public class Tower2 extends Tower {
         this.image = icon.getImage();
     }
 
+    @Override
     public void draw(Graphics g, int CHUNK_SIZE, int offsetX) {
         g.drawImage(image, (int) (x * CHUNK_SIZE + offsetX), (int) (y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
     }
