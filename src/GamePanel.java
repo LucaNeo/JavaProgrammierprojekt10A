@@ -84,10 +84,12 @@ public class GamePanel extends JPanel {
         for (int i = 0; i < wave.getEnemyArrayList().size(); i++) {
             if (wave.getEnemyArrayList().get(i) != null) {
                 if (wave.getSpecificEnemy(i).getX() == 4 && wave.getSpecificEnemy(i).getY() == 13) {
-                    setHealth(0);
+                    setHealth(health=health-wave.getSpecificEnemy(i).getDamageToCastle());
                     wave.clearWave();
                     startButton.setEnabled(true);
-                    showDefeatScreen();
+                    if (health>=0){
+                        showDefeatScreen();}
+
                     i = wave.getEnemyArrayList().size();
                 }
             }
