@@ -9,7 +9,7 @@ public class Tower4 extends Tower {
     private final double x;
     private final double y;
     public Image image;
-    public int damage = 1;
+    public int damage = 2;
     public int coolDown = 40; // in ms
     private int range = 10;
     public double shotSpeed = 0.1;

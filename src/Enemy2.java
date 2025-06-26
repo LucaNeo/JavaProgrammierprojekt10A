@@ -6,9 +6,9 @@ import java.util.Objects;
 // Autor: Titus
 public class Enemy2 extends Enemy {
     private double x, y;
-    private float health = 60;
+    private float health = 30;
     private final float maxHealth;
-    private double speed = 0.075;
+    private double speed = 0.065;
     private final Image image;
     private int damageToCastle = 40;
 

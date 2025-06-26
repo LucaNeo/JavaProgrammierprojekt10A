@@ -8,7 +8,7 @@ public class Enemy3 extends Enemy {
     private double x, y;
     private float health = 1000;
     private final float maxHealth;
-    private double speed = 0.0025;
+    private double speed = 0.025;
     private final Image image;
     private int damageToCastle = 20000;
 
