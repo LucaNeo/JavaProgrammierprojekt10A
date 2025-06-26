@@ -121,9 +121,7 @@ public class GamePanel extends JPanel {
         victoryButton.setOpaque(false);
         victoryButton.setContentAreaFilled(false);
         victoryButton.setBorderPainted(false);
-        victoryButton.addActionListener(_ -> {
-            returnToMenu();
-        });
+        victoryButton.addActionListener(_ -> returnToMenu());
         add(victoryButton);
 
         remove(startButton);
@@ -146,9 +144,7 @@ public class GamePanel extends JPanel {
         defeatButton.setOpaque(false);
         defeatButton.setContentAreaFilled(false);
         defeatButton.setBorderPainted(false);
-        defeatButton.addActionListener(_ -> {
-            returnToMenu();
-        });
+        defeatButton.addActionListener(_ -> returnToMenu());
         add(defeatButton);
 
         remove(startButton);
@@ -320,9 +316,7 @@ public class GamePanel extends JPanel {
         returnToMenu.setOpaque(false);
         returnToMenu.setContentAreaFilled(false);
         returnToMenu.setBorderPainted(false);
-        returnToMenu.addActionListener(_ -> {
-            returnToMenu();
-        });
+        returnToMenu.addActionListener(_ -> returnToMenu());
         add(returnToMenu);
 
         //startButton
@@ -457,8 +451,7 @@ public class GamePanel extends JPanel {
         Image placementImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isPlaceable.png"))).getImage();
         Image nonPlaceableImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isNotPlaceable.png"))).getImage();
 
-        if (placingTower) {
-        } else {
+        if (!placingTower) {
             return;
         }
         for (int x = 0; x < cols; x++) {
@@ -521,11 +514,9 @@ public class GamePanel extends JPanel {
     public Tower2 getSpecificTower2(int index) { return towers2.get(index); }
     public Tower3 getSpecificTower3(int index) { return towers3.get(index); }
     public Tower4 getSpecificTower4(int index) { return towers4.get(index); }
-    public Tower5 getSpecificTower5(int index) { return towers5.get(index); }
     public Wave getWave() { return wave; }
     public JButton getStartButton() { return startButton; }
 
-    public void setHealth(int value) { health = value; }
     public void setMoney(int value) { money = value; }
     public void setPlaceable(int col, int row, boolean bool) { placeable[col][row] = bool; }
     public void setPlacingTower(boolean bool) { placingTower = bool; }

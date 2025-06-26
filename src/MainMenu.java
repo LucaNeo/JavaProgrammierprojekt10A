@@ -8,15 +8,15 @@ import java.util.Objects;
 
 public class MainMenu extends JPanel {
  //   private Image backgroundImage;
-    private Font titleFont;
-
+    private final Image backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/homeMenuScreen.png"))).getImage();
 
     public MainMenu(JFrame frame) {
+
+        Font titleFont;
+
         // Layout & Hintergrund
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(new Color(30, 30, 40));
-
-
         // Titelstil mit Custom Font //Tower defens GROß
         try {
             titleFont = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getResourceAsStream("fonts/SomeCoolFont.ttf")))
@@ -34,20 +34,22 @@ public class MainMenu extends JPanel {
         title.setBorder(BorderFactory.createEmptyBorder(80, 0, 100, 0));
         // Menü-Buttons
         JButton startButton = createMenuButton("Start Game");
+        startButton.setMultiClickThreshhold(15);
         JButton settingsButton = createMenuButton("Settings");
+        settingsButton.setMultiClickThreshhold(15);
         JButton exitButton = createMenuButton("Exit");
+        exitButton.setMultiClickThreshhold(15);
 
         // Button-Actions
-        startButton.addActionListener(e -> {
+        startButton.addActionListener(_ -> {
             frame.setContentPane(new GamePanel(frame)); // Wechsel zum Spiel
             frame.revalidate();
         });
-        settingsButton.addActionListener(e -> {
-            frame.setContentPane(new SettingsMenu(frame)); // Wechsel zu Settings
+        settingsButton.addActionListener(_ -> {
+            frame.setContentPane(new SettingsMenu(frame, backgroundImage)); // Wechsel zu Settings
             frame.revalidate();
         });
-
-        exitButton.addActionListener(e -> System.exit(0));
+        exitButton.addActionListener(_ -> System.exit(0));
 
         // Zusammensetzen von    Komponenten
         add(title);
@@ -64,12 +66,13 @@ public class MainMenu extends JPanel {
         button.setFont(new Font("Arial", Font.PLAIN, 24));
         button.setForeground(Color.WHITE);
         button.setBackground(new Color(70, 70, 90));
-        button.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(100, 100, 120),2),
-                BorderFactory.createEmptyBorder(10, 40, 10, 40)));
+        button.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(new Color(100, 100, 120),2), BorderFactory.createEmptyBorder(10, 40, 10, 40)));
         button.setFocusPainted(false);
-    return button;
+        return button;
     }
 
-
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.drawImage(backgroundImage, 0, 0, null);
+    }
 }
