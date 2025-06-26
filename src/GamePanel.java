@@ -61,14 +61,14 @@ public class GamePanel extends JPanel {
     }
     private void checkDifficulty(){
         switch (DifficultySettings.getCurrentDifficulty()){
-            case EASY:      setHealth(100);
-                            setMoney(2500);
+            case EASY:      health = 100;
+                            money = 2500;
                             break;
-            case MEDIUM:    setHealth(50);
-                            setMoney(2000);
+            case MEDIUM:    health = 50;
+                            money = 2000;
                             break;
-            case HARD:      setHealth(1);
-                            setMoney(1000);
+            case HARD:      health = 1;
+                            money = 1000;
         }
     }
 
@@ -83,13 +83,17 @@ public class GamePanel extends JPanel {
     private void updateGame() {
         for (int i = 0; i < wave.getEnemyArrayList().size(); i++) {
             if (wave.getEnemyArrayList().get(i) != null) {
-                if (wave.getSpecificEnemy(i).getX() == 4 && wave.getSpecificEnemy(i).getY() == 13) {
-                    setHealth(health=health-wave.getSpecificEnemy(i).getDamageToCastle());
+                if (wave.getSpecificEnemy(i).getX() == 4 && wave.getSpecificEnemy(i).getY() >= 14) {
+                    if (health - wave.getSpecificEnemy(i).getDamageToCastle() < 0) {
+                        health = 0;
+                    } else {
+                        health -= wave.getSpecificEnemy(i).getDamageToCastle();
+                    }
                     wave.clearWave();
                     startButton.setEnabled(true);
-                    if (health>=0){
-                        showDefeatScreen();}
-
+                    if (health == 0) {
+                        showDefeatScreen();
+                    }
                     i = wave.getEnemyArrayList().size();
                 }
             }

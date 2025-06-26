@@ -1,15 +1,16 @@
 package src;
 
-public enum Difficulty {
-    EASY,
-    MEDIUM,
-    HARD
-}
-class DifficultySettings {
+public class DifficultySettings {
+
+    public enum Difficulty {
+        EASY,
+        MEDIUM,
+        HARD
+    }
+
     private static Difficulty currentDifficulty = Difficulty.MEDIUM; // Standard
 
-    public DifficultySettings(Difficulty difficulty) {
-    }
+    public DifficultySettings() {}
 
     public static float getEnemySpeedMultiplier() {
         if (currentDifficulty == Difficulty.EASY) {

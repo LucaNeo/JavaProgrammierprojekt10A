@@ -11,7 +11,7 @@ public class Projectile {
     private double speed;
     private Tower originTower;
 
-    public Projectile(double x, double y, double speed, Graphics g, Tower originTower) {
+    public Projectile(double x, double y, double speed, Tower originTower) {
         this.x = x;
         this.y = y;
         this.speed = speed;
@@ -20,11 +20,6 @@ public class Projectile {
 
     public void draw(Graphics g, BufferedImage image, int offsetX, int CHUNK_SIZE) {
         g.drawImage(image, (int) Math.round(x * CHUNK_SIZE) + offsetX, (int) Math.round(y * CHUNK_SIZE), null);
-    }
-
-    public void move(double dx, double dy) {
-        x += dx;
-        y += dy;
     }
 
     public double getX(){

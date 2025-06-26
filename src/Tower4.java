@@ -5,6 +5,7 @@ import java.awt.*;
 import java.util.Objects;
 
 public class Tower4 extends Tower {
+
     private final double x;
     private final double y;
     public Image image;

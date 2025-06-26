@@ -25,6 +25,7 @@ public class Tower2 extends Tower {
         this.image = icon.getImage();
     }
 
+    @Override
     public void draw(Graphics g, int CHUNK_SIZE, int offsetX) {
         g.drawImage(image, (int) (x * CHUNK_SIZE + offsetX), (int) (y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
     }

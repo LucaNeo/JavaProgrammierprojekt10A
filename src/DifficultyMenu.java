@@ -46,18 +46,18 @@ public class DifficultyMenu extends JPanel {
             easyButton.addActionListener(e -> {
                 frame.setContentPane(new SettingsMenu(frame)); // Wechsel zum Spiel
                 frame.revalidate();
-                DifficultySettings.setCurrentDifficulty(Difficulty.EASY);
+                DifficultySettings.setCurrentDifficulty(DifficultySettings.Difficulty.EASY);
 
             });
             mediumButton.addActionListener(e -> {
                 frame.setContentPane(new SettingsMenu(frame)); // Wechsel zu Settings
                 frame.revalidate();
-                DifficultySettings.setCurrentDifficulty(Difficulty.MEDIUM);
+                DifficultySettings.setCurrentDifficulty(DifficultySettings.Difficulty.MEDIUM);
             });
             hardButton.addActionListener(e -> {
                 frame.setContentPane(new SettingsMenu(frame));
                 frame.revalidate();
-                DifficultySettings.setCurrentDifficulty(Difficulty.HARD);
+                DifficultySettings.setCurrentDifficulty(DifficultySettings.Difficulty.HARD);
             });
 
             backButton.addActionListener(e -> {
