@@ -127,15 +127,17 @@ public class Shot {
                         }
                     }
 
+                    //Tower3 heilt die Burg alle 3sek um 8
                     if (p.getOriginTower().getClass() == Tower3.class) {
-                        nextProjectiles.add(p);
-                        nextDeltaX.add(currentDeltaX);
-                        nextDeltaY.add(currentDeltaY);
                         System.out.println("Ja");
-                        if(p.getX() >= 4 * gamePanel.getCHUNK_SIZE() && p.getX() <= 7 * gamePanel.getCHUNK_SIZE() && p.getY()>=14 * gamePanel.getCHUNK_SIZE()) {
+                        if(p.getX() >= 4  && p.getX() <= 7 && p.getY()>=14 ) {
                             System.out.println("Jaja");
-                            if(gamePanel.getHealth()<=140){gamePanel.heal(10);}
+                            if(gamePanel.getHealth()<=140){gamePanel.heal(8);}
                             if(gamePanel.getHealth()>140&& gamePanel.getHealth()<150) {gamePanel.heal(150-gamePanel.getHealth());}
+                        }else{
+                            nextProjectiles.add(p);
+                            nextDeltaX.add(currentDeltaX);
+                            nextDeltaY.add(currentDeltaY);
                         }
 
                     }
