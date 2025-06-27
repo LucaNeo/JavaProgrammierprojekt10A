@@ -70,8 +70,8 @@ public class Shot {
                 if (gamePanel.getHealth() > 0 ) {
                     if (gamePanel.getSpecificTower3(a).getTimer() % tower.getCoolDown() == 0) {
                         projectile.add(new Projectile(gamePanel.getSpecificTower3(a).getX(), gamePanel.getSpecificTower3(a).getY(), gamePanel.getSpecificTower3(a).getShotSpeed(), gamePanel.getSpecificTower3(a)));
-                        deltaX.add(400 - gamePanel.getSpecificTower3(a).getX());
-                        deltaY.add(1080 - gamePanel.getSpecificTower3(a).getY());
+                        deltaX.add(4 - gamePanel.getSpecificTower3(a).getX());
+                        deltaY.add(14 - gamePanel.getSpecificTower3(a).getY());
                     }
                 }
             }
@@ -84,7 +84,7 @@ public class Shot {
             if (tower != null && getTargetedEnemy(tower) != null && !gamePanel.getPaused()) {
                 if (gamePanel.getHealth() > 0 && checkEnemyInRange(tower) && !gamePanel.getWave().getEnemyArrayList().isEmpty()) {
                     if (gamePanel.getSpecificTower4(a).getTimer() % tower.getCoolDown() == 0) {
-                        projectile.add(new Projectile(gamePanel.getSpecificTower4(a).getX(), gamePanel.getSpecificTower4(a).getY(), gamePanel.getSpecificTower4(a).getShotSpeed(), gamePanel.getSpecificTower4(a)));
+                        projectile.add(new Projectile(gamePanel.getSpecificTower4(a).getX(), gamePanel.getSpecificTower4(a).getY() , gamePanel.getSpecificTower4(a).getShotSpeed(), gamePanel.getSpecificTower4(a)));
                         deltaX.add((getTargetedEnemy(gamePanel.getSpecificTower4(a)).getX() + 0.5) - gamePanel.getSpecificTower4(a).getX());
                         deltaY.add((getTargetedEnemy(gamePanel.getSpecificTower4(a)).getY() + 0.5) - gamePanel.getSpecificTower4(a).getY());
                     }
@@ -118,12 +118,18 @@ public class Shot {
                     p.setX(p.getX() + currentDeltaX * p.getSpeed());
                     p.setY(p.getY() + currentDeltaY * p.getSpeed());
 
-                    if (!hitAndMarkForRemoval(p, p.getOriginTower())) {
+                    if (p.getOriginTower().getClass() != Tower3.class && !hitAndMarkForRemoval(p, p.getOriginTower())) {
                         if (p.getX() >= 0 && p.getY() >= 0 && p.getX() < gamePanel.getWidth() && p.getY() < gamePanel.getHeight()) {
                             nextProjectiles.add(p);
                             nextDeltaX.add(currentDeltaX);
                             nextDeltaY.add(currentDeltaY);
                         }
+                    }
+
+                    if (p.getOriginTower().getClass() == Tower3.class) {
+                        nextProjectiles.add(p);
+                        nextDeltaX.add(currentDeltaX);
+                        nextDeltaY.add(currentDeltaY);
                     }
                 }
             }
