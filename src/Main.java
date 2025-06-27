@@ -1,12 +1,9 @@
 package src;
 
-//TODO: Placement Offset <-- Neo?
-//TODO: README schreiben <-- Neo
-//TODO: Größe des Fensters anpassen können
-
 import javax.swing.*;
 import java.awt.*;
 
+// Autor: Jakob
 public class Main {
     public static void main(String[] args) {
 
