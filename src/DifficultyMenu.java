@@ -6,6 +6,7 @@ import java.awt.font.TextAttribute;
 import java.util.Collections;
 import java.util.Objects;
 
+// Autor: Jakob
 public class DifficultyMenu extends JPanel {
 
     private final JFrame parentFrame;
@@ -20,7 +21,6 @@ public class DifficultyMenu extends JPanel {
         // Layout & Hintergrund
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(new Color(30, 30, 40));
-
 
         // Titelstil mit Custom Font //Tower defens GROß
         try {
@@ -43,22 +43,22 @@ public class DifficultyMenu extends JPanel {
         JButton backButton = createMenuButton("Back");
 
         // Button-Actions
-        easyButton.addActionListener(e -> {
+        easyButton.addActionListener(_ -> {
             frame.setContentPane(new SettingsMenu(frame, backgroundImage)); // Wechsel zum Spiel
             frame.revalidate();
             DifficultySettings.setCurrentDifficulty(DifficultySettings.Difficulty.EASY);
         });
-        mediumButton.addActionListener(e -> {
+        mediumButton.addActionListener(_ -> {
             frame.setContentPane(new SettingsMenu(frame, backgroundImage)); // Wechsel zu Settings
             frame.revalidate();
             DifficultySettings.setCurrentDifficulty(DifficultySettings.Difficulty.MEDIUM);
         });
-        hardButton.addActionListener(e -> {
+        hardButton.addActionListener(_ -> {
             frame.setContentPane(new SettingsMenu(frame, backgroundImage));
             frame.revalidate();
             DifficultySettings.setCurrentDifficulty(DifficultySettings.Difficulty.HARD);
         });
-        backButton.addActionListener(e -> {
+        backButton.addActionListener(_ -> {
             parentFrame.setContentPane(new SettingsMenu(parentFrame, backgroundImage));
             parentFrame.revalidate();
             parentFrame.repaint();

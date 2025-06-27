@@ -12,6 +12,7 @@ public class Placement extends MouseAdapter {
         this.gamePanel = gamePanel;
     }
 
+    // Autor: Jakob (Großteil), Luca (Anpassung auf Grid gemäß der Map), Titus (Werte angepasst)
     @Override
     public void mouseClicked(MouseEvent e) {
         if (!gamePanel.getPlacingTower()) return;
@@ -53,6 +54,8 @@ public class Placement extends MouseAdapter {
             gamePanel.repaint();
         }
     }
+
+    // Autor: Jakob
     private double getCostMultiplier() {
         return switch (DifficultySettings.getCurrentDifficulty()){
             case HARD -> 1.15; //15%

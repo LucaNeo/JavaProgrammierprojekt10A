@@ -1,5 +1,5 @@
 package src;
-// Autor Jakob/Luca
+
 // TODO Settings verbessern
 // TODO shortcuts,Undo/Redo
 // TODO pause Button
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+// Autor: Jakob (Basis), Luca (Integration aller anderen Klassen)
 public class GamePanel extends JPanel {
 
     private final int CHUNK_SIZE = 72;
@@ -20,8 +21,8 @@ public class GamePanel extends JPanel {
     private boolean[][] isPathway;
     private final int offsetX = 100;
     private boolean placingTower = false;  // Ist Platzierungsmodus aktiv?
-    private int money; // StartGeld
-    private int health; //hp
+    private int money; // Geld
+    private int health; // Lebensanzeige
     private int selectedTowerType = 0;    // 1 = Tower1, 2 = Tower2 etc.se;
     private boolean paused = false;
 
@@ -33,8 +34,8 @@ public class GamePanel extends JPanel {
     private final Wave wave = new Wave();
     private final Shot shot = new Shot(this);
     private final Pathfinding pathFinding = new Pathfinding(this);
-    private Timer gameLoop; // aktive runde ?
 
+    private Timer gameLoop; // aktive runde ?
     private final JFrame parentFrame;
     private JButton startButton;
     private JButton restartButton;
@@ -56,9 +57,11 @@ public class GamePanel extends JPanel {
         initGrid();
         setUI();
         startGameLoop();
-        setFocusable(true); // Shortcuts möglich machen (Press Key Event)
         checkDifficulty();
+        setFocusable(true); // Shortcuts möglich machen (Press Key Event)
     }
+
+    // Autor: Jakob
     private void checkDifficulty(){
         switch (DifficultySettings.getCurrentDifficulty()){
             case EASY:      health = 100;
@@ -72,6 +75,7 @@ public class GamePanel extends JPanel {
         }
     }
 
+    // Autor: Jakob
     private void startGameLoop() {
         gameLoop = new Timer(16, _ -> {
             updateGame();
@@ -80,6 +84,7 @@ public class GamePanel extends JPanel {
         gameLoop.start();
     }
 
+    // Autor: Luca, Titus
     private void updateGame() {
         for (int i = 0; i < wave.getEnemyArrayList().size(); i++) {
             if (wave.getEnemyArrayList().get(i) != null) {
@@ -100,6 +105,7 @@ public class GamePanel extends JPanel {
         }
     }
 
+    // Autor: Neo
     private void pauseGame() {
         if(!paused) {
             paused = true;
@@ -114,6 +120,7 @@ public class GamePanel extends JPanel {
         }
     }
 
+    // Autor: Luca
     public void showVictoryScreen() {
         ImageIcon victoryIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/victoryScreen.png")));
         JButton victoryButton = new JButton(victoryIcon);
@@ -137,6 +144,7 @@ public class GamePanel extends JPanel {
         gameLoop.stop();
     }
 
+    // Autor: Luca
     public void showDefeatScreen() {
         ImageIcon defeatIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/defeatScreen.png")));
         JButton defeatButton = new JButton(defeatIcon);
@@ -160,6 +168,7 @@ public class GamePanel extends JPanel {
         gameLoop.stop();
     }
 
+    // Autor: Luca
     private void initGrid() {
         placeable = new boolean[cols][rows];
         isPathway = new boolean[cols][rows];
@@ -206,6 +215,7 @@ public class GamePanel extends JPanel {
         }
     }
 
+    // Autor: Jakob
     private void returnToMenu() {
         if (gameLoop != null) gameLoop.stop();
         parentFrame.setContentPane(new MainMenu(parentFrame));
@@ -213,6 +223,7 @@ public class GamePanel extends JPanel {
         parentFrame.repaint();
     }
 
+    // Autor: Jakob, Neo, Luca
     private void setUI() {
         setLayout(null); // Layout des GamePanel auf null setzen
 
@@ -390,6 +401,37 @@ public class GamePanel extends JPanel {
         add(pauseButton);
     }
 
+
+    private void drawGrid(Graphics g) { //teilt map in chunks
+        Image placementImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isPlaceable.png"))).getImage();
+        Image nonPlaceableImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isNotPlaceable.png"))).getImage();
+
+        if (!placingTower) {
+            return;
+        }
+        for (int x = 0; x < cols; x++) {
+            for (int y = 0; y < rows; y++) {
+                if (placeable[x][y]) {
+                    g.drawImage(placementImage, x * CHUNK_SIZE + offsetX, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
+                }
+                if (!placeable[x][y]) {
+                    g.drawImage(nonPlaceableImage, x * CHUNK_SIZE + offsetX, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
+                }
+            }
+        }
+    }
+
+    // Autor: Jakob
+    private void drawHUD(Graphics g, Graphics g2) { // HP und Geld anzeige
+        g.setColor(Color.ORANGE);
+        g.setFont(new Font("Arial", Font.BOLD, 40));
+        g.drawString("$" + money, 1240, 60);
+        g2.setColor(Color.RED);
+        g2.setFont(new Font("Arial", Font.BOLD, 40));
+        g2.drawString("♥️" + health, 1240, 100);
+    }
+
+    // Autor: Jakob, Luca
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -414,7 +456,7 @@ public class GamePanel extends JPanel {
             }
         }
 
-        //  Türme zeichnen
+        //  Autor: Jakob (Türme zeichnen)
         for (Tower1 tower1 : towers1) {
             tower1.draw(g, CHUNK_SIZE, offsetX);
         }
@@ -447,52 +489,6 @@ public class GamePanel extends JPanel {
         drawGrid(g);
     }
 
-    private void drawGrid(Graphics g) { //teilt map in chunks
-        Image placementImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isPlaceable.png"))).getImage();
-        Image nonPlaceableImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isNotPlaceable.png"))).getImage();
-
-        if (!placingTower) {
-            return;
-        }
-        for (int x = 0; x < cols; x++) {
-            for (int y = 0; y < rows; y++) {
-                if (placeable[x][y]) {
-                    g.drawImage(placementImage, x * CHUNK_SIZE + offsetX, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
-                }
-                if (!placeable[x][y]) {
-                    g.drawImage(nonPlaceableImage, x * CHUNK_SIZE + offsetX, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, null);
-                }
-            }
-        }
-    }
-
-    private void drawHUD(Graphics g, Graphics g2) { // HP und Geld anzeige
-        g.setColor(Color.ORANGE);
-        g.setFont(new Font("Arial", Font.BOLD, 40));
-        g.drawString("$" + money, 1240, 60);
-        g2.setColor(Color.RED);
-        g2.setFont(new Font("Arial", Font.BOLD, 40));
-        g2.drawString("♥️" + health, 1240, 100);
-    }
-    private double getCostMultiplier() {
-        // Multiplikator basierend auf Schwierigkeit
-        return switch (DifficultySettings.getCurrentDifficulty()) {
-            case EASY -> 0.8;  // Türme 20% günstiger
-            case MEDIUM -> 1.0; // Standard
-            case HARD -> 1.2;   // Türme 20% teurer
-        };
-    }
-    public int getTowerCost(int towerType) {
-        int baseCost = switch (towerType) {
-            case 1 -> 250;
-            case 2 -> 350;
-            case 3 -> 500;
-            case 4 -> 60;
-            case 5 -> 400;
-            default -> 0;
-        };
-        return (int)(baseCost * getCostMultiplier());
-    }
     public int getMoney() { return money; }
     public int getHealth() { return health; }
     public void heal(int amount) {health += amount;}

@@ -7,11 +7,10 @@ import java.util.Collections;
 import java.util.Objects;
 
 public class MainMenu extends JPanel {
- //   private Image backgroundImage;
+
     private final Image backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/homeMenuScreen.png"))).getImage();
 
     public MainMenu(JFrame frame) {
-
         Font titleFont;
 
         // Layout & Hintergrund
@@ -26,12 +25,14 @@ public class MainMenu extends JPanel {
         } catch (Exception e) {
             titleFont = new Font("Arial", Font.BOLD, 48);
         }
-    //Titel setzen
+
+        //Titel setzen
         JLabel title = new JLabel("Tower Defense");
         title.setFont(titleFont);
         title.setForeground(new Color(220, 220, 250));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setBorder(BorderFactory.createEmptyBorder(80, 0, 100, 0));
+
         // Menü-Buttons
         JButton startButton = createMenuButton("Start Game");
         startButton.setMultiClickThreshhold(15);
@@ -59,7 +60,7 @@ public class MainMenu extends JPanel {
         add(Box.createRigidArea(new Dimension(0, 20)));
         add(exitButton);
     }
-// optimierter button für Settings/Menu
+    // optimierter button für Settings/Menu
     private JButton createMenuButton(String text) {
         JButton button = new JButton(text);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);

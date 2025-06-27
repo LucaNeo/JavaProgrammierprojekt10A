@@ -1,18 +1,17 @@
 package src;
 
-import javax.swing.*;
 import java.awt.*;
-import java.util.List;
-import java.util.Objects;
 
-
+// Autor: Titus
 public class Enemy {
-    private double x, y;
+
+    private final double x;
+    private final double y;
     private int health;
     private double speed;
     private Image image;
+    private int damageToCastle;
 
-    private int damageToCastle ;
     public Enemy(double x, double y) {
         this.x = x;
         this.y = y;
@@ -26,7 +25,10 @@ public class Enemy {
         return x;
     }
 
-    public int getHealth() { return health; }
+    public int getHealth() {
+        return health;
+    }
+
     //public void reward(){if(health==0){}}
     public void draw(Graphics2D g2d, int offsetX, int CHUNK_SIZE) {
     }
@@ -38,6 +40,11 @@ public class Enemy {
         return false;
     }
 
-    public void takeDamage(int damage){
+    public void takeDamage(int damage) {
+        health -= damage;
     }
-    public int getDamageToCastle() {return (int)damageToCastle;}}
+
+    public int getDamageToCastle() {
+        return (int) damageToCastle;
+    }
+}

@@ -1,11 +1,10 @@
 package src;
 
-// Autor Luca/Titus
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
+// Autor: Titus, Luca
 public class Enemy1 extends Enemy {
 
     private double x, y;
@@ -13,7 +12,7 @@ public class Enemy1 extends Enemy {
     private final float maxHealth;
     private double speed = 0.05;
     private final Image image;
-    private int damageToCastle = 10;
+    private final int damageToCastle = 10;
 
     public Enemy1(double x, double y) {
         super(x, y);
@@ -33,21 +32,6 @@ public class Enemy1 extends Enemy {
     }
 
     @Override
-    public double getY() {
-        return y;
-    }
-
-    @Override
-    public double getX() {
-        return x;
-    }
-
-    @Override
-    public int getHealth() { return (int) health; }
-
-    public int getDamageToCastle() {return (int)damageToCastle;}
-
-    @Override
     public void draw(Graphics2D g2d, int offsetX, int CHUNK_SIZE) {
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, health / maxHealth));
         g2d.drawImage(image, (int) Math.round(x * CHUNK_SIZE) + offsetX, (int) Math.round(y * CHUNK_SIZE), CHUNK_SIZE, CHUNK_SIZE, null);
@@ -57,30 +41,30 @@ public class Enemy1 extends Enemy {
     @Override
     public void move() {
         if (x == 2 && y < 7) {
-            y = Double.parseDouble(String.format("%.2f", y += speed).replace(',', '.'));
+            y = Double.parseDouble(String.format("%.2f", y + speed).replace(',', '.'));
         }
         if (x < 6 && y >= 7 && y < 8) {
-            x = Double.parseDouble(String.format("%.2f", x += speed).replace(',', '.'));
+            x = Double.parseDouble(String.format("%.2f", x + speed).replace(',', '.'));
             y = 7;
         }
         if (x >= 6 && x < 7 && y > 4 && y < 8) {
-            y = Double.parseDouble(String.format("%.2f", y -= speed).replace(',', '.'));
+            y = Double.parseDouble(String.format("%.2f", y - speed).replace(',', '.'));
             x = 6;
         }
         if (x < 10 && x > 5 && y <= 4) {
-            x = Double.parseDouble(String.format("%.2f", x += speed).replace(',', '.'));
+            x = Double.parseDouble(String.format("%.2f", x + speed).replace(',', '.'));
             y = 4;
         }
         if (x >= 10 && y < 10) {
-            y = Double.parseDouble(String.format("%.2f", y += speed).replace(',', '.'));
+            y = Double.parseDouble(String.format("%.2f", y + speed).replace(',', '.'));
             x = 10;
         }
         if (x > 4 && y >= 10) {
-            x = Double.parseDouble(String.format("%.2f", x -= speed).replace(',', '.'));
+            x = Double.parseDouble(String.format("%.2f", x - speed).replace(',', '.'));
             y = 10;
         }
         if (x <= 4 && y > 9 && y < 14){
-            y = Double.parseDouble(String.format("%.2f", y += speed).replace(',', '.'));
+            y = Double.parseDouble(String.format("%.2f", y + speed).replace(',', '.'));
             x = 4;
         }
     }
@@ -97,6 +81,21 @@ public class Enemy1 extends Enemy {
             return false;
         }
     }
+
+    @Override
+    public double getY() {
+        return y;
+    }
+
+    @Override
+    public double getX() {
+        return x;
+    }
+
+    @Override
+    public int getHealth() { return (int) health; }
+
+    public int getDamageToCastle() { return damageToCastle; }
 
     @Override
     public void takeDamage(int damage){

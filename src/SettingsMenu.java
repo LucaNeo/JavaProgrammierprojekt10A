@@ -7,6 +7,7 @@ import java.awt.font.TextAttribute;
 import java.util.Collections;
 import java.util.Objects;
 
+// Autor: Jakob
 public class SettingsMenu extends JPanel {
 
          private final JFrame parentFrame;
@@ -36,7 +37,7 @@ public class SettingsMenu extends JPanel {
 
              JButton difficultyButton = styleButton("Difficulty");
              difficultyButton.setMultiClickThreshhold(15);
-             difficultyButton.addActionListener(e -> {
+             difficultyButton.addActionListener(_ -> {
                  parentFrame.setContentPane(new DifficultyMenu(frame, backgroundImage));
                  parentFrame.revalidate();
                  parentFrame.repaint();
@@ -45,7 +46,7 @@ public class SettingsMenu extends JPanel {
             //TODO Button-Actions
              JButton backButton = styleButton("Back");
              backButton.setMultiClickThreshhold(15);
-             backButton.addActionListener(e -> {
+             backButton.addActionListener(_ -> {
                  parentFrame.setContentPane(new MainMenu(parentFrame));
                  parentFrame.revalidate();
                  parentFrame.repaint();

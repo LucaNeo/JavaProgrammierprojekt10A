@@ -1,11 +1,12 @@
 package src;
-//Autor Jakob
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
+// Autor: Titus, Luca
 public class Tower5 extends Tower {
 
     private final int x;
@@ -20,8 +21,7 @@ public class Tower5 extends Tower {
         this.y = y;
         this.gamePanel = gamePanel;
 
-        // Bild laden
-        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-trader.png"))); // Pfad anpassen
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-trader.png")));
         this.image = icon.getImage();
         startTimer();
     }

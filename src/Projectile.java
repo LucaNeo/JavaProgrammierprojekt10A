@@ -9,7 +9,7 @@ public class Projectile {
     private double x;
     private double y;
     private final double speed;
-    private Tower originTower;
+    private final Tower originTower;
 
     public Projectile(double x, double y, double speed, Tower originTower) {
         this.x = x;
@@ -28,8 +28,8 @@ public class Projectile {
     public double getY(){
         return y;
     }
-    public double getSpeed(){ return speed; }
-    public Tower getOriginTower(){ return originTower; }
+    public double getSpeed() { return speed; }
+    public Tower getOriginTower() { return originTower; }
     public void setX(double x){
         this.x = x;
     }

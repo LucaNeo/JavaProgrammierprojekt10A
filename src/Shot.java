@@ -8,6 +8,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
+// Autor: Neo, Luca
 public class Shot {
 
     private final GamePanel gamePanel;
@@ -31,8 +32,8 @@ public class Shot {
 
         Image projectile1Image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/goatAttack.png"))).getImage();
         Image projectile2Image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/magicSpell.png"))).getImage();
-        Image projectile4Image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/arrow.png"))).getImage();
         Image projectile3Image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/magicSpellHeal.png"))).getImage();
+        Image projectile4Image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/arrow.png"))).getImage();
 
         // Logik für das Erstellen neuer Projektile für Tower1
         for (int a = 0; a < gamePanel.getTower1Arraylist().size(); a++) {
@@ -127,14 +128,17 @@ public class Shot {
                         }
                     }
 
+                    // Autor: Neo
                     //Tower3 heilt die Burg alle 3sek um 8
                     if (p.getOriginTower().getClass() == Tower3.class) {
-                        System.out.println("Ja");
-                        if(p.getX() >= 4  && p.getX() <= 7 && p.getY()>=14 ) {
-                            System.out.println("Jaja");
-                            if(gamePanel.getHealth()<=140){gamePanel.heal(8);}
-                            if(gamePanel.getHealth()>140&& gamePanel.getHealth()<150) {gamePanel.heal(150-gamePanel.getHealth());}
-                        }else{
+                        if(p.getX() >= 4  && p.getX() <= 7 && p.getY() >= 14 ) {
+                            if(gamePanel.getHealth() <= 140) {
+                                gamePanel.heal(8);
+                            }
+                            if(gamePanel.getHealth() > 140 && gamePanel.getHealth() < 150) {
+                                gamePanel.heal(150 - gamePanel.getHealth());
+                            }
+                        } else {
                             nextProjectiles.add(p);
                             nextDeltaX.add(currentDeltaX);
                             nextDeltaY.add(currentDeltaY);

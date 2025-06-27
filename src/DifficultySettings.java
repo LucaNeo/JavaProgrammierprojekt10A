@@ -1,6 +1,6 @@
 package src;
 
-
+// Autor: Jakob
 public class DifficultySettings {
 
     public enum Difficulty {

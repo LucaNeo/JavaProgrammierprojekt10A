@@ -1,9 +1,10 @@
 package src;
-// Autor Titus
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
+// Autor: Titus
 public class Tower1 extends Tower {
 
     private final double x;
@@ -22,8 +23,7 @@ public class Tower1 extends Tower {
         this.y = y;
         this.timer = timer;
 
-        // Bild laden
-        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-guard.png"))); // Pfad anpassen
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-guard.png")));
         this.image = icon.getImage();
     }
 

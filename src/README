@@ -4,7 +4,7 @@ Dabei kommen sie von der roten Fahne und überqueren das Schlachtfeld auf dem st
 Rekrutiere Soldaten und schicke sie aufs Schlachtfeld um deine Burg zu beschützen.
     - Guard: einen axtschwingenden Bärserker mit kurzer Reichweite und mittlerem Schaden.
     - Ketoon: einen mächtigen Magier, der deine Feinde mit magischen Bällen bewerfen wird, diese machen viel Schaden doch habt keine so hohe Reichweite.
-    - Priest: einen Zauberer, der deine Burg mit einem Schutz-Zauber versieht und so alle ??sek ??Leben wiederherstellt.
+    - Priest: einen Zauberer, der deine Burg mit einem Schutz-Zauber versieht und so alle 4 Sekunden 8 Leben wiederherstellt.
     - Archer: einen Bogenschützen mit hoher Reichweite jedoch geringer Projektielgeschwindigkeit und geringem Schaden.
     - Trader: einen Steuereintreiber, dieser zahlt dir einen Teil deines Geldes zurück.
 
@@ -18,4 +18,4 @@ Infos:
         Easy: Leben 100 ; Startgeld 2500 ; Midlander: -20% Leben, -10% Geschwindigkeit
         Medium: (Standart) Leben 50; Startgeld 2000
         Hard: Leben 1 ; Startgeld 1000 ; Midlander: +20% Leben, +20% Geschwindigkeit
-    2. Das Spiel ist (leider) nur im Format 16:9 in FHD (1080p X 1920p) angemessen spielbar.
+    2. Das Spiel ist (leider) nur im Format 16:9 in Full HD (1920p x 1080p) angemessen spielbar.

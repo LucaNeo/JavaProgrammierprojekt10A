@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-//Autor Basiscode: Luca; Implementierung einzelner Waves: Titus
+// Autor Basiscode: Luca, Implementierung der Waves: Titus
 
 public class Wave {
+
     private final Random random = new Random();
     private int waveCompleted = 0;
 
@@ -14,14 +15,14 @@ public class Wave {
 
     public Wave() {}
 
-    public void createWave1(){
+    public void createWave1() {
         for (int i = 0; i < 10; i++) {
             double r = random.doubles(1, 1.25).findFirst().getAsDouble();
             enemy.add(new Enemy1(2, Double.parseDouble(String.format("%.1f", i * -r).replace(',', '.')))); // r = Abstand der Enemies in Chunks
         }
     }
-    public void createWave2(){
 
+    public void createWave2() {
         for (int i = 0; i < 13; i++) {
             if (Math.random() < 0.7) {
                 double r = random.doubles(1, 1.25).findFirst().getAsDouble();
@@ -32,8 +33,8 @@ public class Wave {
             }
         }
     }
-    public void createWave3(){
 
+    public void createWave3() {
         for (int i = 0; i < 15; i++) {
             if (Math.random() < 0.5) {
                 double r = random.doubles(1, 1.25).findFirst().getAsDouble();
@@ -44,8 +45,8 @@ public class Wave {
             }
         }
     }
-    public void createWave4(){
 
+    public void createWave4() {
         for (int i = 0; i < 19; i++) {
             if (Math.random() < 0.2) {
                 double r = random.doubles(1, 1.25).findFirst().getAsDouble();
@@ -56,6 +57,7 @@ public class Wave {
             }
         }
     }
+
     public void createWave5() {
         for (int i = 0; i < 1; i++) {
             double r = random.doubles(1, 1.25).findFirst().getAsDouble();
@@ -64,7 +66,6 @@ public class Wave {
     }
 
     public void clearWave(){
-        //clear Wave 1
         enemy.clear();
         waveCompleted++;
     }
@@ -76,5 +77,5 @@ public class Wave {
     public Enemy getSpecificEnemy(int index) { return enemy.get(index); }
     public List getEnemyArrayList() { return enemy; }
     public int getWavesCompleted(){ return waveCompleted; }
-    public int setWavesCompleted(int value) { return waveCompleted = value; }
+    public void setWavesCompleted(int value) { waveCompleted = value; }
 }

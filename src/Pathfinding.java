@@ -2,6 +2,7 @@ package src;
 
 import java.awt.*;
 
+// Autor: Luca
 public class Pathfinding {
 
     private final GamePanel gamePanel;

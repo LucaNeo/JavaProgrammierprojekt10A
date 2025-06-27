@@ -1,9 +1,10 @@
 package src;
-//Autor Jakob
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
+// Autor: Titus
 public class Tower4 extends Tower {
 
     private final double x;
@@ -22,8 +23,7 @@ public class Tower4 extends Tower {
         this.y = y;
         this.timer = timer;
 
-        // Bild laden
-        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-archer.png"))); // Pfad anpassen
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-archer.png")));
         this.image = icon.getImage();
     }
 

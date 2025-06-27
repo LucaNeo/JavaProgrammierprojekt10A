@@ -2,7 +2,9 @@ package src;
 
 import java.awt.*;
 
+// Autor: Jakob, Titus
 public class Tower {
+
     private final double x;
     private final double y;
     private int damage;
@@ -28,10 +30,6 @@ public class Tower {
         return y;
     }
 
-    public int getCost() {
-        return 0;
-    }
-
     public int getRange() {
         return range;
     }
@@ -48,11 +46,7 @@ public class Tower {
         return shotSpeed;
     }
 
-    public int getTimer() {
-        return timer;
-    }
+    public int getTimer() { return timer; }
 
-    public void setTimer(int value) {
-        this.timer = value;
-    }
+    public void setTimer(int value) { this.timer = value; }
 }
