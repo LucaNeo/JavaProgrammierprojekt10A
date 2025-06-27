@@ -32,6 +32,7 @@ public class Shot {
         Image projectile1Image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/goatAttack.png"))).getImage();
         Image projectile2Image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/magicSpell.png"))).getImage();
         Image projectile4Image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/arrow.png"))).getImage();
+        Image projectile3Image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/magicSpellHeal.png"))).getImage();
 
         // Logik für das Erstellen neuer Projektile für Tower1
         for (int a = 0; a < gamePanel.getTower1Arraylist().size(); a++) {
@@ -67,11 +68,11 @@ public class Shot {
         for (int a = 0; a < gamePanel.getTower3Arraylist().size(); a++) {
             Tower3 tower = gamePanel.getSpecificTower3(a);
             if (tower != null && !gamePanel.getPaused()) {
-                if (gamePanel.getHealth() > 0 ) {
+                if (gamePanel.getHealth() > 0 && !gamePanel.getWave().getEnemyArrayList().isEmpty()) {
                     if (gamePanel.getSpecificTower3(a).getTimer() % tower.getCoolDown() == 0) {
                         projectile.add(new Projectile(gamePanel.getSpecificTower3(a).getX(), gamePanel.getSpecificTower3(a).getY(), gamePanel.getSpecificTower3(a).getShotSpeed(), gamePanel.getSpecificTower3(a)));
                         deltaX.add(4 - gamePanel.getSpecificTower3(a).getX());
-                        deltaY.add(14 - gamePanel.getSpecificTower3(a).getY());
+                        deltaY.add(15 - gamePanel.getSpecificTower3(a).getY());
                     }
                 }
             }
@@ -106,7 +107,7 @@ public class Shot {
                 } else if (p.getOriginTower().getClass() == Tower2.class) {
                     currentProjectileImage = projectile2Image;
                 } else if (p.getOriginTower().getClass() == Tower3.class) {
-                   currentProjectileImage = projectile4Image;
+                   currentProjectileImage = projectile3Image;
                 } else if (p.getOriginTower().getClass() == Tower4.class) {
                     currentProjectileImage = projectile4Image;
                 } else {
@@ -130,6 +131,13 @@ public class Shot {
                         nextProjectiles.add(p);
                         nextDeltaX.add(currentDeltaX);
                         nextDeltaY.add(currentDeltaY);
+                        System.out.println("Ja");
+                        if(p.getX() >= 4 * gamePanel.getCHUNK_SIZE() && p.getX() <= 7 * gamePanel.getCHUNK_SIZE() && p.getY()>=14 * gamePanel.getCHUNK_SIZE()) {
+                            System.out.println("Jaja");
+                            if(gamePanel.getHealth()<=140){gamePanel.heal(10);}
+                            if(gamePanel.getHealth()>140&& gamePanel.getHealth()<150) {gamePanel.heal(150-gamePanel.getHealth());}
+                        }
+
                     }
                 }
             }

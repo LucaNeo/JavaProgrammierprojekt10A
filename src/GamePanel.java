@@ -495,6 +495,7 @@ public class GamePanel extends JPanel {
     }
     public int getMoney() { return money; }
     public int getHealth() { return health; }
+    public void heal(int amount) {health += amount;}
     public int getOffsetX() { return offsetX; }
     public int getCHUNK_SIZE() { return CHUNK_SIZE; }
     public int getHeight() { return 2000; }

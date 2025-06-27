@@ -9,8 +9,8 @@ public class Tower3 extends Tower {
     private final double x;
     private final double y;
     private final Image image;
-    public int coolDown = 10; // in ms
-    private final double shotSpeed = 0.1;
+    public int coolDown = 100; // in ms
+    private final double shotSpeed = 0.01;
     private int timer;
 
     public Tower3(int x, int y, int timer) {
