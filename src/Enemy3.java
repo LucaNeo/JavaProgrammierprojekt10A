@@ -4,17 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-// Autor: Titus, Luca
-public class Enemy1 extends Enemy {
-
+// Autor: Titus
+public class Enemy3 extends Enemy {
     private double x, y;
-    private float health = 8;
+    private float health = 1000;
     private final float maxHealth;
-    private double speed = 0.05;
+    private double speed = 0.025;
     private final Image image;
-    private final int damageToCastle = 10;
+    private final int damageToCastle = 20000;
 
-    public Enemy1(double x, double y) {
+    public Enemy3(double x, double y) {
         super(x, y);
         this.x = x;
         this.y = y;
@@ -27,7 +26,7 @@ public class Enemy1 extends Enemy {
         speed *= speedMultiplier;
 
         // Bild laden
-        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-midlander.png"))); // Pfad anpassen
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-midleader.png"))); // Pfad anpassen
         this.image = icon.getImage();
     }
 

@@ -1,22 +1,19 @@
 package src;
-import javax.swing.JFrame;
 
+import javax.swing.*;
+import java.awt.*;
+
+// Autor: Jakob
 public class Main {
-
-    private JFrame frame;
-    private Enemy enemy = new Enemy();
-
     public static void main(String[] args) {
-        new Main().go();
-    }
 
-    private void go(){
-        frame = new JFrame("Tower Defense");
-
-        frame.setSize(1920, 1080);
+        JFrame frame = new JFrame("Tower Defense");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setMinimumSize(new Dimension(1280, 720));
+        frame.setSize(1920, 1080);
+        frame.setLocationRelativeTo(null);
+        frame.setUndecorated(true);
+        frame.setContentPane(new MainMenu(frame));
         frame.setVisible(true);
-        frame.setResizable(true); // review
-        frame.getContentPane().add(enemy.label);
     }
 }

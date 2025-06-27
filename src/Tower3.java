@@ -4,26 +4,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-// Autor: Titus
-public class Tower1 extends Tower {
+// Autor: Titus, Luca
+public class Tower3 extends Tower {
 
     private final double x;
     private final double y;
     private final Image image;
-    public int damage = 5;
-    public int coolDown = 50; // in ms
-    private final int range = 2;
-    private final double shotSpeed = 0.1;
+    public int coolDown = 300; // in ms
+    private final double shotSpeed = 0.01;
     private int timer;
 
-    public Tower1(int x, int y, int timer) {
+    public Tower3(int x, int y, int timer) {
         super(x, y, timer);
 
         this.x = x;
         this.y = y;
         this.timer = timer;
 
-        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-guard.png")));
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-priest.png")));
         this.image = icon.getImage();
     }
 
@@ -40,16 +38,6 @@ public class Tower1 extends Tower {
     @Override
     public double getY(){
         return y;
-    }
-
-    @Override
-    public int getRange() {
-        return range;
-    }
-
-    @Override
-    public int getDamage() {
-        return damage;
     }
 
     @Override

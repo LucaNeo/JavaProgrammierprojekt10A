@@ -5,25 +5,25 @@ import java.awt.*;
 import java.util.Objects;
 
 // Autor: Titus
-public class Tower1 extends Tower {
+public class Tower4 extends Tower {
 
     private final double x;
     private final double y;
     private final Image image;
-    public int damage = 5;
-    public int coolDown = 50; // in ms
-    private final int range = 2;
+    public int damage = 1;
+    public int coolDown = 40; // in ms
+    private final int range = 10;
     private final double shotSpeed = 0.1;
     private int timer;
 
-    public Tower1(int x, int y, int timer) {
+    public Tower4(int x, int y, int timer) {
         super(x, y, timer);
 
         this.x = x;
         this.y = y;
         this.timer = timer;
 
-        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-guard.png")));
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-archer.png")));
         this.image = icon.getImage();
     }
 
@@ -53,14 +53,10 @@ public class Tower1 extends Tower {
     }
 
     @Override
-    public int getCoolDown() {
-        return coolDown;
-    }
+    public int getCoolDown() { return coolDown; }
 
     @Override
-    public double getShotSpeed() {
-        return shotSpeed;
-    }
+    public double getShotSpeed() { return shotSpeed; }
 
     @Override
     public int getTimer() { return timer; }
@@ -68,3 +64,4 @@ public class Tower1 extends Tower {
     @Override
     public void setTimer(int value) { this.timer = value; }
 }
+
