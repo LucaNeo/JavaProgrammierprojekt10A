@@ -1,9 +1,9 @@
 Willkommen zu diesem Tower-Defense Spiel.
 Verteidige deine Burg gegen die feindlichen Midlander. Sie werden deine Burg angreifen, wenn du nichts tust.
-Dabei kommen sie von der roten Fahne und überqueren das Schlachtfeld auf dem steinigem Weg.
+Dabei kommen sie von der roten Fahne und überqueren das Schlachtfeld auf dem steinigen Weg.
 Rekrutiere Soldaten und schicke sie aufs Schlachtfeld um deine Burg zu beschützen.
-    - Guard: einen axtschwingenden Bärserker mit kurzer Reichweite aber großem Schaden.
-    - Ketoon: einen mächtigen Magier, der deine Feinde mit magischen Bällen bewerfen wird, diese machen viel Schaden doch haben keine so hohe Reichweite.
+    - Guard: einen axtschwingenden Bärserker mit kurzer Reichweite und mittlerem Schaden.
+    - Ketoon: einen mächtigen Magier, der deine Feinde mit magischen Bällen bewerfen wird, diese machen viel Schaden doch habt keine so hohe Reichweite.
     - Priest: einen ???
     - Archer: einen Bogenschützen mit hoher Reichweite jedoch geringer Projektielgeschwindigkeit und geringem Schaden.
     - Trader: einen Steuereintreiber, dieser zahlt dir einen Teil deines Geldes zurück.
@@ -15,7 +15,7 @@ Viel Spaß beim Spielen!
 
 Infos:
     1. Wenn dir dein Spiel zu einfach erscheint (du einfach zu gut bist ;)) ändere die Schwierigkeit im Hauptmenü unter: Settings > Difficulty
-        Easy: Leben  ; Startgeld  ; Midlander: -20% Leben, -10% Geschwindigkeit
+        Easy: Leben 100 ; Startgeld 2500 ; Midlander: -20% Leben, -10% Geschwindigkeit
         Medium: (Standart) Leben 50; Startgeld 2000
-        Hard: Leben  ; Startgeld  ; Midlander: +20% Leben, +20% Geschwindigkeit
+        Hard: Leben 1 ; Startgeld 1000 ; Midlander: +20% Leben, +20% Geschwindigkeit
     2. Das Spiel ist (leider) nur im Format 16:9 in FHD (1080p X 1920p) angemessen spielbar.

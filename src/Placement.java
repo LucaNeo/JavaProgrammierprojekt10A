@@ -16,7 +16,7 @@ public class Placement extends MouseAdapter {
     public void mouseClicked(MouseEvent e) {
         if (!gamePanel.getPlacingTower()) return;
 
-        int gridX = e.getX() / gamePanel.getCHUNK_SIZE() - (gamePanel.getOffsetX() + 10)/gamePanel.getCHUNK_SIZE();
+        int gridX = e.getX() / gamePanel.getCHUNK_SIZE() - (gamePanel.getOffsetX() + 44)/gamePanel.getCHUNK_SIZE();
         int gridY = e.getY() / gamePanel.getCHUNK_SIZE();
         // Prüfen ob das Feld gültig, frei und bezahlbar ist
         if (gridX >= 0 && gridX < gamePanel.getCols() &&
