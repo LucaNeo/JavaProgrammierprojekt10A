@@ -32,7 +32,7 @@ public class Tower5 extends Tower {
             @Override
             public void run() {
                 if (!gamePanel.getWave().getEnemyArrayList().isEmpty() && !gamePanel.getPaused()) {
-                    gamePanel.setMoney(gamePanel.getMoney() + 75);
+                    gamePanel.setMoney(gamePanel.getMoney() + 200);
                 }
             }
         };
