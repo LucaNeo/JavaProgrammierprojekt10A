@@ -9,9 +9,7 @@ public class Tower3 extends Tower {
     private final double x;
     private final double y;
     private final Image image;
-    public int damage = 10;
-    public int coolDown = 100; // in ms
-    private final int range = 10;
+    public int coolDown = 10; // in ms
     private final double shotSpeed = 0.1;
     private int timer;
 
@@ -40,16 +38,6 @@ public class Tower3 extends Tower {
     @Override
     public double getY(){
         return y;
-    }
-
-    @Override
-    public int getRange() {
-        return range;
-    }
-
-    @Override
-    public int getDamage() {
-        return damage;
     }
 
     @Override

@@ -66,12 +66,12 @@ public class Shot {
         // Logik für das Erstellen neuer Projektile für Tower3
         for (int a = 0; a < gamePanel.getTower3Arraylist().size(); a++) {
             Tower3 tower = gamePanel.getSpecificTower3(a);
-            if (tower != null && getTargetedEnemy(tower) != null && !gamePanel.getPaused()) {
-                if (gamePanel.getHealth() > 0 && checkEnemyInRange(tower) && !gamePanel.getWave().getEnemyArrayList().isEmpty()) {
+            if (tower != null && !gamePanel.getPaused()) {
+                if (gamePanel.getHealth() > 0 ) {
                     if (gamePanel.getSpecificTower3(a).getTimer() % tower.getCoolDown() == 0) {
                         projectile.add(new Projectile(gamePanel.getSpecificTower3(a).getX(), gamePanel.getSpecificTower3(a).getY(), gamePanel.getSpecificTower3(a).getShotSpeed(), gamePanel.getSpecificTower3(a)));
-                        deltaX.add((getTargetedEnemy(gamePanel.getSpecificTower3(a)).getX() + 0.5) - gamePanel.getSpecificTower3(a).getX());
-                        deltaY.add((getTargetedEnemy(gamePanel.getSpecificTower3(a)).getY() + 0.5) - gamePanel.getSpecificTower3(a).getY());
+                        deltaX.add(400 - gamePanel.getSpecificTower3(a).getX());
+                        deltaY.add(1080 - gamePanel.getSpecificTower3(a).getY());
                     }
                 }
             }
