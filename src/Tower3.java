@@ -9,16 +9,16 @@ public class Tower3 extends Tower {
     private final double x;
     private final double y;
     private final Image image;
-    public int damage = 10;
-    public int coolDown = 100; // in ms
-    private final int range = 10;
+    public int coolDown = 10; // in ms
     private final double shotSpeed = 0.1;
+    private int timer;
 
-    public Tower3(int x, int y) {
-        super(x, y);
+    public Tower3(int x, int y, int timer) {
+        super(x, y, timer);
 
         this.x = x;
         this.y = y;
+        this.timer = timer;
 
         // Bild laden
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-priest.png"))); // Pfad anpassen
@@ -41,16 +41,6 @@ public class Tower3 extends Tower {
     }
 
     @Override
-    public int getRange() {
-        return range;
-    }
-
-    @Override
-    public int getDamage() {
-        return damage;
-    }
-
-    @Override
     public int getCoolDown() {
         return coolDown;
     }
@@ -59,4 +49,10 @@ public class Tower3 extends Tower {
     public double getShotSpeed() {
         return shotSpeed;
     }
+
+    @Override
+    public int getTimer() { return timer; }
+
+    @Override
+    public void setTimer(int value) { this.timer = value; }
 }

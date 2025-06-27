@@ -8,7 +8,7 @@ public class Projectile {
 
     private double x;
     private double y;
-    private double speed;
+    private final double speed;
     private Tower originTower;
 
     public Projectile(double x, double y, double speed, Tower originTower) {

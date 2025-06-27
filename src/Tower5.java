@@ -14,7 +14,7 @@ public class Tower5 extends Tower {
     private final GamePanel gamePanel;
 
     public Tower5(int x, int y, GamePanel gamePanel) {
-        super(x, y);
+        super(x, y, 0);
 
         this.x = x;
         this.y = y;

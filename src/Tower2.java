@@ -13,12 +13,14 @@ public class Tower2 extends Tower {
     public int coolDown = 100; // in ms
     private final int range = 15;
     private final double shotSpeed = 0.1;
+    private int timer;
 
-    public Tower2(int x, int y) {
-        super(x, y);
+    public Tower2(int x, int y, int timer) {
+        super(x, y, timer);
 
         this.x = x;
         this.y = y;
+        this.timer = timer;
 
         // Bild laden
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/src/textures/isometric-ketoon.png"))); // Pfad anpassen
@@ -59,4 +61,10 @@ public class Tower2 extends Tower {
     public double getShotSpeed() {
         return shotSpeed;
     }
+
+    @Override
+    public int getTimer() { return timer; }
+
+    @Override
+    public void setTimer(int value) { this.timer = value; }
 }

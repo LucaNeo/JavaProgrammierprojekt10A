@@ -5,14 +5,16 @@ import java.awt.*;
 public class Tower {
     private final double x;
     private final double y;
-    public int damage;
-    public int coolDown; // in ms
+    private int damage;
+    private int coolDown; // in ms
     private int range;
-    public double shotSpeed;
+    private double shotSpeed;
+    private int timer;
 
-    public Tower(int x, int y) {
+    public Tower(int x, int y, int timer) {
         this.x = x;
         this.y = y;
+        this.timer = timer;
     }
 
     public void draw(Graphics g, int CHUNK_SIZE, int offsetX) {
@@ -44,5 +46,13 @@ public class Tower {
 
     public double getShotSpeed() {
         return shotSpeed;
+    }
+
+    public int getTimer() {
+        return timer;
+    }
+
+    public void setTimer(int value) {
+        this.timer = value;
     }
 }
